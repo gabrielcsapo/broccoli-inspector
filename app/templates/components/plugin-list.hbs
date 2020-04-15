@@ -1,0 +1,6 @@
+<div> {{this.totalTime}}ms </div>
+<ul>
+  {{#each @plugins key="@index" as |plugin idx|}}
+    <li>{{plugin.label}} - ({{plugin.buildState.selfTime}}ms)</li>
+  {{/each}}
+</ul>
