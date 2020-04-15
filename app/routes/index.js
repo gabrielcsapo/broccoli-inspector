@@ -18,9 +18,9 @@ export default class IndexRoute extends Route {
   endNode(data) {
     const { id } = data;
 
-    console.log(data)
-
     const plugins = this.get('plugins');
+
+    console.log(data);
 
     plugins[id] = data;
 

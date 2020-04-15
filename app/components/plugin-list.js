@@ -12,4 +12,11 @@ export default class PluginList extends Component {
     }
     return 0;
   }
+
+  get sortedPlugins() {
+    if(this.args.plugins) {
+      return this.args.plugins
+        .sort((pluginA, pluginB) => pluginB.buildState.selfTime - pluginA.buildState.selfTime);
+    }
+  }
 }

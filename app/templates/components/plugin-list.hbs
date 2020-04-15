@@ -1,6 +1,25 @@
 <div> {{this.totalTime}}ms </div>
 <ul>
-  {{#each @plugins key="@index" as |plugin idx|}}
-    <li>{{plugin.label}} - ({{plugin.buildState.selfTime}}ms)</li>
+  {{#each this.sortedPlugins key="@index" as |plugin idx|}}
+    <li>
+      <div> ({{plugin.id}}) {{plugin.label}} - ({{plugin.buildState.selfTime}}ms) </div>
+      <pre>
+        <h2> Input Files </h2>
+        <ul>
+          {{#each plugin.inputFiles as |inputFile|}}
+            <li>{{inputFile}}</li>
+          {{/each}}
+        </ul>
+      </pre>
+
+      <pre>
+        <h2> Output Files </h2>
+        <ul>
+          {{#each plugin.outputFiles as |outputFile|}}
+            <li>{{outputFile}}</li>
+          {{/each}}
+        </ul>
+      </pre>
+    </li>
   {{/each}}
 </ul>

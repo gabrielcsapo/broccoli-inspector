@@ -10,8 +10,6 @@ module.exports = function(app, info) {
   const io = require('socket.io')(httpServer);
 
   io.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
-
     watcher.builder.builder.on('beginNode', (node) => {
       socket.emit('beginNode', node);
     });
@@ -19,9 +17,21 @@ module.exports = function(app, info) {
     watcher.builder.builder.on('endNode', (node) => {
       const { outputPath } = node;
 
-      node.nodeInfo.outputFiles = walkSync(outputPath);
+      const serializedNode = {
+        id: node.id,
+        buildState: node.buildState,
+        label: node.label,
+        inputPaths: node.inputPaths,
+        outputFiles: walkSync(outputPath)
+      }
 
-      socket.emit('endNode', node);
+      if(Array.isArray(node.inputPaths)) {
+        const inputFile = node.inputPaths.map((inputPath) => walkSync(inputPath))
+
+         serializedNode.inputFiles = [].concat(...inputFile);
+      }
+
+      socket.emit('endNode', serializedNode);
     });
   });
 
