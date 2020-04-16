@@ -1,14 +1,14 @@
-<div> ({{model.id}}) {{model.label}} - ({{model.buildState.selfTime}}ms) </div>
-<h2> Input Files {{model.inputFiles.length}} </h2>
+<div> ({{@model.id}}) {{@model.label}} - ({{@model.buildState.selfTime}}ms) </div>
+<h2> Input Files {{@model.inputFiles.length}} </h2>
 <ul>
-  {{#each model.inputFiles as |inputFile|}}
+  {{#each @model.inputFiles as |inputFile|}}
     <li>{{inputFile}}</li>
   {{/each}}
 </ul>
 
-<h2> Output Files {{model.outputFiles.length}} </h2>
+<h2> Output Files {{@model.outputFiles.length}} </h2>
 <ul>
-  {{#each model.outputFiles as |outputFile|}}
+  {{#each @model.outputFiles as |outputFile|}}
     <li>{{outputFile}}</li>
   {{/each}}
 </ul>
