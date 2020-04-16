@@ -60,6 +60,15 @@ module.exports = function(app, info) {
         return buildState;
       },
 
+      stats:(root, args, context, info) => {
+        const { id } = root;
+        const node = getNodeById(parseInt(id));
+
+        const { stats } = node['__heimdall__'];
+
+        return stats
+      },
+
       label:(root, args, context, info) => {
         const { id } = root;
         const { label } = getNodeById(parseInt(id));
@@ -102,7 +111,8 @@ module.exports = function(app, info) {
     type Node {
       id: ID!
       label: String
-      buildState: BuildState,
+      buildState: BuildState
+      stats: Stat
       slowestNodes: [Node]
       inputFiles: [String]
       outputFiles: [String]
@@ -111,6 +121,97 @@ module.exports = function(app, info) {
     type BuildState {
       selfTime: Float!
       totalTime: Float!
+    }
+
+    type Stat {
+      fs: FS
+    }
+
+    type FS {
+      appendFile: FSMetric
+      appendFileSync: FSMetric
+      access: FSMetric
+      accessSync: FSMetric
+      chown: FSMetric
+      chownSync: FSMetric
+      chmod: FSMetric
+      chmodSync: FSMetric
+      close: FSMetric
+      closeSync: FSMetric
+      copyFile: FSMetric
+      copyFileSync: FSMetric
+      createReadStream: FSMetric
+      createWriteStream: FSMetric
+      exists: FSMetric
+      existsSync: FSMetric
+      fchown: FSMetric
+      fchownSync: FSMetric
+      fchmod: FSMetric
+      fchmodSync: FSMetric
+      fdatasync: FSMetric
+      fdatasyncSync: FSMetric
+      fstat: FSMetric
+      fstatSync: FSMetric
+      fsync: FSMetric
+      fsyncSync: FSMetric
+      ftruncate: FSMetric
+      ftruncateSync: FSMetric
+      futimes: FSMetric
+      futimesSync: FSMetric
+      lchown: FSMetric
+      lchownSync: FSMetric
+      lchmod: FSMetric
+      lchmodSync: FSMetric
+      link: FSMetric
+      linkSync: FSMetric
+      lstat: FSMetric
+      lstatSync: FSMetric
+      mkdir: FSMetric
+      mkdirSync: FSMetric
+      mkdtemp: FSMetric
+      mkdtempSync: FSMetric
+      open: FSMetric
+      openSync: FSMetric
+      opendir: FSMetric
+      opendirSync: FSMetric
+      readdir: FSMetric
+      readdirSync: FSMetric
+      read: FSMetric
+      readSync: FSMetric
+      readFile: FSMetric
+      readFileSync: FSMetric
+      readlink: FSMetric
+      readlinkSync: FSMetric
+      realpath: FSMetric
+      realpathSync: FSMetric
+      rename: FSMetric
+      renameSync: FSMetric
+      rmdir: FSMetric
+      rmdirSync: FSMetric
+      stat: FSMetric
+      statSync: FSMetric
+      symlink: FSMetric
+      symlinkSync: FSMetric
+      truncate: FSMetric
+      truncateSync: FSMetric
+      unwatchFile: FSMetric
+      unlink: FSMetric
+      unlinkSync: FSMetric
+      utimes: FSMetric
+      utimesSync: FSMetric
+      watch: FSMetric
+      watchFile: FSMetric
+      writeFile: FSMetric
+      writeFileSync: FSMetric
+      write: FSMetric
+      writeSync: FSMetric
+      writev: FSMetric
+      writevSync: FSMetric
+    }
+
+    type FSMetric {
+      count: Float
+      time: Float
     }
 
     schema {

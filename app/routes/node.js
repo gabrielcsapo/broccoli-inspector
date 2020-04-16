@@ -7,6 +7,7 @@ import { queryManager } from "ember-apollo-client";
 const query = gql`
   query query($id: ID!) {
     node(id: $id) {
+      id
       label
       inputFiles
       outputFiles
