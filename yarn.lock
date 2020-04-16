@@ -6896,7 +6896,7 @@ ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.12.0, ember-cli-babel@^6.14.1,
     ember-cli-version-checker "^2.1.2"
     semver "^5.5.0"
 
-ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.11.0, ember-cli-babel@^7.12.0, ember-cli-babel@^7.13.2, ember-cli-babel@^7.18.0, ember-cli-babel@^7.7.3:
+ember-cli-babel@^7.1.2, ember-cli-babel@^7.11.0, ember-cli-babel@^7.12.0, ember-cli-babel@^7.13.2, ember-cli-babel@^7.18.0, ember-cli-babel@^7.7.3:
   version "7.19.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.19.0.tgz#e6eddea18a867231fcf90a80689e92b98be9a63b"
   integrity sha512-HiWKuoyy35vGEr+iCw6gUnQ3pS5qslyTlKEDW8cVoMbvZNGYBgRxHed5nklVUh+BS74AwR9lsp25BTAagYAP9Q==
@@ -7060,27 +7060,6 @@ ember-cli-test-loader@^2.2.0:
   dependencies:
     ember-cli-babel "^6.8.1"
 
-ember-cli-typescript-blueprints@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-typescript-blueprints/-/ember-cli-typescript-blueprints-3.0.0.tgz#88595df71ddca9a7cb3ef1fb1626a1c2528da1b6"
-  integrity sha512-nJScjIjwDY96q9eiIBse9npLht/1FNmDRMpoTLJUrgSTzmx7/S6JhlH4BrMELkLCvtPkWoduDNBGiGBdCqf9FA==
-  dependencies:
-    chalk "^2.4.1"
-    ember-cli-babel "^7.0.0"
-    ember-cli-get-component-path-option "^1.0.0"
-    ember-cli-is-package-missing "^1.0.0"
-    ember-cli-normalize-entity-name "^1.0.0"
-    ember-cli-path-utils "^1.0.0"
-    ember-cli-string-utils "^1.1.0"
-    ember-cli-test-info "^1.0.0"
-    ember-cli-valid-component-name "^1.0.0"
-    ember-cli-version-checker "^3.0.0"
-    ember-router-generator "^2.0.0"
-    exists-sync "^0.1.0"
-    fs-extra "^8.0.0"
-    inflection "^1.12.0"
-    silent-error "^1.1.0"
-
 ember-cli-typescript@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-3.0.0.tgz#3b838d1ce9e4d22a98e68da22ceac6dc0cfd9bfc"
@@ -7144,13 +7123,6 @@ ember-cli-uglify@^3.0.0:
     broccoli-uglify-sourcemap "^3.1.0"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-valid-component-name@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-valid-component-name/-/ember-cli-valid-component-name-1.0.0.tgz#71550ce387e0233065f30b30b1510aa2dfbe87ef"
-  integrity sha1-cVUM44fgIzBl8wswsVEKot++h+8=
-  dependencies:
-    silent-error "^1.0.0"
-
 ember-cli-version-checker@^2.0.0, ember-cli-version-checker@^2.1.0, ember-cli-version-checker@^2.1.1, ember-cli-version-checker@^2.1.2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-2.2.0.tgz#47771b731fe0962705e27c8199a9e3825709f3b3"
@@ -7159,7 +7131,7 @@ ember-cli-version-checker@^2.0.0, ember-cli-version-checker@^2.1.0, ember-cli-ve
     resolve "^1.3.3"
     semver "^5.3.0"
 
-ember-cli-version-checker@^3.0.0, ember-cli-version-checker@^3.1.2, ember-cli-version-checker@^3.1.3:
+ember-cli-version-checker@^3.1.2, ember-cli-version-checker@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-3.1.3.tgz#7c9b4f5ff30fdebcd480b1c06c4de43bb51c522c"
   integrity sha512-PZNSvpzwWgv68hcXxyjREpj3WWb81A7rtYNQq1lLEgrWIchF8ApKJjWP3NBpHjaatwILkZAV8klair5WFlXAKg==
@@ -7934,11 +7906,6 @@ exists-sync@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/exists-sync/-/exists-sync-0.0.4.tgz#9744c2c428cc03b01060db454d4b12f0ef3c8879"
   integrity sha1-l0TCxCjMA7AQYNtFTUsS8O88iHk=
-
-exists-sync@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/exists-sync/-/exists-sync-0.1.0.tgz#318d545213d2b2a31499e92c35f74c94196a22f7"
-  integrity sha512-qEfFekfBVid4b14FNug/RNY1nv+BADnlzKGHulc+t6ZLqGY4kdHGh1iFha8lnE3sJU/1WzMzKRNxS6EvSakJUg==
 
 exit@^0.1.2:
   version "0.1.2"
@@ -14728,10 +14695,10 @@ typescript-memoize@^1.0.0-alpha.3:
   dependencies:
     core-js "2.4.1"
 
-typescript@^3.8.3:
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
-  integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
+typescript@3.7.5:
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
+  integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
 
 uc.micro@^1.0.0, uc.micro@^1.0.1, uc.micro@^1.0.5:
   version "1.0.6"
