@@ -1,1 +1,22 @@
-{{outlet}}
+<Progressbar @currentStep={{this.currentNode}} @isBuilding={{this.isBuilding}} @currentBuildTime={{this.currentBuildTime}} />
+
+<div class="container">
+  <div class="flex-grid">
+    <div class="col sidebar">
+      {{#if this.isBuilding}}
+        Broccoli is building
+      {{else}}
+        <NodeList
+          @nodes={{model.nodes}}
+        />
+      {{/if}}
+    </div>
+    <div class="col main">
+      {{#if this.isBuilding}}
+        Broccoli is building
+      {{else}}
+        {{outlet}}
+      {{/if}}
+    </div>
+  </div>
+</div>

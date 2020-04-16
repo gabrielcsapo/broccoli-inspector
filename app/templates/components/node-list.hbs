@@ -1,0 +1,9 @@
+<ul class="node-list">
+  {{#each this.nodes key="@index" as |node idx|}}
+    <li>
+      <LinkTo @route="node" @model={{node.id}}>
+          ({{node.buildState.selfTime}}ms) {{node.label}}
+      </LinkTo>
+    </li>
+  {{/each}}
+</ul>

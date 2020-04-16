@@ -1,3 +1,7 @@
-<div class="progressbar p2">
-  {{@currentStep}}
+<div class={{if @isBuilding "progressbar progressbar--building p3" "progressbar progressbar--complete p3"}}>
+  {{#if @isBuilding}}
+    {{@currentBuildTime}} {{@currentStep}}
+  {{else}}
+    Please rerun to get more data
+  {{/if}}
 </div>

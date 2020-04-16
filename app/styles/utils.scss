@@ -1,5 +1,5 @@
 @for $i from 0 through 4 {
   .p#{$i} {
-    padding: ($i * 2) + px;
+    padding: ($i * 4) + px;
   }
 }

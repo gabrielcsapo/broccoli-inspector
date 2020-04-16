@@ -5,6 +5,9 @@ module.exports = function(environment) {
     'ember-websockets': {
       socketIO: true
     },
+    apollo: {
+      apiURL: 'http://localhost:4200/_broccoli/api/graphql',
+    },
     modulePrefix: 'broccoli-inspector',
     environment,
     rootURL: '/',

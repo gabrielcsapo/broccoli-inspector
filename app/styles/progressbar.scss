@@ -1,5 +1,15 @@
 @import "./colors";
 
 .progressbar {
-  background-color: $grey;
+  width: 100%;
+}
+
+.progressbar--building {
+  background-color: $unknown;
+  border-bottom: 1px solid darken($unknown, 25);
+}
+
+.progressbar--complete {
+  background-color: $success;
+  border-bottom: 1px solid darken($success, 25);
 }

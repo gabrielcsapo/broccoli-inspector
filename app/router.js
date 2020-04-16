@@ -8,4 +8,5 @@ export default class Router extends EmberRouter {
 
 Router.map(function() {
   this.route('index', { path: '/' });
+  this.route('node', { path: '/plugins/:id' });
 });

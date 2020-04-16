@@ -1,3 +1,32 @@
+@import "./colors";
 @import "./normalize";
 @import "./progressbar";
+@import "./node-list";
 @import "./utils";
+
+.container {
+  max-width: 960px;
+  margin: auto;
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+
+.flex-grid {
+  display: flex;
+  margin: auto -1rem 1rem;
+}
+
+.col {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  padding: 1rem;
+}
+
+.sidebar {
+  flex: 1;
+  border-right: 1px solid $grey;
+}
+
+.main {
+  flex: 3;
+}
