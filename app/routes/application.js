@@ -84,6 +84,5 @@ export default class ApplicationRoute extends Route {
 
     this.controller.set('isBuilding', true);
     this.controller.set('currentNode', data.label);
-    console.log(this.controller.get('currentNode'));
   }
 }

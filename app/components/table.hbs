@@ -1,0 +1,15 @@
+<h2>{{@title}}</h2>
+<table class="table">
+  <tr>
+    {{#each @header as |header|}}
+      <th>{{header}}</th>
+    {{/each}}
+  </tr>
+  {{#each @body as |items|}}
+    <tr>
+      {{#each items as |item|}}
+        <td>{{item}}</td>
+      {{/each}}
+    </tr>
+  {{/each}}
+</table>
