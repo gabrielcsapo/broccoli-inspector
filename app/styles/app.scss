@@ -12,7 +12,8 @@
 }
 
 .flex-grid {
-  height: 100vh;
+  height: 100;
+  min-height: 100vh;
   display: flex;
   margin: auto -1rem 1rem;
 }
