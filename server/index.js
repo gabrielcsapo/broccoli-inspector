@@ -223,8 +223,6 @@ module.exports = function (app, info) {
         closeSync: FSMetric
         copyFile: FSMetric
         copyFileSync: FSMetric
-        createReadStream: FSMetric
-        createWriteStream: FSMetric
         exists: FSMetric
         existsSync: FSMetric
         fchown: FSMetric

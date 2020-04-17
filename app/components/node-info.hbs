@@ -1,15 +1,19 @@
-<div> ({{@node.id}}) {{@node.label}} - ({{@node.buildState.selfTime}}ms) </div>
+<h1> ({{@node.id}}) {{@node.label}} ({{@node.buildState.selfTime}}ms)</h1>
 
-<table style="width:100%">
-  <tr>
-    <th>Output Files {{@node.outputFiles.length}}</th>
-    <th>Input Files {{@node.inputFiles.length}}</th>
-  </tr>
-  {{#each this.fileTable as |files|}}
-    <tr>
-      {{#each files as |file|}}
-        <td>{{file}}</td>
-      {{/each}}
-    </tr>
-  {{/each}}
-</table>
+{{#if this.fsTableBody}}
+  <Table
+    @title="FS Timing"
+    @header={{this.fsTableHeader}}
+    @body={{this.fsTableBody}}
+  />
+{{else}}
+  <div class="callout">
+    No FS Timing available
+  </div>
+{{/if}}
+<br/>
+<Table
+  @title="File Input & Outputs"
+  @header={{this.fileTableHeader}}
+  @body={{this.fileTableBody}}
+/>
