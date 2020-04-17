@@ -4,7 +4,7 @@
 const { ApolloServer, gql } = require('apollo-server-express');
 const walkSync = require('walk-sync');
 
-module.exports = function(app, info) {
+module.exports = function (app, info) {
   const { watcher, httpServer } = info;
 
   const io = require('socket.io')(httpServer);
@@ -26,13 +26,16 @@ module.exports = function(app, info) {
   function fuzzySearchNodeWrappers(nodeWrappers, query) {
     const found = [];
 
-    for (const [index, _node] of watcher.builder.builder._nodeWrappers.entries()) {
-      for(const prop in _node) {
-        if(typeof _node[prop] === 'object') {
+    for (const [
+      index,
+      _node,
+    ] of watcher.builder.builder._nodeWrappers.entries()) {
+      for (const prop in _node) {
+        if (typeof _node[prop] === 'object') {
           continue;
         }
-        if(query.exec(_node[prop])) {
-          found.push(_node);
+        if (query.exec(_node[prop])) {
+          found.push({ id: _node.id });
           // we want to short circuit as we found the prop that matched
           break;
         }
@@ -45,8 +48,11 @@ module.exports = function(app, info) {
   function getNodeById(id) {
     let node;
 
-    for (const [index, _node] of watcher.builder.builder._nodeWrappers.entries()) {
-      if ( _node.id === id ) {
+    for (const [
+      index,
+      _node,
+    ] of watcher.builder.builder._nodeWrappers.entries()) {
+      if (_node.id === parseInt(id)) {
         node = _node;
 
         break;
@@ -58,209 +64,247 @@ module.exports = function(app, info) {
 
   const resolvers = {
     Query: {
-      fuzzy(root,args,context,info) {
+      fuzzy(root, args, context, info) {
         const { value } = args;
 
         // we want to fuzzy search all nodes for values that match our value
-        return fuzzySearchNodeWrappers(watcher.builder.builder._nodeWrappers, new RegExp(value));
+        return fuzzySearchNodeWrappers(
+          watcher.builder.builder._nodeWrappers,
+          new RegExp(value)
+        );
       },
 
       nodes() {
-        return watcher.builder.builder._nodeWrappers
+        const ids = [];
+
+        // only return the id as we don't want to unnecessarily make the graphql engine trim values
+        for (const [
+          index,
+          _node,
+        ] of watcher.builder.builder._nodeWrappers.entries()) {
+          ids.push({ id: _node.id });
+        }
+
+        return ids;
       },
 
-      node(root,args,context,info) {
+      node(root, args, context, info) {
         const { id } = args;
 
         return {
-          id: id
+          id: id,
         };
       },
     },
 
     Node: {
-      buildState:(root, args, context, info) => {
+      buildState: (root, args, context, info) => {
         const { id } = root;
-        const { buildState } = getNodeById(parseInt(id));
+        const { buildState } = getNodeById(id);
 
         return buildState;
       },
 
-      stats:(root, args, context, info) => {
+      stats: (root, args, context, info) => {
         const { id } = root;
-        const node = getNodeById(parseInt(id));
+        const node = getNodeById(id);
 
         const { stats } = node['__heimdall__'];
 
-        return stats
+        return stats;
       },
 
-      label:(root, args, context, info) => {
+      pluginName: (root, args, context, info) => {
         const { id } = root;
-        const { label } = getNodeById(parseInt(id));
+        const node = getNodeById(id);
+
+        const { id: heimdallId } = node['__heimdall__'];
+        const { broccoliPluginName } = heimdallId;
+
+        return broccoliPluginName;
+      },
+
+      label: (root, args, context, info) => {
+        const { id } = root;
+        const { label } = getNodeById(id);
 
         return label;
       },
 
-      inputPaths:(root, args, context, info) => {
+      inputPaths: (root, args, context, info) => {
         const { id } = root;
-        const { inputPaths } = getNodeById(parseInt(id));
+        const { inputPaths } = getNodeById(id);
 
         return inputPaths;
       },
 
-      outputPath:(root, args, context, info) => {
+      outputPath: (root, args, context, info) => {
         const { id } = root;
-        const { outputPath } = getNodeById(parseInt(id));
+        const { outputPath } = getNodeById(id);
 
         return outputPath;
       },
 
-      slowestNodes:(root, args, context, info) => {
-        return Array.from(watcher.builder.builder._nodeWrappers, ([key, value]) => value)
-          .sort((pluginA, pluginB) => pluginB.buildState.selfTime - pluginA.buildState.selfTime)
+      slowestNodes: (root, args, context, info) => {
+        return Array.from(
+          watcher.builder.builder._nodeWrappers,
+          ([key, value]) => value
+        )
+          .sort(
+            (pluginA, pluginB) =>
+              pluginB.buildState.selfTime - pluginA.buildState.selfTime
+          )
           .slice(0, 5);
       },
 
-      outputFiles:(root, args, context, info) => {
+      outputFiles: (root, args, context, info) => {
         const { id } = root;
         let outputFiles = [];
 
-        const { outputPath } = getNodeById(parseInt(id));
+        const { outputPath } = getNodeById(id);
 
-        return walkSync(outputPath)
+        return walkSync(outputPath);
       },
 
-      inputFiles:(root, args, context, info) => {
+      inputFiles: (root, args, context, info) => {
         const { id } = root;
-        const { inputPaths } = getNodeById(parseInt(id));
+        const { inputPaths } = getNodeById(id);
 
-        let inputFiles = inputPaths.map((inputPath) => walkSync(inputPath))
+        let inputFiles = inputPaths.map((inputPath) => walkSync(inputPath));
 
-        return [].concat(...inputFiles)
-      }
-    }
+        return [].concat(...inputFiles);
+      },
+    },
   };
 
-  const server = new ApolloServer({ resolvers, typeDefs: gql`
-    type Query {
-      fuzzy(value:String!):[Node]
-      nodes: [Node]
-      node(id:ID!):Node
-    }
+  const server = new ApolloServer({
+    tracing: true,
+    cacheControl: true,
+    resolvers,
+    typeDefs: gql`
+      type Query {
+        fuzzy(value: String!): [Node]
+        nodes: [Node]
+        node(id: ID!): Node
+      }
 
-    type Node {
-      id: ID!
-      label: String
-      buildState: BuildState
-      stats: Stat
-      inputPaths: [String]
-      outputPath: String
-      slowestNodes: [Node]
-      inputFiles: [String]
-      outputFiles: [String]
-    }
+      type Node {
+        id: ID!
+        label: String
+        pluginName: String
+        buildState: BuildState
+        stats: Stat
+        inputPaths: [String]
+        outputPath: String
+        slowestNodes: [Node]
+        inputFiles: [String]
+        outputFiles: [String]
+      }
 
-    type BuildState {
-      selfTime: Float!
-      totalTime: Float!
-    }
+      type BuildState {
+        selfTime: Float!
+        totalTime: Float!
+      }
 
-    type Stat {
-      fs: FS
-    }
+      type Stat {
+        fs: FS
+      }
 
-    type FS {
-      appendFile: FSMetric
-      appendFileSync: FSMetric
-      access: FSMetric
-      accessSync: FSMetric
-      chown: FSMetric
-      chownSync: FSMetric
-      chmod: FSMetric
-      chmodSync: FSMetric
-      close: FSMetric
-      closeSync: FSMetric
-      copyFile: FSMetric
-      copyFileSync: FSMetric
-      createReadStream: FSMetric
-      createWriteStream: FSMetric
-      exists: FSMetric
-      existsSync: FSMetric
-      fchown: FSMetric
-      fchownSync: FSMetric
-      fchmod: FSMetric
-      fchmodSync: FSMetric
-      fdatasync: FSMetric
-      fdatasyncSync: FSMetric
-      fstat: FSMetric
-      fstatSync: FSMetric
-      fsync: FSMetric
-      fsyncSync: FSMetric
-      ftruncate: FSMetric
-      ftruncateSync: FSMetric
-      futimes: FSMetric
-      futimesSync: FSMetric
-      lchown: FSMetric
-      lchownSync: FSMetric
-      lchmod: FSMetric
-      lchmodSync: FSMetric
-      link: FSMetric
-      linkSync: FSMetric
-      lstat: FSMetric
-      lstatSync: FSMetric
-      mkdir: FSMetric
-      mkdirSync: FSMetric
-      mkdtemp: FSMetric
-      mkdtempSync: FSMetric
-      open: FSMetric
-      openSync: FSMetric
-      opendir: FSMetric
-      opendirSync: FSMetric
-      readdir: FSMetric
-      readdirSync: FSMetric
-      read: FSMetric
-      readSync: FSMetric
-      readFile: FSMetric
-      readFileSync: FSMetric
-      readlink: FSMetric
-      readlinkSync: FSMetric
-      realpath: FSMetric
-      realpathSync: FSMetric
-      rename: FSMetric
-      renameSync: FSMetric
-      rmdir: FSMetric
-      rmdirSync: FSMetric
-      stat: FSMetric
-      statSync: FSMetric
-      symlink: FSMetric
-      symlinkSync: FSMetric
-      truncate: FSMetric
-      truncateSync: FSMetric
-      unwatchFile: FSMetric
-      unlink: FSMetric
-      unlinkSync: FSMetric
-      utimes: FSMetric
-      utimesSync: FSMetric
-      watch: FSMetric
-      watchFile: FSMetric
-      writeFile: FSMetric
-      writeFileSync: FSMetric
-      write: FSMetric
-      writeSync: FSMetric
-      writev: FSMetric
-      writevSync: FSMetric
-    }
+      type FS {
+        appendFile: FSMetric
+        appendFileSync: FSMetric
+        access: FSMetric
+        accessSync: FSMetric
+        chown: FSMetric
+        chownSync: FSMetric
+        chmod: FSMetric
+        chmodSync: FSMetric
+        close: FSMetric
+        closeSync: FSMetric
+        copyFile: FSMetric
+        copyFileSync: FSMetric
+        createReadStream: FSMetric
+        createWriteStream: FSMetric
+        exists: FSMetric
+        existsSync: FSMetric
+        fchown: FSMetric
+        fchownSync: FSMetric
+        fchmod: FSMetric
+        fchmodSync: FSMetric
+        fdatasync: FSMetric
+        fdatasyncSync: FSMetric
+        fstat: FSMetric
+        fstatSync: FSMetric
+        fsync: FSMetric
+        fsyncSync: FSMetric
+        ftruncate: FSMetric
+        ftruncateSync: FSMetric
+        futimes: FSMetric
+        futimesSync: FSMetric
+        lchown: FSMetric
+        lchownSync: FSMetric
+        lchmod: FSMetric
+        lchmodSync: FSMetric
+        link: FSMetric
+        linkSync: FSMetric
+        lstat: FSMetric
+        lstatSync: FSMetric
+        mkdir: FSMetric
+        mkdirSync: FSMetric
+        mkdtemp: FSMetric
+        mkdtempSync: FSMetric
+        open: FSMetric
+        openSync: FSMetric
+        opendir: FSMetric
+        opendirSync: FSMetric
+        readdir: FSMetric
+        readdirSync: FSMetric
+        read: FSMetric
+        readSync: FSMetric
+        readFile: FSMetric
+        readFileSync: FSMetric
+        readlink: FSMetric
+        readlinkSync: FSMetric
+        realpath: FSMetric
+        realpathSync: FSMetric
+        rename: FSMetric
+        renameSync: FSMetric
+        rmdir: FSMetric
+        rmdirSync: FSMetric
+        stat: FSMetric
+        statSync: FSMetric
+        symlink: FSMetric
+        symlinkSync: FSMetric
+        truncate: FSMetric
+        truncateSync: FSMetric
+        unwatchFile: FSMetric
+        unlink: FSMetric
+        unlinkSync: FSMetric
+        utimes: FSMetric
+        utimesSync: FSMetric
+        watch: FSMetric
+        watchFile: FSMetric
+        writeFile: FSMetric
+        writeFileSync: FSMetric
+        write: FSMetric
+        writeSync: FSMetric
+        writev: FSMetric
+        writevSync: FSMetric
+      }
 
-    type FSMetric {
-      count: Float
-      time: Float
-    }
+      type FSMetric {
+        count: Float
+        time: Float
+      }
 
-    schema {
-      query: Query
-    }
-  ` });
+      schema {
+        query: Query
+      }
+    `,
+  });
 
-  server.applyMiddleware({ app, path: '/_broccoli/api/graphql' });
-}
+  server.applyMiddleware({
+    app,
+    path: '/_broccoli/api/graphql',
+  });
+};

@@ -1,0 +1,15 @@
+<div> ({{@node.id}}) {{@node.label}} - ({{@node.buildState.selfTime}}ms) </div>
+
+<table style="width:100%">
+  <tr>
+    <th>Output Files {{@node.outputFiles.length}}</th>
+    <th>Input Files {{@node.inputFiles.length}}</th>
+  </tr>
+  {{#each this.fileTable as |files|}}
+    <tr>
+      {{#each files as |file|}}
+        <td>{{file}}</td>
+      {{/each}}
+    </tr>
+  {{/each}}
+</table>
