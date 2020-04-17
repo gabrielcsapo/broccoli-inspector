@@ -55,6 +55,7 @@ module.exports = function(app, info) {
     Node: {
       buildState:(root, args, context, info) => {
         const { id } = root;
+        console.log(getNodeById(parseInt(id)))
         const { buildState } = getNodeById(parseInt(id));
 
         return buildState;
@@ -74,6 +75,20 @@ module.exports = function(app, info) {
         const { label } = getNodeById(parseInt(id));
 
         return label;
+      },
+
+      inputPaths:(root, args, context, info) => {
+        const { id } = root;
+        const { inputPaths } = getNodeById(parseInt(id));
+
+        return inputPaths;
+      },
+
+      outputPath:(root, args, context, info) => {
+        const { id } = root;
+        const { outputPath } = getNodeById(parseInt(id));
+
+        return outputPath;
       },
 
       slowestNodes:(root, args, context, info) => {
@@ -113,6 +128,8 @@ module.exports = function(app, info) {
       label: String
       buildState: BuildState
       stats: Stat
+      inputPaths: [String]
+      outputPath: String
       slowestNodes: [Node]
       inputFiles: [String]
       outputFiles: [String]
