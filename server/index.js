@@ -23,6 +23,25 @@ module.exports = function(app, info) {
     });
   });
 
+  function fuzzySearchNodeWrappers(nodeWrappers, query) {
+    const found = [];
+
+    for (const [index, _node] of watcher.builder.builder._nodeWrappers.entries()) {
+      for(const prop in _node) {
+        if(typeof _node[prop] === 'object') {
+          continue;
+        }
+        if(query.exec(_node[prop])) {
+          found.push(_node);
+          // we want to short circuit as we found the prop that matched
+          break;
+        }
+      }
+    }
+
+    return found;
+  }
+
   function getNodeById(id) {
     let node;
 
@@ -39,6 +58,13 @@ module.exports = function(app, info) {
 
   const resolvers = {
     Query: {
+      fuzzy(root,args,context,info) {
+        const { value } = args;
+
+        // we want to fuzzy search all nodes for values that match our value
+        return fuzzySearchNodeWrappers(watcher.builder.builder._nodeWrappers, new RegExp(value));
+      },
+
       nodes() {
         return watcher.builder.builder._nodeWrappers
       },
@@ -55,7 +81,6 @@ module.exports = function(app, info) {
     Node: {
       buildState:(root, args, context, info) => {
         const { id } = root;
-        console.log(getNodeById(parseInt(id)))
         const { buildState } = getNodeById(parseInt(id));
 
         return buildState;
@@ -119,6 +144,7 @@ module.exports = function(app, info) {
 
   const server = new ApolloServer({ resolvers, typeDefs: gql`
     type Query {
+      fuzzy(value:String!):[Node]
       nodes: [Node]
       node(id:ID!):Node
     }

@@ -1,4 +1,10 @@
-.node-list {
+.node-list {}
+
+.node-list--search {
+  width: 100%;
+}
+
+.node-list--items {
   list-style: none;
   margin: 0;
   padding: 0;

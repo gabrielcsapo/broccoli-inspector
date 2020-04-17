@@ -17,8 +17,29 @@ const query = gql`
   }
 `;
 
+const searchQuery = gql`
+  query fuzzy($value: String!) {
+    fuzzy(value: $value) {
+      id
+      label
+      buildState {
+        selfTime
+        totalTime
+      }
+    }
+  }
+`;
+
 export default class ApplicationRoute extends Route {
+  queryParams = {
+    searchTerm: {
+      refreshModel: true
+    }
+  };
+
   @queryManager apollo;
+
+  @service('router') router;
   @service('socket-io') socketIO;
 
   constructor() {
@@ -32,7 +53,13 @@ export default class ApplicationRoute extends Route {
   }
 
   model(params) {
-    const { id } = params;
+    const { id, searchTerm } = params;
+
+    if(searchTerm) {
+      return this.apollo.query({ query: searchQuery, variables: { value: searchTerm } }, "fuzzy").then((result) => {
+        return { nodes: result, searchTerm }
+      });
+    }
 
     return this.apollo.query({ query }, "nodes").then((result) => {
       return { nodes: result }
