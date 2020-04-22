@@ -15,6 +15,14 @@ const query = gql`
         selfTime
         totalTime
       }
+      inputNodeWrappers {
+        id
+        label
+        buildState {
+          selfTime
+          totalTime
+        }
+      }
       stats {
         fs {
           appendFile { count time }

@@ -6,6 +6,7 @@ interface Node {
   stats: Stats;
   outputFiles: string[];
   inputFiles: string[];
+  inputNodeWrappers: Node[];
   buildState: {
     selfTime: number;
   };
@@ -123,6 +124,12 @@ export default class NodeInfo extends Component<Args> {
 
         return item && item.time;
       })
+      .sort((keyA, keyB) => {
+        const rowA = fs[keyA];
+        const rowB = fs[keyB];
+
+        return rowB.time - rowA.time;
+      })
       .map((key) => {
         const { time, count } = fs[key];
         // time is ns and we want to convert to ms
@@ -137,8 +144,8 @@ export default class NodeInfo extends Component<Args> {
     const outputFiles = node?.outputFiles || [];
 
     return [
-      `Output Files ${outputFiles.length}`,
-      `Input Files ${inputFiles.length}`
+      `Input Files (${inputFiles.length})`,
+      `Output Files (${outputFiles.length})`
     ]
   }
 

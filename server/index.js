@@ -10,8 +10,8 @@ module.exports = function (app, info) {
   const io = require('socket.io')(httpServer);
 
   io.on('connection', function (socket) {
-    watcher.builder.builder.on('buildFinished', (pipeline) => {
-      socket.emit('buildFinished', pipeline);
+    watcher.on('buildSuccess', (node) => {
+      socket.emit('buildFinished', node);
     });
 
     watcher.builder.builder.on('beginNode', (node) => {
@@ -32,6 +32,7 @@ module.exports = function (app, info) {
     ] of watcher.builder.builder._nodeWrappers.entries()) {
       for (const prop in _node) {
         if (typeof _node[prop] === 'object') {
+          // TODO: this should be able to fuzzy search recursively
           continue;
         }
         if (query.exec(_node[prop])) {
@@ -109,9 +110,27 @@ module.exports = function (app, info) {
         const { id } = root;
         const node = getNodeById(id);
 
-        const { stats } = node['__heimdall__'];
+        let { stats } = node['__heimdall__'];
+
+        if(node['__heimdall__']._children) {
+          // Traverse this until we get to a node that is the applyPatches
+          for(const child of node['__heimdall__']._children) {
+            if(child.id.name === 'applyPatches') {
+              return child.stats;
+            }
+          }
+        }
 
         return stats;
+      },
+
+      inputNodeWrappers: (root, args, context, info) => {
+        const { id } = root;
+        const { inputNodeWrappers=[] } = getNodeById(id);
+
+        return inputNodeWrappers.map(({ id }) => {
+          return { id }
+        });
       },
 
       pluginName: (root, args, context, info) => {
@@ -199,6 +218,7 @@ module.exports = function (app, info) {
         slowestNodes: [Node]
         inputFiles: [String]
         outputFiles: [String]
+        inputNodeWrappers: [Node]
       }
 
       type BuildState {
