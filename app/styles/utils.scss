@@ -1,5 +1,9 @@
 @for $i from 0 through 4 {
   .p#{$i} {
-    padding: ($i * 4) + px;
+    padding: ($i * 4) + px !important;
   }
+}
+
+.text-center {
+  text-align: center !important;
 }

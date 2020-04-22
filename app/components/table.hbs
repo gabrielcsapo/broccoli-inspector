@@ -1,15 +1,34 @@
 <h2>{{@title}}</h2>
 <table class="table">
   <tr>
-    {{#each @header as |header|}}
+    {{#each @data.header as |header|}}
       <th>{{header}}</th>
     {{/each}}
   </tr>
-  {{#each @body as |items|}}
+  {{#if @data.body}}
+    {{#each @data.body as |items|}}
+      <tr>
+        {{#each items as |item|}}
+          {{#if item.linkRoute}}
+            <td>
+              <LinkTo
+                @route={{item.linkRoute}}
+                @model={{item.linkModel}}
+              >
+                {{item.text}}
+              </LinkTo>
+            </td>
+          {{else}}
+            <td>{{item}}</td>
+          {{/if}}
+        {{/each}}
+      </tr>
+    {{/each}}
+  {{else}}
     <tr>
-      {{#each items as |item|}}
-        <td>{{item}}</td>
-      {{/each}}
+      <td class="text-center" colspan={{@data.header.length}}>
+        {{@empty}}
+      </td>
     </tr>
-  {{/each}}
+  {{/if}}
 </table>

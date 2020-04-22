@@ -3,6 +3,8 @@
 @import "./progressbar";
 @import "./table";
 @import "./node-list";
+@import "./empty-state";
+@import "./form";
 @import "./utils";
 
 .container {
@@ -15,27 +17,38 @@
   height: 100%;
   min-height: 100vh;
   display: flex;
-  margin: auto -1rem 1rem;
-}
-
-.col {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  padding: 1rem;
+  margin: auto;
 }
 
 .sidebar {
   flex: 1;
+  padding-top: 10px;
   border-right: 1px solid $grey;
 }
 
 .main {
+  padding: 1rem;
   flex: 3;
 }
 
-.callout {
-  border: 0;
-  border-left: .2rem solid $grey;
-  padding: 1rem 1.5rem;
-  position: relative;
+.plugin-selected {
+  color: $white;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: darken($grey, 50);
+}
+
+.plugin-selected--clear {
+  color: $white;
+  float: right;
+  border-radius: 5px;
+  box-shadow: none;
+  background-color: transparent;
+  outline: 0;
+  border: 2px solid $white;
+}
+
+.plugin-selected--clear:hover {
+  color: darken($grey, 50);
+  background-color: $white;
 }

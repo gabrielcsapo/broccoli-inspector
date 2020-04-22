@@ -106,19 +106,42 @@ interface Args {
 }
 
 export default class NodeInfo extends Component<Args> {
-  get fsTableHeader() {
-    return [
-      `Operation`,
-      `Time`,
-      `Count`
-    ];
+  get info() {
+    return {
+      header: [],
+      body: []
+    }
   }
 
-  get fsTableBody() {
+  get inputNodeWrappers() {
+    const node = this.args.node;
+    const inputNodeWrappers = node?.inputNodeWrappers || [];
+
+    return {
+      header: [
+        'ID',
+        'Time',
+        'Node Label'
+      ],
+      body: inputNodeWrappers.map((inputNodeWrapper) => {
+        return [
+          inputNodeWrapper.id,
+          Number(inputNodeWrapper.buildState.selfTime).toFixed(3) + 'ms',
+          {
+            text: inputNodeWrapper.label,
+            linkModel: inputNodeWrapper.id,
+            linkRoute: 'node'
+          }
+        ]
+      })
+    }
+  }
+
+  get fs() {
     const node = this.args.node;
     const fs = node?.stats?.fs || {};
 
-    return Object.keys(fs)
+    const body = Object.keys(fs)
       .filter((key) => {
         const item = fs[key];
 
@@ -135,32 +158,34 @@ export default class NodeInfo extends Component<Args> {
         // time is ns and we want to convert to ms
         return [key, `${time / 1000000}ms`, count];
       });
+
+    return {
+      header: [
+        `Operation`,
+        `Time`,
+        `Count`
+      ],
+      body
+    }
   }
 
-
-  get fileTableHeader() {
+  get files() {
+    const body = [];
     const node = this.args.node;
     const inputFiles = node?.inputFiles || [];
     const outputFiles = node?.outputFiles || [];
-
-    return [
-      `Input Files (${inputFiles.length})`,
-      `Output Files (${outputFiles.length})`
-    ]
-  }
-
-  get fileTableBody() {
-    const table = [];
-    const node = this.args.node;
-    const inputFiles = node?.inputFiles || [];
-    const outputFiles = node?.outputFiles || [];
-
     const tableHeight = Math.max(inputFiles.length, outputFiles.length);
 
     for (var i = 0; i < tableHeight; i++) {
-      table.push([inputFiles[i], outputFiles[i]])
+      body.push([inputFiles[i], outputFiles[i]])
     }
 
-    return table;
+    return {
+      header: [
+        `Input Files (${inputFiles.length})`,
+        `Output Files (${outputFiles.length})`
+      ],
+      body
+    };
   }
 }
