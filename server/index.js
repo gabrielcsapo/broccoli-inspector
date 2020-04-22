@@ -65,6 +65,35 @@ module.exports = function (app, info) {
 
   const resolvers = {
     Query: {
+      nodesByType(root, args, context, info) {
+        const { type } = args;
+
+        const nodesByType = {};
+        for (const [
+          index,
+          _node,
+        ] of watcher.builder.builder._nodeWrappers.entries()) {
+          const { id: heimdallId } = _node['__heimdall__'];
+          const { broccoliPluginName } = heimdallId;
+
+          if(type && type !== broccoliPluginName) continue;
+
+          if(!nodesByType[broccoliPluginName]) {
+            nodesByType[broccoliPluginName] = [];
+          }
+
+          nodesByType[broccoliPluginName].push(_node);
+        }
+
+        return Object.keys(nodesByType).map((type) => {
+          return {
+            label: type,
+            time: nodesByType[type].map((node) => node.buildState.selfTime).reduce((a, b) => a + b),
+            nodes: nodesByType[type]
+          }
+        });
+      },
+
       fuzzy(root, args, context, info) {
         const { value } = args;
 
@@ -202,9 +231,16 @@ module.exports = function (app, info) {
     resolvers,
     typeDefs: gql`
       type Query {
+        nodesByType(type: String): [NodeByType]
         fuzzy(value: String!): [Node]
         nodes: [Node]
         node(id: ID!): Node
+      }
+
+      type NodeByType {
+        label: String
+        time: Float!
+        nodes: [Node]
       }
 
       type Node {

@@ -1,34 +1,25 @@
 <h1> ({{@node.id}}) {{@node.label}} ({{@node.buildState.selfTime}}ms)</h1>
 
-{{#if this.fsTableBody}}
-  <Table
-    @title="FS Timing"
-    @header={{this.fsTableHeader}}
-    @body={{this.fsTableBody}}
-  />
-{{else}}
-  <div class="callout">
-    No FS Timing available
-  </div>
-{{/if}}
+<Table
+  @title="Node Info"
+  @data={{this.info}}
+/>
 
-<div>
-  <h2>Input Nodes</h2>
+<Table
+  @title="FS Timing"
+  @data={{this.fs}}
+  @empty="No FS Timing available"
+/>
 
-  <ul class="node-list--items">
-  {{#each @node.inputNodeWrappers as |inputNodeWrapper|}}
-    <li>
-      <LinkTo @route="node" @model={{inputNodeWrapper.id}}>
-        ({{to-fixed inputNodeWrapper.buildState.selfTime 3}}ms) {{inputNodeWrapper.label}}
-      </LinkTo>
-    </li>
-  {{/each}}
-  </ul>
-</div>
+<Table
+  @title="Input Nodes"
+  @data={{this.inputNodeWrappers}}
+  @empty="No input node wrappers for this plugin"
+/>
 
 <br/>
 <Table
   @title="File Input & Outputs"
-  @header={{this.fileTableHeader}}
-  @body={{this.fileTableBody}}
+  @data={{this.files}}
+  @empty="No file input or outputs for this plugin"
 />

@@ -17,6 +17,32 @@ const query = gql`
   }
 `;
 
+const groupPluginsQuery = gql`
+  query query {
+    nodesByType {
+      label
+      time
+    }
+  }
+`
+
+const groupPluginsSearchQuery = gql`
+  query query($type: String!) {
+    nodesByType(type: $type) {
+      label
+      time
+      nodes {
+        id
+        label
+        buildState {
+          selfTime
+          totalTime
+        }
+      }
+    }
+  }
+`
+
 const searchQuery = gql`
   query fuzzy($value: String!) {
     fuzzy(value: $value) {
@@ -30,9 +56,21 @@ const searchQuery = gql`
   }
 `;
 
+function sortNodes(nodes){
+  return nodes.sort(
+    (nodeA, nodeB) => nodeB.buildState.selfTime - nodeA.buildState.selfTime
+  )
+}
+
 export default class ApplicationRoute extends Route {
   queryParams = {
     searchTerm: {
+      refreshModel: true
+    },
+    pluginType: {
+      refreshModel: true
+    },
+    groupPlugins: {
       refreshModel: true
     }
   };
@@ -53,16 +91,30 @@ export default class ApplicationRoute extends Route {
   }
 
   model(params) {
-    const { id, searchTerm } = params;
+    const { id, searchTerm, pluginType, groupPlugins } = params;
+
+    if(groupPlugins) {
+      if(pluginType) {
+        return this.apollo.query({ query: groupPluginsSearchQuery, variables: { type: pluginType } }, "nodesByType").then((result) => {
+          const nodes = result[0] && result[0].nodes ? sortNodes(result[0].nodes) : [];
+
+          return { nodes }
+        });
+      }
+
+      return this.apollo.query({ query: groupPluginsQuery }, "nodesByType").then((result) => {
+        return { nodesByType: result }
+      });
+    }
 
     if(searchTerm) {
       return this.apollo.query({ query: searchQuery, variables: { value: searchTerm } }, "fuzzy").then((result) => {
-        return { nodes: result, searchTerm }
+        return { nodes: sortNodes(result), searchTerm }
       });
     }
 
     return this.apollo.query({ query }, "nodes").then((result) => {
-      return { nodes: result }
+      return { nodes: sortNodes(result) }
     });
   }
 

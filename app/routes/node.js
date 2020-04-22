@@ -11,6 +11,7 @@ const query = gql`
       label
       inputFiles
       outputFiles
+      pluginName
       buildState {
         selfTime
         totalTime
