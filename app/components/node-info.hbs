@@ -11,6 +11,21 @@
     No FS Timing available
   </div>
 {{/if}}
+
+<div>
+  <h2>Input Nodes</h2>
+
+  <ul class="node-list--items">
+  {{#each @node.inputNodeWrappers as |inputNodeWrapper|}}
+    <li>
+      <LinkTo @route="node" @model={{inputNodeWrapper.id}}>
+        ({{to-fixed inputNodeWrapper.buildState.selfTime 3}}ms) {{inputNodeWrapper.label}}
+      </LinkTo>
+    </li>
+  {{/each}}
+  </ul>
+</div>
+
 <br/>
 <Table
   @title="File Input & Outputs"
