@@ -6,11 +6,11 @@ module.exports = function(environment) {
       socketIO: true
     },
     apollo: {
-      apiURL: 'http://localhost:4200/_broccoli/api/graphql',
+      apiURL: 'http://localhost:4200/broccoli-inspector/api/graphql',
     },
     modulePrefix: 'broccoli-inspector',
     environment,
-    rootURL: '/',
+    rootURL: '/broccoli-inspector',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

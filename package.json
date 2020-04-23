@@ -1,15 +1,10 @@
 {
   "name": "broccoli-inspector",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.1",
   "description": "Small description for broccoli-inspector goes here",
-  "repository": "",
+  "repository": "https://github.com/gabrielcsapo/broccoli-inspector.git",
   "license": "MIT",
-  "author": "",
-  "directories": {
-    "doc": "doc",
-    "test": "tests"
-  },
+  "author": "Gabriel J. Csapo",
   "scripts": {
     "build": "ember build --environment=production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
@@ -20,9 +15,11 @@
     "test:ember": "ember test",
     "storybook": "start-storybook -p 6006 -s dist",
     "build-storybook": "build-storybook -s dist",
-    "storybook-dev": "npm-run-all --aggregate-output --continue-on-error --parallel start storybook"
+    "storybook-dev": "npm-run-all --aggregate-output --continue-on-error --parallel start storybook",
+    "preinstall": "yarn build"
   },
   "devDependencies": {
+    "apollo-server-express": "^2.12.0",
     "@babel/core": "^7.9.0",
     "@ember/optional-features": "^1.3.0",
     "@fortawesome/ember-fontawesome": "^0.2.1",
@@ -60,7 +57,6 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-typescript": "^3.1.3",
     "ember-cli-uglify": "^3.0.0",
-    "ember-data": "~3.17.0",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^6.3.1",
     "ember-load-initializers": "^2.1.1",
@@ -73,23 +69,21 @@
     "eslint": "^6.8.0",
     "eslint-plugin-ember": "^7.10.1",
     "eslint-plugin-node": "^11.0.0",
+    "express": "^4.17.1",
     "graphql": "^14.0.2",
+    "graphql-tag": "^2.10.3",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
     "qunit-dom": "^1.1.0",
     "sass": "^1.26.3",
     "socket.io": "^2.3.0",
-    "typescript": "3.7.5"
+    "typescript": "3.7.5",
+    "walk-sync": "^2.1.0"
   },
   "engines": {
     "node": "10.* || >= 12"
   },
   "ember": {
     "edition": "octane"
-  },
-  "dependencies": {
-    "apollo-server-express": "^2.12.0",
-    "graphql-tag": "^2.10.3",
-    "walk-sync": "^2.1.0"
   }
 }

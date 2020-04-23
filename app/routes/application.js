@@ -76,14 +76,15 @@ export default class ApplicationRoute extends Route {
   };
 
   @queryManager apollo;
-
   @service('router') router;
   @service('socket-io') socketIO;
 
   constructor() {
     super(...arguments);
 
-    const socket = this.socketIO.socketFor(`http://localhost:4200`);
+    // In order for broccoli-inspector the middleware needs to be set and serving this asset
+    // We can depend on socket.io being setup if that is the case
+    const socket = this.socketIO.socketFor(window.location.origin);
 
     socket.on('beginNode', this.beginNode, this);
     socket.on('endNode', this.endNode, this);
