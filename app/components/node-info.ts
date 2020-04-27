@@ -4,12 +4,22 @@ interface Node {
   id: number;
   label: string;
   stats: Stats;
+  nodeInfo: NodeInfo;
   outputFiles: string[];
   inputFiles: string[];
   inputNodeWrappers: Node[];
   buildState: {
     selfTime: number;
   };
+}
+
+interface NodeInfo {
+  instantiationStack: String;
+  annotation: String;
+  persistentOutput: Boolean;
+  needsCache: Boolean;
+  volatile: Boolean;
+  trackInputChanges: Boolean;
 }
 
 interface Stats {
@@ -107,9 +117,25 @@ interface Args {
 
 export default class NodeInfo extends Component<Args> {
   get info() {
+    const node = this.args.node;
+    const nodeInfo = node?.nodeInfo || {};
+
     return {
-      header: [],
-      body: []
+      header: [
+        "Property", "Value"
+      ],
+      body: Object.keys(nodeInfo)
+        .filter((prop) => prop.indexOf('__') === -1)
+        .map((prop) => {
+          if(prop === 'instantiationStack') {
+            return [prop, {
+              tag: 'pre',
+              text: nodeInfo[prop]
+            }]
+          }
+
+          return [prop, nodeInfo[prop]]
+        })
     }
   }
 

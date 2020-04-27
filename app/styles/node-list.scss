@@ -6,16 +6,12 @@
   padding: 0;
 }
 
-.node-list--items:first-child {
-  border-top: 1px solid $grey;
-}
-
 .node-list--items {
   position: relative;
   display: block;
   padding: .75rem 1.25rem;
   margin-bottom: -1px;
-  border-bottom: 1px solid $grey;
+  border-bottom: 1px solid lighten($grey, 20);
 }
 
 .node-list--items a {

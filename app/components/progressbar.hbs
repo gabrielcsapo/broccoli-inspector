@@ -1,7 +1,11 @@
 <div class={{if @isBuilding "progressbar progressbar--building p3" "progressbar progressbar--complete p3"}}>
   {{#if @isBuilding}}
-    {{@currentBuildTime}} {{@currentStep}}
+    {{@currentBuildTime}}ms {{@currentStep}}
   {{else}}
-    Please rerun to get more data
+    {{#if @totalBuildTime}}
+      Last build took {{@totalBuildTime}}ms
+    {{else}}
+      Please rerun to get more data
+    {{/if}}
   {{/if}}
 </div>

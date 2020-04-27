@@ -1,5 +1,7 @@
+import Ember from 'ember';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
 import gql from "graphql-tag";
 import { queryManager } from "ember-apollo-client";
@@ -9,6 +11,10 @@ const query = gql`
     nodes {
       id
       label
+      nodeInfo {
+        instantiationStack
+        annotation
+      }
       buildState {
         selfTime
         totalTime
@@ -22,6 +28,13 @@ const groupPluginsQuery = gql`
     nodesByType {
       label
       time
+      nodes {
+        id
+        buildState {
+          selfTime
+          totalTime
+        }
+      }
     }
   }
 `
@@ -34,6 +47,10 @@ const groupPluginsSearchQuery = gql`
       nodes {
         id
         label
+        nodeInfo {
+          instantiationStack
+          annotation
+        }
         buildState {
           selfTime
           totalTime
@@ -119,8 +136,9 @@ export default class ApplicationRoute extends Route {
     });
   }
 
-  buildFinished() {
+  buildFinished(currentBuild) {
     this.controller.set('isBuilding', false);
+    this.controller.set('totalBuildTime', currentBuild.totalTime / 1000000);
   }
 
   endNode(data) {

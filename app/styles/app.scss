@@ -7,6 +7,19 @@
 @import "./form";
 @import "./utils";
 
+pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  font-size: .75rem;
+  line-height: 1;
+
+  background-color: lighten($grey, 20);
+  border-radius: 5px;
+  padding: 10px;
+}​
+
 .container {
   min-height: 100vh;
   margin: auto;
@@ -22,8 +35,27 @@
 
 .sidebar {
   flex: 1;
-  padding-top: 10px;
-  border-right: 1px solid $grey;
+  padding-top: 1rem;
+  margin: 1rem;
+}
+
+.sidebar-content {
+  border-radius: .25rem;
+  height: 75vh;
+  overflow: scroll;
+  border: 1px solid lighten($grey, 20);
+}
+
+.sidebar-controls {
+  border-bottom: 1px solid lighten($grey, 20);
+  margin-bottom: .5rem;
+}
+
+.content-center {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex: 1;
 }
 
 .main {

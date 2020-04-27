@@ -16,6 +16,14 @@ const query = gql`
         selfTime
         totalTime
       }
+      nodeInfo {
+        instantiationStack
+        annotation
+        persistentOutput
+        needsCache
+        volatile
+        trackInputChanges
+      }
       inputNodeWrappers {
         id
         label

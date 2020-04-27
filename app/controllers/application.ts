@@ -12,7 +12,7 @@ export default class ApplicationController extends Controller {
   queryParams = ['searchTerm', 'groupPlugins', 'pluginType'];
 
   @tracked
-  groupPlugins = false;
+  groupPlugins = true;
 
   @tracked
   searchTerm = null;
