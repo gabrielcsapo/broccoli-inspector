@@ -1,10 +1,6 @@
 @import "./colors";
 
-.progressbar {
-  width: 90%;
-  margin: 1rem auto;
-  border-radius: .25rem;
-}
+.progressbar {}
 
 .progressbar--building {
   background-color: $unknown;

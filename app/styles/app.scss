@@ -1,10 +1,10 @@
 @import "./colors";
 @import "./normalize";
+@import "./navbar";
 @import "./progressbar";
 @import "./table";
 @import "./node-list";
 @import "./empty-state";
-@import "./form";
 @import "./utils";
 
 pre {
@@ -14,7 +14,6 @@ pre {
   word-wrap: break-word;
   font-size: .75rem;
   line-height: 1;
-
   background-color: lighten($grey, 20);
   border-radius: 5px;
   padding: 10px;
@@ -35,20 +34,11 @@ pre {
 
 .sidebar {
   flex: 1;
-  padding-top: 1rem;
+  flex-basis: 0;
   margin: 1rem;
-}
-
-.sidebar-content {
   border-radius: .25rem;
-  height: 75vh;
-  overflow: scroll;
   border: 1px solid lighten($grey, 20);
-}
-
-.sidebar-controls {
-  border-bottom: 1px solid lighten($grey, 20);
-  margin-bottom: .5rem;
+  height: fit-content;
 }
 
 .content-center {
@@ -64,6 +54,16 @@ pre {
 }
 
 .plugin-selected {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   color: $white;
   padding: 1rem;
   margin: 1rem;
@@ -71,8 +71,8 @@ pre {
 }
 
 .plugin-selected--clear {
+  cursor: pointer;
   color: $white;
-  float: right;
   border-radius: 5px;
   box-shadow: none;
   background-color: transparent;

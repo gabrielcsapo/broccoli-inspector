@@ -28,8 +28,20 @@ export default class ApplicationController extends Controller {
   }
 
   @action
+  clearSearch() {
+    this.searchTerm = null;
+    this.groupPlugins = false;
+    this.pluginType = null;
+  }
+
+  @action
   toggleGroupingPlugins() {
     this.groupPlugins = !this.groupPlugins;
+    this.pluginType = null;
+
+    if(this.groupPlugins) {
+      this.searchTerm = null;
+    }
   }
 
   @action

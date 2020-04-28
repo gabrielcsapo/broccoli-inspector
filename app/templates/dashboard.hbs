@@ -1,0 +1,15 @@
+<h2> Slowest Node </h2>
+
+<LinkTo @route="node" @model={{this.model.slowestNode.id}}>
+    ({{to-fixed this.model.slowestNode.buildState.selfTime 3}}ms) {{this.model.slowestNode.label}}
+</LinkTo>
+
+<h2> FS Information </h2>
+
+<Charts::FsCountPieChart
+  @fs={{this.model.totalFs}}
+/>
+
+<Charts::FsTimePieChart
+  @fs={{this.model.totalFs}}
+/>

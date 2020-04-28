@@ -1,0 +1,42 @@
+.navbar {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: .5rem 1rem;
+  background-color: lighten($grey, 20);
+  border: 1px solid lighten($grey, 10);
+}
+
+.navbar * {
+  color: darken($grey, 30);
+}
+
+.navbar--search {
+  position: relative;
+}
+
+.navbar--search input {
+  display: block;
+  width: auto;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: $white;
+  background-clip: padding-box;
+  border: 1px solid lighten($grey, 10);
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.navbar--search svg {
+  position: absolute;
+  top: 25%;
+  right: 5%;
+}

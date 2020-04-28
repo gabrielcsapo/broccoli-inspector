@@ -1,3 +1,11 @@
+# 0.0.5 (04/28/2020)
+
+- ui cleanup
+- shows the selected plugin in the list when selected
+- sort plugins by type by time
+- shows the total time of nodesByType
+- adds dashboard route to be able to show high level information
+
 # 0.0.4 (04/26/2020)
 
 - show total plugins in rollup list

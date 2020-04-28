@@ -109,7 +109,7 @@ export default class ApplicationRoute extends Route {
   }
 
   model(params) {
-    const { id, searchTerm, pluginType, groupPlugins } = params;
+    const { searchTerm, pluginType, groupPlugins } = params;
 
     if(groupPlugins) {
       if(pluginType) {
@@ -121,7 +121,7 @@ export default class ApplicationRoute extends Route {
       }
 
       return this.apollo.query({ query: groupPluginsQuery }, "nodesByType").then((result) => {
-        return { nodesByType: result }
+        return { nodesByType: result.sort((nodeA, nodeB) => nodeB.time - nodeA.time) }
       });
     }
 
