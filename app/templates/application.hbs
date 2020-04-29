@@ -1,9 +1,4 @@
-<Navbar
-  @search={{this.search}}
-  @groupPlugins={{this.groupPlugins}}
-  @toggleGroupingPlugins={{this.toggleGroupingPlugins}}
-  @searchTerm={{@model.searchTerm}}
-/>
+<Navbar/>
 
 <Progressbar
   @currentStep={{this.currentNode}}
@@ -25,6 +20,24 @@
     {{else}}
       <div class="sidebar">
         <ul class="node-list">
+          <li class="node-list--items node-list--items-header text-center">
+            <label for="group-plugins">Group Plugins by Type</label>
+            <input id="group-plugins" type="checkbox" checked={{this.groupPlugins}} {{on "change" this.toggleGroupingPlugins}}/>
+          </li>
+
+          {{#unless this.groupPlugins}}
+            <li class="node-list--items node-list--items-header">
+              <div class="node-list--search">
+                <input
+                  type="text"
+                  placeholder="Filter by plugin name"
+                  value={{@model.searchTerm}}
+                  {{on "change" this.search}}
+                />
+              </div>
+            </li>
+          {{/unless}}
+
           {{#if @model.nodes}}
             <li class="node-list--items node-list--items-header text-center">
               <i>Total time {{to-fixed (node-total-time @model.nodes) 3}}ms</i>

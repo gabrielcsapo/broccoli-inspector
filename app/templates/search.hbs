@@ -1,0 +1,14 @@
+<div class="search-results">
+  {{#each @model.result key="@index" as |searchResult idx|}}
+    <h2 class="search-results--header">
+      <LinkTo @route="node" @model={{searchResult.node.id}}>
+        {{searchResult.node.label}}
+      </LinkTo>
+    </h2>
+
+    {{#each searchResult.results key="@index" as |result idx|}}
+      <div class="search-results--property">{{result.property}}</div>
+      <pre class="search-results--stringValue"><code>{{highlight-text result.stringValue @model.query}}</code></pre>
+    {{/each}}
+  {{/each}}
+</div>

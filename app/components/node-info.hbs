@@ -5,6 +5,12 @@
   @data={{this.info}}
 />
 
+<br/>
+<Charts::PluginTimeBreakdown
+  @selfTime={{@node.buildState.selfTime}}
+  @fs={{@node.stats.fs}}
+/>
+
 <Table
   @title="FS Timing"
   @data={{this.fs}}

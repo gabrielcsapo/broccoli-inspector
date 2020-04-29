@@ -1,8 +1,21 @@
-<h2>{{@title}}</h2>
+<div class="table-header">
+  <h2>{{@title}}</h2> <a href="{{this.csv}}">Export to CSV</a>
+</div>
+
 <table class="table">
   <tr>
-    {{#each @data.header as |header|}}
-      <th>{{header}}</th>
+    {{#each @data.header as |header index|}}
+      <th {{on "click" (fn this.sortColumn index)}}>
+        {{header}}
+        &nbsp;
+        {{#if (eq index this.currentSelectedColumn)}}
+          {{#if (eq index this.lastSelectedColumn)}}
+            <FaIcon @icon="chevron-up" @size="1x"/>
+          {{else}}
+            <FaIcon @icon="chevron-down" @size="1x"/>
+          {{/if}}
+        {{/if}}
+      </th>
     {{/each}}
   </tr>
   {{#if @data.body}}
@@ -30,7 +43,7 @@
     {{/each}}
   {{else}}
     <tr>
-      <td class="text-center" colspan={{@data.header.length}}>
+      <td class="text-center" colspan={{this.header.length}}>
         {{@empty}}
       </td>
     </tr>

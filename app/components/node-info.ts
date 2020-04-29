@@ -1,5 +1,6 @@
 import Component from "@glimmer/component";
-import Node from "types";
+import { tracked } from '@glimmer/tracking';
+import { Node } from "types";
 
 interface Args {
   node?: Node;

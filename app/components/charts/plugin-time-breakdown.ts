@@ -3,26 +3,33 @@ import { bind, later } from "@ember/runloop";
 import { action, computed } from "@ember/object";
 
 interface Args {
-  fs?: FS
+  fs?: FS;
+  selfTime: Number;
 }
 
-export default class NodeInfo extends Component<Args> {
+export default class NodeTimeBreakdown extends Component<Args> {
   chart = null;
 
-  title = { text: "Total FS Count" };
+  title = { text: "Node Time Breakdown" };
   padding = { top: 20 };
 
   get data() {
     const columns = [];
-    const fs = this.args ?.fs || {};
+    const fs = this.args?.fs || {};
+    const selfTime = this.args.selfTime;
+
+    let fsTime = 0;
 
     for (const operation in fs) {
-      if (!fs[operation] || !fs[operation].count) continue;
-      columns.push([operation, fs[operation].count])
+      if (!fs[operation] || !fs[operation].time) continue;
+      fsTime += fs[operation].time;
     }
 
     return {
-      columns,
+      columns: [
+        ["FS", fsTime / 1000000],
+        ["Other", selfTime - (fsTime / 1000000)]
+      ],
       type: "pie",
       onclick: this.onclick
     }
@@ -32,7 +39,7 @@ export default class NodeInfo extends Component<Args> {
     return {
       format: {
         value: function (value, ratio, id, index) {
-          return `${value} | ${Number(ratio * 100).toFixed(0)}%`;
+          return `${value}ms | ${Number(ratio * 100).toFixed(0)}%`;
         }
       }
     };

@@ -1,3 +1,15 @@
+# 0.0.6 (04/29/2020)
+
+- fix label formatting for total fs timing data to turn us to ms.
+- move group by plugin to sidebar from Navbar
+- consolidates navbar to have `|input|     |links|`
+- show node breakdown by fs and other (other being the time spent in the plugin that we don't have instrumentation to pin down where it is being spent.)
+- Move search box for plugins into the right rail, this is specifically for search by plugin name
+  - This functionality is done locally
+- adds a link to table that will download the data as a csv
+- be able to sort column values in tables
+- adds a new search page that allows the searching of multiple fields such as derived fields like inputFiles and outputFiles
+
 # 0.0.5 (04/28/2020)
 
 - ui cleanup

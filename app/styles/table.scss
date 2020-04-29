@@ -1,6 +1,23 @@
+.table-header {
+  display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
 .table {
   border-spacing: 0;
   width: 100%;
+
+  th {
+    border-top: 0.05rem solid #e1e1e1;
+  }
 
   td, th {
     border-bottom: 0.05rem solid #e1e1e1;

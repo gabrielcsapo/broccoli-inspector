@@ -1,22 +1,22 @@
 <div class="navbar">
-  <div>
-    <label for="group-plugins">Group Plugins by Type</label>
-    <input id="group-plugins" type="checkbox" checked={{@groupPlugins}} {{on "change" @toggleGroupingPlugins}}/>
-  </div>
+  <div class="navbar-content">
+    <div class="navbar--search">
+      <input
+        type="text"
+        placeholder="Search"
+        {{on "change" this.search}}
+      />
+      <FaIcon @icon="binoculars" @size="1x"/>
+    </div>
 
-  <div class="p3 flex-1 text-left">
-    <LinkTo @route="dashboard">
-      Dashboard
-    </LinkTo>
-  </div>
+    <div class="flex-1 text-right">
+      <LinkTo @route="dashboard" class="display-inline-block text-center">
+        <div class="display-block">
+          <FaIcon @icon="chart-line" @size="1x"/>
+        </div>
 
-  <div class="navbar--search">
-    <input
-      type="text"
-      placeholder="Search"
-      value={{@searchTerm}}
-      {{on "change" @search}}
-    />
-    <FaIcon @icon="binoculars" @size="1x"/>
+        Dashboard
+      </LinkTo>
+    </div>
   </div>
 </div>

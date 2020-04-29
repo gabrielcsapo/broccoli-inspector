@@ -60,21 +60,13 @@ const groupPluginsSearchQuery = gql`
   }
 `
 
-const searchQuery = gql`
-  query fuzzy($value: String!) {
-    fuzzy(value: $value) {
-      id
-      label
-      buildState {
-        selfTime
-        totalTime
-      }
-    }
-  }
-`;
-
-function sortNodes(nodes){
-  return nodes.sort(
+function sortNodes(nodes, filter) {
+  return nodes
+  .filter((node) => {
+    if(!filter) return true;
+    if(filter && new RegExp(filter, 'i').exec(node.label)) return true;
+  })
+  .sort(
     (nodeA, nodeB) => nodeB.buildState.selfTime - nodeA.buildState.selfTime
   )
 }
@@ -110,6 +102,7 @@ export default class ApplicationRoute extends Route {
 
   model(params) {
     const { searchTerm, pluginType, groupPlugins } = params;
+    console.log(params)
 
     if(groupPlugins) {
       if(pluginType) {
@@ -126,8 +119,11 @@ export default class ApplicationRoute extends Route {
     }
 
     if(searchTerm) {
-      return this.apollo.query({ query: searchQuery, variables: { value: searchTerm } }, "fuzzy").then((result) => {
-        return { nodes: sortNodes(result), searchTerm }
+      return this.apollo.query({ query }, "nodes").then((result) => {
+        return {
+          nodes: sortNodes(result, searchTerm),
+          searchTerm
+        }
       });
     }
 

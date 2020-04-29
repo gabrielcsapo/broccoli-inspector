@@ -6,10 +6,10 @@ interface Args {
   fs?: FS
 }
 
-export default class NodeInfo extends Component<Args> {
+export default class FsCount extends Component<Args> {
   chart = null;
 
-  title = { text: "Total FS Time" };
+  title = { text: "Total FS Count" };
   padding = { top: 20 };
 
   get data() {
@@ -17,8 +17,8 @@ export default class NodeInfo extends Component<Args> {
     const fs = this.args ?.fs || {};
 
     for (const operation in fs) {
-      if (!fs[operation] || !fs[operation].time) continue;
-      columns.push([operation, fs[operation].time])
+      if (!fs[operation] || !fs[operation].count) continue;
+      columns.push([operation, fs[operation].count])
     }
 
     return {
@@ -32,7 +32,7 @@ export default class NodeInfo extends Component<Args> {
     return {
       format: {
         value: function (value, ratio, id, index) {
-          return `${value / 1000}ms | ${Number(ratio * 100).toFixed(0)}%`;
+          return `${value} | ${Number(ratio * 100).toFixed(0)}%`;
         }
       }
     };

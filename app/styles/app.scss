@@ -5,6 +5,7 @@
 @import "./table";
 @import "./node-list";
 @import "./empty-state";
+@import "./search-results";
 @import "./utils";
 
 pre {
@@ -34,7 +35,7 @@ pre {
 
 .sidebar {
   flex: 1;
-  flex-basis: 0;
+  width: 300px;
   margin: 1rem;
   border-radius: .25rem;
   border: 1px solid lighten($grey, 20);
