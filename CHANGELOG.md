@@ -1,3 +1,7 @@
+# 0.0.8 (04/30/2020)
+
+- only sends down the string diff that is needed instead of the entire file. Reduces network download size by more than half. 
+
 # 0.0.7 (04/30/2020)
 
 - adds loading states for sidebar to only show up when data has loaded
