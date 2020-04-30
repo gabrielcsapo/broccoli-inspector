@@ -20,6 +20,17 @@ export default class ApplicationController extends Controller {
   @tracked
   pluginType = null;
 
+  @tracked
+  isCollapsed = true;
+
+  @tracked
+  isLoading = false;
+
+  @action
+  uncollapse() {
+    this.isCollapsed = false;
+  }
+
   @action
   search(e: DOMEvent) {
     this.searchTerm = e.target.value;

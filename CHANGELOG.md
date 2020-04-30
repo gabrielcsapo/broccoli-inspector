@@ -1,3 +1,9 @@
+# 0.0.7 (04/30/2020)
+
+- adds loading states for sidebar to only show up when data has loaded
+- condense sidebar to only show 10 items initially
+- while building crawl input and output paths to get the files on the node. This is going to make searching way faster on any project. Just searching on this project went from 6s to 8ms.
+
 # 0.0.6 (04/29/2020)
 
 - fix label formatting for total fs timing data to turn us to ms.

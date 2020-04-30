@@ -12,6 +12,7 @@
   padding: .5rem 1rem;
   background-color: lighten($grey, 20);
   border: 1px solid lighten($grey, 10);
+  box-shadow: 0px 2px 2px 0px #dddddd;
 }
 
 .navbar * {
@@ -35,7 +36,12 @@
 }
 
 .navbar-content a {
+  font-size: 13px;
   text-decoration: none;
+}
+
+.navbar-content a svg {
+  font-size: 25px;
 }
 
 .navbar--search {

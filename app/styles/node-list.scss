@@ -23,20 +23,29 @@
   border-left: 5px solid darken($grey, 50);
 }
 
-.node-list--items a {
-  color: black;
-  text-decoration: none;
-}
-
+.node-list--items a,
 .node-list--items a:visited {
   color: black;
+  text-decoration: none;
 }
 
 .node-list--items-header {
   padding: .75rem 1.25rem;
   background-color: darken($grey, 50);
-  border-bottom: 2px solid lighten($grey, 20); 
+  border-bottom: 2px solid lighten($grey, 20);
   color: $white;
+}
+
+.node-list--items-footer {
+  padding: .75rem 1.25rem;
+  background-color: darken($grey, 50);
+  border-top: 2px solid lighten($grey, 20);
+  color: $white;
+}
+
+.node-list--items-footer a,
+.node-list--items-footer a:visited {
+  color: $white
 }
 
 .node-list--search {

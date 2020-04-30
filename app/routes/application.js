@@ -28,13 +28,6 @@ const groupPluginsQuery = gql`
     nodesByType {
       label
       time
-      nodes {
-        id
-        buildState {
-          selfTime
-          totalTime
-        }
-      }
     }
   }
 `
@@ -100,9 +93,14 @@ export default class ApplicationRoute extends Route {
     socket.on('buildFinished', this.buildFinished, this);
   }
 
+  afterModel() {
+    this.controllerFor('application').set('isLoading', false);
+  }
+
   model(params) {
+    this.controllerFor('application').set('isLoading', true);
+
     const { searchTerm, pluginType, groupPlugins } = params;
-    console.log(params)
 
     if(groupPlugins) {
       if(pluginType) {

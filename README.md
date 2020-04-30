@@ -7,7 +7,7 @@
 ## Installation
 
 ```
-yarn add broccoli-inspector
+yarn add broccoli-inspector --dev
 ```
 
 ## Usage
