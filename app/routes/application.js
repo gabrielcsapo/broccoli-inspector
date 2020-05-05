@@ -28,6 +28,7 @@ const groupPluginsQuery = gql`
     nodesByType {
       label
       time
+      amountOfNodes
     }
   }
 `

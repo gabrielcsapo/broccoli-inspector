@@ -1,6 +1,17 @@
+# 0.0.9 (05/05/2020)
+
+- show custom heimdall stats object
+- adds empty state for search results coming back empty
+- shows the ellipses for search results stringValue so that the user knows there is more data behind and should click into the plugin to see more
+- Updates readme to explain how broccoli inspector works
+- tables will condense values and allow the user to expand if wanted
+- tables sort strings and number values correctly
+- adds system info information to the dashboard
+- major design overhaul
+
 # 0.0.8 (04/30/2020)
 
-- only sends down the string diff that is needed instead of the entire file. Reduces network download size by more than half. 
+- only sends down the string diff that is needed instead of the entire file. Reduces network download size by more than half.
 
 # 0.0.7 (04/30/2020)
 

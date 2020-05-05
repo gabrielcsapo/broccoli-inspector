@@ -1,8 +1,15 @@
-<C3Chart
-  @data={{this.data}}
-  @title={{this.title}}
-  @padding={{this.padding}}
-  @c3chart={{this.chart}}
-  @tooltip={{this.tooltip}}
-  @pie={{this.pie}}
-/>
+<div class="card h-100">
+  <div class="card-header text-center">
+    <h2> Node Time Breakdown </h2>
+  </div>
+  <div class="card-body p-0">
+    <C3Chart
+      @data={{this.data}}
+      @title={{this.title}}
+      @padding={{this.padding}}
+      @c3chart={{this.chart}}
+      @tooltip={{this.tooltip}}
+      @pie={{this.pie}}
+    />
+  </div>
+</div>

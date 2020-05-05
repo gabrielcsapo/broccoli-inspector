@@ -1,4 +1,4 @@
-<h1> ({{@node.id}}) {{@node.label}} ({{@node.buildState.selfTime}}ms)</h1>
+<h1 class="mt-4"> ({{@node.id}}) {{@node.label}} ({{@node.buildState.selfTime}}ms)</h1>
 
 <Table
   @title="Node Info"
@@ -6,16 +6,50 @@
 />
 
 <br/>
-<Charts::PluginTimeBreakdown
-  @selfTime={{@node.buildState.selfTime}}
-  @fs={{@node.stats.fs}}
-/>
 
-<Table
-  @title="FS Timing"
-  @data={{this.fs}}
-  @empty="No FS Timing available"
-/>
+{{#if @node.stats.custom}}
+  <br/>
+  <h2> Custom Heimdall Information </h2>
+  {{#each @node.stats.custom as |custom index|}}
+    <div class="card">
+      <div class="card-header">
+        {{custom.name}}
+      </div>
+      <div class="card-body">
+        <pre><code>{{custom.jsonValue}}</code></pre>
+      </div>
+    </div>
+    <br/>
+  {{/each}}
+{{else}}
+  <div class="card">
+    <div class="card-body">
+      To get additional data logged here, please follow the guide on adding heimdall logging to your plugin.
+    </div>
+  </div>
+{{/if}}
+
+<br/>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <Charts::PluginTimeBreakdown
+        @selfTime={{@node.buildState.selfTime}}
+        @fs={{@node.stats.fs}}
+      />
+    </div>
+    <div class="col">
+      <Table
+        @title="FS Timing"
+        @data={{this.fs}}
+        @empty="No FS Timing available"
+      />
+    </div>
+  </div>
+</div>
+
+<br/>
 
 <Table
   @title="Input Nodes"
@@ -24,8 +58,11 @@
 />
 
 <br/>
+
 <Table
   @title="File Input & Outputs"
   @data={{this.files}}
   @empty="No file input or outputs for this plugin"
 />
+
+<br/>

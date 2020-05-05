@@ -1,0 +1,20 @@
+<tr>
+  {{#each @items as |item|}}
+    {{#if item.linkRoute}}
+      <td>
+        <LinkTo
+          @route={{item.linkRoute}}
+          @model={{item.linkModel}}
+        >
+          {{item.text}}
+        </LinkTo>
+      </td>
+    {{else if item.tag}}
+      <td>
+        <TableTag @tag={{item.tag}} @text={{item.text}}/>
+      </td>
+    {{else}}
+      <td>{{item}}</td>
+    {{/if}}
+  {{/each}}
+</tr>

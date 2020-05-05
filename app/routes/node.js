@@ -33,6 +33,10 @@ const query = gql`
         }
       }
       stats {
+        custom {
+          name
+          jsonValue
+        }
         fs {
           appendFile { count time }
           appendFileSync { count time }

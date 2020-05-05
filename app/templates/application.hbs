@@ -6,10 +6,10 @@
   @currentBuildTime={{this.currentBuildTime}}
 />
 
-<div class="container">
-  <div class="flex-grid">
+<div class="container-fluid">
+  <div class="row flex-xl-nowrap">
     {{#if this.isBuilding}}
-      <div class="content-center">
+      <div class="mx-auto">
         <EmptyState
           @iconType="truck-loading"
           @iconSize="4x"
@@ -18,7 +18,7 @@
         />
       </div>
     {{else}}
-      <div class="sidebar">
+      <div class="col-3 sidebar">
         {{#if this.isLoading}}
           <EmptyState
             @iconType="truck-loading"
@@ -27,112 +27,94 @@
             @subtitle="This will refresh when data has been fetched"
           />
         {{else}}
-          <ul class="node-list">
-            <li class="node-list--items node-list--items-header text-center">
-              <label for="group-plugins">Group Plugins by Type</label>
-              <input id="group-plugins" type="checkbox" checked={{this.groupPlugins}} {{on "change" this.toggleGroupingPlugins}}/>
-            </li>
+          <div>
+            <div class="alert alert-dark">
+              {{#if @model.nodes}}
+                <i>Total time {{to-fixed (node-total-time @model.nodes) 3}}ms</i>
+              {{/if}}
 
-            {{#unless this.groupPlugins}}
-              <li class="node-list--items node-list--items-header">
-                <div class="node-list--search">
+              {{#if @model.nodesByType}}
+                  <i>Total time {{to-fixed (node-by-type-total-time @model.nodesByType) 3}}ms</i>
+              {{/if}}
+            </div>
+
+            <form class="m-3">
+              {{#unless this.groupPlugins}}
+                <div class="form-group">
                   <input
+                    class="form-control ds-input"
                     type="text"
                     placeholder="Filter by plugin name"
                     value={{@model.searchTerm}}
                     {{on "change" this.search}}
                   />
                 </div>
-              </li>
-            {{/unless}}
+              {{/unless}}
 
-            {{#if @model.nodes}}
-              <li class="node-list--items node-list--items-header text-center">
-                <i>Total time {{to-fixed (node-total-time @model.nodes) 3}}ms</i>
-              </li>
-            {{/if}}
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked={{this.groupPlugins}} {{on "change" this.toggleGroupingPlugins}}>
+                <label class="form-check-label" for="defaultCheck1">
+                  Group Plugins by Type
+                </label>
+              </div>
+            </form>
+          </div>
 
-            {{#if @model.nodesByType}}
-              <li class="node-list--items node-list--items-header text-center">
-                <i>Total time {{to-fixed (node-by-type-total-time @model.nodesByType) 3}}ms</i>
-              </li>
-            {{/if}}
+          <hr/>
 
-            {{#if @model.searchTerm}}
-              <li class="node-list--items">
-                <div class="plugin-selected">
-                  {{@model.searchTerm}}
-                  <button
-                    class="plugin-selected--clear"
-                    {{on "click" this.clearSearch}}
-                  >X</button>
-                </div>
-              </li>
-            {{/if}}
-
+          <nav class="nav flex-column">
             {{#if this.pluginType}}
-              <li class="node-list--items">
-                <div class="plugin-selected">
+              <a class="nav-link" href="#" {{on "click" (fn this.selectPluginGroup "")}}>
+                <h6>
+                  <FaIcon @icon="chevron-left" @size="1x"/>
                   {{this.pluginType}}
-                  <button
-                    class="plugin-selected--clear"
-                    {{on "click" (fn this.selectPluginGroup "")}}
-                  >X</button>
-                </div>
-              </li>
+                </h6>
+              </a>
             {{/if}}
 
             {{#if @model.nodesByType}}
               {{#each @model.nodesByType key="@index" as |node idx|}}
                 {{#if (and this.isCollapsed (lt idx 10))}}
-                  <li class="node-list--items">
-                    <a href="#" {{on "click" (fn this.selectPluginGroup node.label)}}>
-                        ({{to-fixed node.time 3}}ms) {{node.label}} ({{node.nodes.length}})
-                    </a>
-                  </li>
+                  <a class="nav-link d-flex justify-content-between align-items-center text-break" href="#" {{on "click" (fn this.selectPluginGroup node.label)}}>
+                      ({{to-fixed node.time 3}}ms) {{node.label}}
+                      <span class="badge badge-primary badge-pill">{{node.amountOfNodes}}</span>
+                  </a>
                 {{/if}}
 
                 {{#unless this.isCollapsed}}
-                  <li class="node-list--items">
-                    <a href="#" {{on "click" (fn this.selectPluginGroup node.label)}}>
-                        ({{to-fixed node.time 3}}ms) {{node.label}} ({{node.nodes.length}})
-                    </a>
-                  </li>
+                  <a class="nav-link text-center" href="#" {{on "click" (fn this.selectPluginGroup node.label)}}>
+                      ({{to-fixed node.time 3}}ms) {{node.label}}
+                      <span class="badge badge-primary badge-pill">{{node.amountOfNodes}}</span>
+                  </a>
                 {{/unless}}
               {{/each}}
 
-              {{#if this.isCollapsed}}
-                <li class="node-list--items node-list--items-footer text-center">
-                  <a href="#" {{on "click" this.uncollapse}}> Show More </a>
-                </li>
+              {{#if (and this.isCollapsed (gt @model.nodesByType.length 10))}}
+                <a class="btn btn-outline-primary text-center m-2" href="#" {{on "click" this.uncollapse}}> Show {{sub @model.nodesByType.length 10}} More </a>
               {{/if}}
             {{else if @model.nodes}}
               {{#each @model.nodes key="@index" as |node idx|}}
                 {{#if (and this.isCollapsed (lt idx 10))}}
-                  <li class="node-list--items">
-                    <LinkTo @route="node" @model={{node.id}}>
-                        ({{to-fixed node.buildState.selfTime 3}}ms) {{node.label}}
-                    </LinkTo>
-                  </li>
+                  <LinkTo class="nav-link d-flex justify-content-between align-items-center text-break" @route="node" @model={{node.id}}>
+                    {{node.label}}
+
+                    <span class="badge badge-primary badge-pill">{{to-fixed node.buildState.selfTime 3}}ms</span>
+                  </LinkTo>
                 {{/if}}
 
                 {{#unless this.isCollapsed}}
-                  <li class="node-list--items">
-                    <LinkTo @route="node" @model={{node.id}}>
-                        ({{to-fixed node.buildState.selfTime 3}}ms) {{node.label}}
-                    </LinkTo>
-                  </li>
+                  <LinkTo class="nav-link d-flex justify-content-between align-items-center text-break" @route="node" @model={{node.id}}>
+                      ({{to-fixed node.buildState.selfTime 3}}ms) {{node.label}}
+                  </LinkTo>
                 {{/unless}}
               {{/each}}
 
-              {{#if this.isCollapsed}}
-                <li class="node-list--items node-list--items-footer text-center">
-                  <a href="#" {{on "click" this.uncollapse}}> Show More </a>
-                </li>
+              {{#if (and this.isCollapsed (gt @model.nodes.length 10))}}
+                <a class="btn btn-outline-primary text-center m-2" href="#" {{on "click" this.uncollapse}}> Show {{sub @model.nodes.length 10}} More </a>
               {{/if}}
             {{else}}
-              <div class="display-flex height-fill">
-                <div class="content-center">
+              <div class="d-flex height-fill">
+                <div class="mx-auto">
                   <EmptyState
                     @iconType="times-circle"
                     @iconSize="4x"
@@ -142,10 +124,10 @@
                 </div>
               </div>
             {{/if}}
-          </ul>
+          </nav>
         {{/if}}
       </div>
-      <div class="main">
+      <div class="col-9">
         {{outlet}}
       </div>
     {{/if}}

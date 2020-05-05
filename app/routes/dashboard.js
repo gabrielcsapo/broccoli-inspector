@@ -7,6 +7,12 @@ import { queryManager } from "ember-apollo-client";
 const query = gql`
   query query {
     dashboard {
+      systemInfo {
+        totalmem
+        type
+        cpus
+        env
+      }
       selfTime
       slowestNode {
         id

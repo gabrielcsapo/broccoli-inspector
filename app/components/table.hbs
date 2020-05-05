@@ -1,51 +1,54 @@
-<div class="table-header">
-  <h2>{{@title}}</h2> <a href="{{this.csv}}">Export to CSV</a>
-</div>
+<div class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>{{@title}}</h2> <a href="{{this.csv}}">Export to CSV</a>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <table class="table">
+      <thead>
+        <tr>
+          {{#each this.header as |header index|}}
+            <th {{on "click" (fn this.sortColumn index)}}>
+              {{header}}
+              {{#if (eq index this.currentSelectedColumn)}}
+                {{#if (eq index this.lastSelectedColumn)}}
+                  &nbsp;
+                  <FaIcon @icon="chevron-up" @size="1x"/>
+                {{else}}
+                  &nbsp;
+                  <FaIcon @icon="chevron-down" @size="1x"/>
+                {{/if}}
+              {{/if}}
+            </th>
+          {{/each}}
+        </tr>
+      </thead>
+      {{#if this.body}}
+        {{#each this.body as |items idx|}}
+          {{#if (and this.isCollapsed (lt idx 10))}}
+            <TableRow @items={{items}}/>
+          {{/if}}
 
-<table class="table">
-  <tr>
-    {{#each @data.header as |header index|}}
-      <th {{on "click" (fn this.sortColumn index)}}>
-        {{header}}
-        &nbsp;
-        {{#if (eq index this.currentSelectedColumn)}}
-          {{#if (eq index this.lastSelectedColumn)}}
-            <FaIcon @icon="chevron-up" @size="1x"/>
-          {{else}}
-            <FaIcon @icon="chevron-down" @size="1x"/>
-          {{/if}}
-        {{/if}}
-      </th>
-    {{/each}}
-  </tr>
-  {{#if @data.body}}
-    {{#each @data.body as |items|}}
-      <tr>
-        {{#each items as |item|}}
-          {{#if item.linkRoute}}
-            <td>
-              <LinkTo
-                @route={{item.linkRoute}}
-                @model={{item.linkModel}}
-              >
-                {{item.text}}
-              </LinkTo>
-            </td>
-          {{else if item.tag}}
-            <td>
-              <TableTag @tag={{item.tag}} @text={{item.text}}/>
-            </td>
-          {{else}}
-            <td>{{item}}</td>
-          {{/if}}
+          {{#unless this.isCollapsed}}
+            <TableRow @items={{items}}/>
+          {{/unless}}
         {{/each}}
-      </tr>
-    {{/each}}
-  {{else}}
-    <tr>
-      <td class="text-center" colspan={{this.header.length}}>
-        {{@empty}}
-      </td>
-    </tr>
-  {{/if}}
-</table>
+
+        {{#if (and this.isCollapsed (gt this.body.length 10))}}
+          <tr>
+            <td colspan={{this.width}} class="text-center">
+              <button type="button" class="btn btn-outline-primary" {{on "click" this.uncollapse}}> Show {{sub this.body.length 10}} More </button>
+            </td>
+          </tr>
+        {{/if}}
+      {{else}}
+        <tr>
+          <td class="text-center" colspan={{this.header.length}}>
+            {{@empty}}
+          </td>
+        </tr>
+      {{/if}}
+    </table>
+  </div>
+</div>

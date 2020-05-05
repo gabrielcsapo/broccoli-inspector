@@ -10,7 +10,7 @@ interface Args {
 export default class NodeTimeBreakdown extends Component<Args> {
   chart = null;
 
-  title = { text: "Node Time Breakdown" };
+  title = { text: "" };
   padding = { top: 20 };
 
   get data() {

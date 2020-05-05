@@ -1,13 +1,29 @@
 import Controller from '@ember/controller';
-import { FS } from "types";
 
-interface Args {
-  fs?: FS;
-}
+export default class DashboardController extends Controller {
+  get info() {
+    const { systemInfo } = this.model;
 
-export default class DashboardController extends Controller<Args> {
+    const { cpus, env, totalmem, type } = systemInfo;
+
+    return {
+      header: [
+        'Cpus',
+        'Memory',
+        'Type',
+        'ENV'
+      ],
+      body: [
+        [cpus, totalmem, type, {
+          tag: 'pre',
+          text: env,
+        }]
+      ]
+    }
+  }
+
   get fs() {
-    const fs = this.model.totalFs;
+    const { totalFs: fs } = this.model;
 
     const body = Object.keys(fs)
       .filter((key) => {

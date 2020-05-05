@@ -29,13 +29,9 @@ export default class SearchRoute extends Route {
 
   @queryManager apollo;
 
-  constructor() {
-    super(...arguments);
-  }
-
   model(params) {
     const { query: _query } = params;
-
+    console.log(_query)
     if(!_query) return {};
 
     return this.apollo.query({ query, variables: { value: _query } }, "search").then((result) => {

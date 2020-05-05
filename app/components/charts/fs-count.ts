@@ -9,7 +9,7 @@ interface Args {
 export default class FsCount extends Component<Args> {
   chart = null;
 
-  title = { text: "Total FS Count" };
+  title = { text: "FS Count" };
   padding = { top: 20 };
 
   get data() {
@@ -25,6 +25,12 @@ export default class FsCount extends Component<Args> {
       columns,
       type: "pie",
       onclick: this.onclick
+    }
+  }
+
+  get legend() {
+    return {
+      show: false
     }
   }
 

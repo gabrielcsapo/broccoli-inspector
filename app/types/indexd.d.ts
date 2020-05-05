@@ -1,5 +1,5 @@
 export interface Node {
-  id: number;
+  id: Number;
   label: string;
   stats: Stats;
   nodeInfo: NodeInfo;
@@ -7,8 +7,15 @@ export interface Node {
   inputFiles: string[];
   inputNodeWrappers: Node[];
   buildState: {
-    selfTime: number;
+    selfTime: Number;
   };
+}
+
+export interface SystemInfo {
+  totalmem: Number
+  type: String
+  cpus: Number
+  env: String
 }
 
 export interface NodeInfo {
@@ -22,6 +29,12 @@ export interface NodeInfo {
 
 export interface Stats {
   fs?: FS
+  custom?: CustomStat
+}
+
+export interface CustomStat {
+  name?: String
+  jsonValue?: String
 }
 
 export interface FS {
@@ -105,6 +118,6 @@ export interface FS {
 }
 
 export interface FSMetric {
-  count?: number
-  time?: number
+  count?: Number
+  time?: Number
 }
