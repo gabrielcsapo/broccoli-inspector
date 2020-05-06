@@ -1,6 +1,6 @@
 {
   "name": "broccoli-inspector",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "🔍 inspect what's really happening in your broccoli pipeline",
   "repository": "https://github.com/gabrielcsapo/broccoli-inspector.git",
   "license": "MIT",
@@ -28,8 +28,7 @@
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.3",
     "socket.io": "^2.3.0",
-    "walk-sync": "^2.1.0",
-    "workerpool": "^5.0.4"
+    "walk-sync": "^2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

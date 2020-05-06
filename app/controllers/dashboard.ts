@@ -4,19 +4,24 @@ export default class DashboardController extends Controller {
   get info() {
     const { systemInfo } = this.model;
 
-    const { cpus, env, totalmem, type } = systemInfo;
+    const { cpus, env, totalmem, type, versions } = systemInfo;
 
     return {
       header: [
-        'Cpus',
-        'Memory',
-        'Type',
-        'ENV'
+        'Key',
+        'Value',
       ],
       body: [
-        [cpus, totalmem, type, {
+        ['CPUs', cpus],
+        ['Memory', totalmem],
+        ['OS', type],
+        ['ENV', {
           tag: 'pre',
           text: env,
+        }],
+        ['Versions', {
+          tag: 'pre',
+          text: versions,
         }]
       ]
     }

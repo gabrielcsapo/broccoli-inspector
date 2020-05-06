@@ -1,3 +1,14 @@
+# 0.1.0 (05/06/2020)
+
+- system info information looks like `| key | value |`
+- shows versions from process.versions on dashboard
+- add line numbers to instantiationStack on node-info page
+- change `Custom Heimdall Information` to `Heimdall Schemas`
+- `Heimdall Schemas` are now formatted in a tab view
+- Instance stack is now clickable and will show the user the file contents in a modal
+- Sorts numbers correctly by allowing the inclusion of raw values to be used in sorting
+- Shows outputNodeWrappers on node-info page
+
 # 0.0.9 (05/05/2020)
 
 - show custom heimdall stats object

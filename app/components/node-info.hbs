@@ -3,24 +3,24 @@
 <Table
   @title="Node Info"
   @data={{this.info}}
+  @onClick={{this.onInfoTableClick}}
 />
 
 <br/>
 
 {{#if @node.stats.custom}}
   <br/>
-  <h2> Custom Heimdall Information </h2>
-  {{#each @node.stats.custom as |custom index|}}
-    <div class="card">
-      <div class="card-header">
-        {{custom.name}}
-      </div>
-      <div class="card-body">
-        <pre><code>{{custom.jsonValue}}</code></pre>
-      </div>
-    </div>
-    <br/>
-  {{/each}}
+  <h2> Heimdall Schemas </h2>
+  <i> Hiemdall Schemas provide additional instrumentation for a plugin to provide aggregate timing for a plugin </i>
+  <BsTab as |tab|>
+    {{#each @node.stats.custom as |custom index|}}
+      <tab.pane @title={{custom.name}}>
+        <div class="card p-3">
+          <pre class="m-0"><code>{{custom.jsonValue}}</code></pre>
+        </div>
+      </tab.pane>
+    {{/each}}
+  </BsTab>
 {{else}}
   <div class="card">
     <div class="card-body">
@@ -55,6 +55,14 @@
   @title="Input Nodes"
   @data={{this.inputNodeWrappers}}
   @empty="No input node wrappers for this plugin"
+/>
+
+<br/>
+
+<Table
+  @title="Output Nodes"
+  @data={{this.outputNodeWrappers}}
+  @empty="No output node wrappers for this plugin"
 />
 
 <br/>

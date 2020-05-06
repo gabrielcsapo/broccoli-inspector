@@ -18,8 +18,24 @@ pre {
   font-size: .75rem;
 }
 
+pre {
+  white-space: pre-wrap;
+}
+
+pre:before {
+  counter-reset: listing;
+}
 pre code {
+  counter-increment: listing;
   word-break: break-word;
+}
+pre code::before {
+  content: counter(listing) ". ";
+  display: inline-block;
+  width: 3rem;
+  padding-left: auto;
+  margin-left: auto;
+  text-align: right;
 }
 
 mark {

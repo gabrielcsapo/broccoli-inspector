@@ -12,6 +12,7 @@ const query = gql`
         type
         cpus
         env
+        versions
       }
       selfTime
       slowestNode {

@@ -1,5 +1,7 @@
 import Component from "@glimmer/component";
+import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { Node } from "types";
 
 interface Args {
@@ -7,6 +9,9 @@ interface Args {
 }
 
 export default class NodeInfo extends Component<Args> {
+  @service
+  router;
+
   get info() {
     const node = this.args.node;
     const nodeInfo = node?.nodeInfo || {};
@@ -19,15 +24,37 @@ export default class NodeInfo extends Component<Args> {
         .filter((prop) => prop.indexOf('__') === -1)
         .map((prop) => {
           if(prop === 'instantiationStack') {
+            const fileReg = /(\/+.*):(.+?):(.+?)(\)|$)/gm;
+            const instantiationStack = nodeInfo[prop].replace(fileReg, (match, filePath, line, column, endingCharacter, offset, string) => {
+              return `<a data-file-path="${filePath}" data-line="${line}" data-column="${column}" href="#">${filePath}:${line}:${column}</a>${endingCharacter}`;
+            });
+
             return [prop, {
               tag: 'pre',
-              text: nodeInfo[prop]
+              html: true,
+              text: instantiationStack.split('\n').map((line) => `<code>${line}</code>`).join('\n')
             }]
           }
 
           return [prop, nodeInfo[prop]]
         })
     }
+  }
+
+  @action
+  onInfoTableClick(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    if(e.target && e.target.dataset['filePath']) {
+      const { filePath, line, column } = e.target.dataset;
+
+      this.router.transitionTo('node.file', this.args.node.id, {
+        queryParams: { filePath: encodeURI(filePath), line, column }
+      });
+    }
+
+    return false;
   }
 
   get inputNodeWrappers() {
@@ -54,6 +81,30 @@ export default class NodeInfo extends Component<Args> {
     }
   }
 
+  get outputNodeWrappers() {
+    const node = this.args.node;
+    const outputNodeWrappers = node?.outputNodeWrappers || [];
+
+    return {
+      header: [
+        'ID',
+        'Time',
+        'Node Label'
+      ],
+      body: outputNodeWrappers.map((outputNodeWrapper) => {
+        return [
+          outputNodeWrapper.id,
+          Number(outputNodeWrapper.buildState.selfTime).toFixed(3) + 'ms',
+          {
+            text: outputNodeWrapper.label,
+            linkModel: outputNodeWrapper.id,
+            linkRoute: 'node'
+          }
+        ]
+      })
+    }
+  }
+
   get fs() {
     const node = this.args.node;
     const fs = node?.stats?.fs || {};
@@ -73,7 +124,7 @@ export default class NodeInfo extends Component<Args> {
       .map((key) => {
         const { time, count } = fs[key];
         // time is ns and we want to convert to ms
-        return [key, `${time / 1000000}ms`, count];
+        return [key, { raw: time, text: `${time / 1000000}ms` }, count];
       });
 
     return {

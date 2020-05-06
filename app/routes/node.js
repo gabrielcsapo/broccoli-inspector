@@ -32,6 +32,14 @@ const query = gql`
           totalTime
         }
       }
+      outputNodeWrappers {
+        id
+        label
+        buildState {
+          selfTime
+          totalTime
+        }
+      }
       stats {
         custom {
           name

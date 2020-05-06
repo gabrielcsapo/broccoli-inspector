@@ -1,4 +1,4 @@
-<tr>
+<tr {{on "click" @onClick}}>
   {{#each @items as |item|}}
     {{#if item.linkRoute}}
       <td>
@@ -11,8 +11,10 @@
       </td>
     {{else if item.tag}}
       <td>
-        <TableTag @tag={{item.tag}} @text={{item.text}}/>
+        <TableTag @tag={{item.tag}} @text={{item.text}} @html={{item.html}}/>
       </td>
+    {{else if item.text}}
+      <td>{{item.text}}</td>
     {{else}}
       <td>{{item}}</td>
     {{/if}}

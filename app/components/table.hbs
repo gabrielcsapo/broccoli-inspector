@@ -27,11 +27,11 @@
       {{#if this.body}}
         {{#each this.body as |items idx|}}
           {{#if (and this.isCollapsed (lt idx 10))}}
-            <TableRow @items={{items}}/>
+            <TableRow @items={{items}} @onClick={{this.onClick}}/>
           {{/if}}
 
           {{#unless this.isCollapsed}}
-            <TableRow @items={{items}}/>
+            <TableRow @items={{items}} @onClick={{this.onClick}}/>
           {{/unless}}
         {{/each}}
 
