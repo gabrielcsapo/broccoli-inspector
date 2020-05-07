@@ -1,5 +1,6 @@
 <div class="navbar navbar-expand-lg navbar-dark bg-dark">
   <LinkTo @route="index" class="navbar-brand">
+    <img src="/_broccoli-inspector/assets/images/logo/logo-white-tiny.png">
     Broccoli Inspector
   </LinkTo>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,21 +8,20 @@
   </button>
 
   <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <LinkTo @route="dashboard" class="nav-link">
-          <FaIcon @icon="chart-line" @size="1x"/>
-          <BsTooltip @placement="bottom">Dashboard</BsTooltip>
-        </LinkTo>
-      </li>
-    </ul>
+    <ul class="navbar-nav mr-auto"></ul>
 
     <div class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" placeholder="Search" {{on "change" this.search}}>
     </div>
 
     <ul class="navbar-nav">
-      <li class="nav-item active">
+      <li class="nav-item">
+        <LinkTo @route="dashboard" class="nav-link">
+          <FaIcon @icon="chart-line" @size="1x"/>
+          <BsTooltip @placement="bottom">Dashboard</BsTooltip>
+        </LinkTo>
+      </li>
+      <li class="nav-item">
         <LinkTo @route="dashboard" class="nav-link">
           <FaIcon @icon="file-invoice" @size="1x"/>
           <BsTooltip @placement="bottom">Export</BsTooltip>

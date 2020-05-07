@@ -1,3 +1,10 @@
+# 0.1.1 (05/07/2020)
+
+- instantiationStack viewer is now inline
+- broccoli logo is used as favicon and navbar icon
+- input and output node wrappers are now next to eachother
+- all table bodies can now be collapsed
+
 # 0.1.0 (05/06/2020)
 
 - system info information looks like `| key | value |`

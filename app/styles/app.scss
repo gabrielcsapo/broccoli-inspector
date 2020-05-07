@@ -1,6 +1,6 @@
 @import "theme/variables";
 @import "ember-bootstrap/bootstrap";
-
+@import "prism-vs";
 @import "empty-state";
 
 .sidebar {
@@ -22,24 +22,15 @@ pre {
   white-space: pre-wrap;
 }
 
-pre:before {
-  counter-reset: listing;
-}
 pre code {
-  counter-increment: listing;
   word-break: break-word;
-}
-pre code::before {
-  content: counter(listing) ". ";
-  display: inline-block;
-  width: 3rem;
-  padding-left: auto;
-  margin-left: auto;
-  text-align: right;
 }
 
 mark {
   background-color: var(--orange);
 }
 
+.list-group-item-action-active {
+  border-left: 5px solid var(--primary)
+}
 .text-break { word-break: break-word !important; }

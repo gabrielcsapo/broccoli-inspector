@@ -1,0 +1,38 @@
+<div class="card">
+  {{#if this.filePath}}
+    <div class="card-header">
+      {{this.filePath}} {{this.line}}:{{this.column}}
+    </div>
+  {{/if}}
+  <div class="container-fluid overflow-auto m-0 p-0" style="height: 400px;">
+    <div class="row">
+      <div class="col-9 pt-0 pb-0 pr-0 pl-2 m-0">
+        {{#if loading}}
+          <EmptyState
+            @iconType="spinner"
+            @iconSize="4x"
+            @spin={{true}}
+            @title="Loading file to view"
+          />
+        {{else}}
+          {{#if this.file}}
+            <CodeBlock class="line-numbers mt-0" @code={{this.file}} @language="javascript" data-line={{this.line}}/>
+          {{else}}
+            <EmptyState
+              @iconType="file-code"
+              @iconSize="4x"
+              @title="Click stack line on the right to see file"
+            />
+          {{/if}}
+        {{/if}}
+      </div>
+      <div class="col-3 p-0 m-0">
+        <ul class="list-group">
+          {{#each this.instantiationStack as |instantiationStackLine index|}}
+            <li data-index={{index}} class="list-group-item list-group-item-action {{if (eq this.selectedIndex index) "list-group-item-action-active"}}" {{on "click" this.onStackClick}}>{{html instantiationStackLine}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

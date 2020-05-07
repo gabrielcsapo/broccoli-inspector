@@ -1,15 +1,33 @@
 'use strict';
 
+const AssetRev = require('broccoli-asset-rev');
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
+    fingerprint: {
+      enabled: true
+    },
+
     'ember-cli-babel': {
       includePolyfill: true,
     },
 
     sassOptions: {
       extension: 'scss',
+      outputPaths: {
+        app: {
+          css: {
+            'prism': '/assets/themes/prism-vs.css'
+          }
+        }
+      }
+    },
+
+    'ember-prism': {
+      'theme': 'vs',
+      'components': ['javascript'],
+      'plugins': ['line-highlight', 'line-numbers']
     },
 
     'ember-bootstrap': {

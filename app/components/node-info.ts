@@ -21,23 +21,8 @@ export default class NodeInfo extends Component<Args> {
         "Property", "Value"
       ],
       body: Object.keys(nodeInfo)
-        .filter((prop) => prop.indexOf('__') === -1)
-        .map((prop) => {
-          if(prop === 'instantiationStack') {
-            const fileReg = /(\/+.*):(.+?):(.+?)(\)|$)/gm;
-            const instantiationStack = nodeInfo[prop].replace(fileReg, (match, filePath, line, column, endingCharacter, offset, string) => {
-              return `<a data-file-path="${filePath}" data-line="${line}" data-column="${column}" href="#">${filePath}:${line}:${column}</a>${endingCharacter}`;
-            });
-
-            return [prop, {
-              tag: 'pre',
-              html: true,
-              text: instantiationStack.split('\n').map((line) => `<code>${line}</code>`).join('\n')
-            }]
-          }
-
-          return [prop, nodeInfo[prop]]
-        })
+        .filter((prop) => prop.indexOf('__') === -1 && prop !== 'instantiationStack')
+        .map((prop) => [prop, nodeInfo[prop]])
     }
   }
 

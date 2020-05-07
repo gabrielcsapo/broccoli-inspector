@@ -53,6 +53,14 @@ export default class Table extends Component<Args> {
   @tracked
   isCollapsed = true; // will condense the table to only show the first 10 results
 
+  @tracked
+  tableCollapsed = false;
+
+  @action
+  toggleCollapseTable() {
+    this.tableCollapsed = !this.tableCollapsed;
+  }
+
   @action
   uncollapse() {
     this.isCollapsed = false;

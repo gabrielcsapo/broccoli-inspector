@@ -1,6 +1,6 @@
 {
   "name": "broccoli-inspector",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "🔍 inspect what's really happening in your broccoli pipeline",
   "repository": "https://github.com/gabrielcsapo/broccoli-inspector.git",
   "license": "MIT",
@@ -76,6 +76,7 @@
     "ember-fetch": "^6.3.1",
     "ember-load-initializers": "^2.1.1",
     "ember-maybe-import-regenerator": "^0.1.6",
+    "ember-prism": "^0.6.1",
     "ember-qunit": "^4.6.0",
     "ember-resolver": "^7.0.0",
     "ember-source": "~3.17.0",

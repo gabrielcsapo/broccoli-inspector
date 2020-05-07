@@ -1,5 +1,11 @@
 <h1 class="mt-4"> ({{@node.id}}) {{@node.label}} ({{@node.buildState.selfTime}}ms)</h1>
 
+<InstantiationStackExplorer
+  @instantiationStack={{@node.nodeInfo.instantiationStack}}
+/>
+
+<br/>
+
 <Table
   @title="Node Info"
   @data={{this.info}}
@@ -51,19 +57,24 @@
 
 <br/>
 
-<Table
-  @title="Input Nodes"
-  @data={{this.inputNodeWrappers}}
-  @empty="No input node wrappers for this plugin"
-/>
-
-<br/>
-
-<Table
-  @title="Output Nodes"
-  @data={{this.outputNodeWrappers}}
-  @empty="No output node wrappers for this plugin"
-/>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <Table
+        @title="Input Nodes"
+        @data={{this.inputNodeWrappers}}
+        @empty="No input node wrappers for this plugin"
+      />
+    </div>
+    <div class="col">
+      <Table
+        @title="Output Nodes"
+        @data={{this.outputNodeWrappers}}
+        @empty="No output node wrappers for this plugin"
+      />
+    </div>
+  </div>
+</div>
 
 <br/>
 

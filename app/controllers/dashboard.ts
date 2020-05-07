@@ -12,8 +12,8 @@ export default class DashboardController extends Controller {
         'Value',
       ],
       body: [
-        ['CPUs', cpus],
-        ['Memory', totalmem],
+        ['CPUs', cpus + ' cores'],
+        ['Memory', `${(totalmem / 1048576).toFixed(2)}mb`],
         ['OS', type],
         ['ENV', {
           tag: 'pre',
