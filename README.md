@@ -28,6 +28,8 @@ To get FS timing information ensure that you add `EMBER_CLI_INSTRUMENTATION=1` r
 
 > Currently tracking moving this functionality into broccoli here https://github.com/broccolijs/broccoli/issues/461.
 
+Once you have done the setup done, visit [http://localhost:4200/_broccoli-inspector](http://localhost:4200/_broccoli-inspector) in your browser. 
+
 ## How does this work?
 
 We are leveraging functionality that currently exists in the broccoli nodes themselves. We are using _Ember_ as our UI as we can debug this application with itself!

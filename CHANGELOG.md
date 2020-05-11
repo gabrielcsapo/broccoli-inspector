@@ -1,8 +1,13 @@
+# 0.1.2 (05/11/2020)
+
+- Surfaces monitors in the heimdall custom tab section as well
+- Updates readme to contain information on how to access the ui.
+
 # 0.1.1 (05/07/2020)
 
 - instantiationStack viewer is now inline
 - broccoli logo is used as favicon and navbar icon
-- input and output node wrappers are now next to eachother
+- input and output node wrappers are now next to each-other
 - all table bodies can now be collapsed
 
 # 0.1.0 (05/06/2020)

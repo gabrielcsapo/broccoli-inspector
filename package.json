@@ -1,6 +1,6 @@
 {
   "name": "broccoli-inspector",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "🔍 inspect what's really happening in your broccoli pipeline",
   "repository": "https://github.com/gabrielcsapo/broccoli-inspector.git",
   "license": "MIT",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.6",
     "@ember/optional-features": "^1.3.0",
     "@ember/render-modifiers": "^1.0.2",
     "@fortawesome/ember-fontawesome": "^0.2.1",
