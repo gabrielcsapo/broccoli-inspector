@@ -1,0 +1,15 @@
+<PaperCard as |card|>
+  <card.title as |title|>
+    <title.text as |text|>
+      <text.headline>Build {{@model.id}}</text.headline>
+      <text.subhead>This is the resulting information from build {{@model.id}}</text.subhead>
+    </title.text>
+  </card.title>
+  <card.content>
+    This build was triggered because of changes to {{@model.filePath}}.
+  </card.content>
+</PaperCard>
+
+<BuildPlugins
+  @nodes={{@model.nodes}}
+/>

@@ -1,18 +1,67 @@
-@import "theme/variables";
-@import "ember-bootstrap/bootstrap";
-@import "prism-vs";
-@import "empty-state";
+@import 'ember-paper';
+@import 'prism-vs';
 
-.sidebar {
-  padding: 0;
-  border-right: 1px solid #c7c8c8;
+.md-navigation-rail {
+  max-width: 80px;
 }
 
-.nav-item svg {
-  font-size: 1.25rem;
+md-sidenav {
+  z-index: auto;
+}
+
+.paper-content--block {
+  height: 68px;
+  padding: 5px 16px 0px 24px;
+
+  input {
+    border: none;
+  }
+}
+
+.main-container {
+  min-height: 100vh;
+}
+
+.full-length-search {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+  md-input-container {
+    width: 100%;
+    margin: 0;
+    background: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  input {
+    height: 100%;
+    padding: 0 40px;
+    padding-right: 72px;
+    font-size: 1.714rem;
+    box-sizing: border-box;
+    border: none;
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  .md-errors-spacer {
+    display: none;
+  }
+
+  button {
+    position: absolute;
+    right: 0;
+    top: 25%;
+
+    md-icon {
+      color: black;
+    }
+  }
 }
 
 pre {
+  background: #f5f5f5;
+  padding: 20px;
   white-space: pre-wrap;
   word-wrap: break-word;
   font-size: .75rem;
@@ -30,7 +79,44 @@ mark {
   background-color: var(--orange);
 }
 
-.list-group-item-action-active {
-  border-left: 5px solid var(--primary)
+table {
+  margin-bottom: 8px;
+  max-width: 100%;
+  width: 100%;
+  border-spacing: 0;
+  border-radius: 2px;
+  overflow: hidden;
 }
+
+th {
+  background-color: paper-color($primary, '400');
+  color: white;
+}
+
+td, th {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+td {
+  vertical-align: top;
+}
+
+.overflow-scroll { overflow: scroll; }
+.text-center { text-align: center; }
 .text-break { word-break: break-word !important; }
+.h-100 {
+  height: 100%;
+}
+.p-0 {
+  padding: 0 !important;
+}
+.m-0 {
+  margin: 0 !important;
+}
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.mt-0 {
+  margin-top: 0 !important;
+}

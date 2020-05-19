@@ -1,135 +1,88 @@
-<Navbar/>
-
 <Progressbar
   @currentStep={{this.currentNode}}
   @isBuilding={{this.isBuilding}}
   @currentBuildTime={{this.currentBuildTime}}
 />
 
-<div class="container-fluid">
-  <div class="row flex-xl-nowrap">
-    {{#if this.isBuilding}}
-      <div class="mx-auto">
-        <EmptyState
-          @iconType="truck-loading"
-          @iconSize="4x"
-          @title="Broccoli is currently building"
-          @subtitle="This will refresh when broccoli is done building"
-        />
-      </div>
-    {{else}}
-      <div class="col-3 sidebar">
-        {{#if this.isLoading}}
-          <EmptyState
-            @iconType="truck-loading"
-            @iconSize="4x"
-            @title="Fetching data"
-            @subtitle="This will refresh when data has been fetched"
-          />
-        {{else}}
-          <div>
-            <div class="alert alert-dark">
-              {{#if @model.nodes}}
-                <i>Total time {{to-fixed (node-total-time @model.nodes) 3}}ms</i>
-              {{/if}}
+<Navbar/>
 
-              {{#if @model.nodesByType}}
-                  <i>Total time {{to-fixed (node-by-type-total-time @model.nodesByType) 3}}ms</i>
-              {{/if}}
-            </div>
+<PaperSidenavContainer @class="main-container">
+  <PaperSidenav @class="md-whiteframe-z2 md-navigation-rail" @lockedOpen={{true}}>
+    <PaperList>
+      <PaperItem>
+        <PaperButton @href={{href-to this.currentRouteName (query-params queryContext="group")}} @iconButton={{true}} @raised={{true}}>
+          {{paper-icon "group-work"}}
+          <PaperTooltip @position="right">
+            Nodes grouped by plugins
+          </PaperTooltip>
+        </PaperButton>
+      </PaperItem>
 
-            <form class="m-3">
-              {{#unless this.groupPlugins}}
-                <div class="form-group">
-                  <input
-                    class="form-control ds-input"
-                    type="text"
-                    placeholder="Filter by plugin name"
-                    value={{@model.searchTerm}}
-                    {{on "change" this.search}}
-                  />
-                </div>
-              {{/unless}}
+      <PaperItem>
+        <PaperButton @href={{href-to this.currentRouteName (query-params queryContext=null)}} @iconButton={{true}} @raised={{true}}>
+          {{paper-icon "list"}}
+          <PaperTooltip @position="right">
+            All nodes
+          </PaperTooltip>
+        </PaperButton>
+      </PaperItem>
 
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked={{this.groupPlugins}} {{on "change" this.toggleGroupingPlugins}}>
-                <label class="form-check-label" for="defaultCheck1">
-                  Group Plugins by Type
-                </label>
-              </div>
-            </form>
-          </div>
+      <PaperItem>
+        <PaperButton @href={{href-to this.currentRouteName (query-params queryContext="builds")}} @iconButton={{true}} @raised={{true}}>
+          {{paper-icon "timeline"}}
+          <PaperTooltip @position="right">
+            Build timelines
+          </PaperTooltip>
+        </PaperButton>
+      </PaperItem>
+    </PaperList>
+  </PaperSidenav>
 
-          <hr/>
-
-          <nav class="nav flex-column">
-            {{#if this.pluginType}}
-              <a class="nav-link" href="#" {{on "click" (fn this.selectPluginGroup "")}}>
-                <h6>
-                  <FaIcon @icon="chevron-left" @size="1x"/>
-                  {{this.pluginType}}
-                </h6>
-              </a>
-            {{/if}}
-
-            {{#if @model.nodesByType}}
-              {{#each @model.nodesByType key="@index" as |node idx|}}
-                {{#if (and this.isCollapsed (lt idx 10))}}
-                  <a class="nav-link d-flex justify-content-between align-items-center text-break" href="#" {{on "click" (fn this.selectPluginGroup node.label)}}>
-                      ({{to-fixed node.time 3}}ms) {{node.label}}
-                      <span class="badge badge-primary badge-pill">{{node.amountOfNodes}}</span>
-                  </a>
-                {{/if}}
-
-                {{#unless this.isCollapsed}}
-                  <a class="nav-link text-center" href="#" {{on "click" (fn this.selectPluginGroup node.label)}}>
-                      ({{to-fixed node.time 3}}ms) {{node.label}}
-                      <span class="badge badge-primary badge-pill">{{node.amountOfNodes}}</span>
-                  </a>
-                {{/unless}}
-              {{/each}}
-
-              {{#if (and this.isCollapsed (gt @model.nodesByType.length 10))}}
-                <a class="btn btn-outline-primary text-center m-2" href="#" {{on "click" this.uncollapse}}> Show {{sub @model.nodesByType.length 10}} More </a>
-              {{/if}}
-            {{else if @model.nodes}}
-              {{#each @model.nodes key="@index" as |node idx|}}
-                {{#if (and this.isCollapsed (lt idx 10))}}
-                  <LinkTo class="nav-link d-flex justify-content-between align-items-center text-break" @route="node" @model={{node.id}}>
-                    {{node.label}}
-
-                    <span class="badge badge-primary badge-pill">{{to-fixed node.buildState.selfTime 3}}ms</span>
-                  </LinkTo>
-                {{/if}}
-
-                {{#unless this.isCollapsed}}
-                  <LinkTo class="nav-link d-flex justify-content-between align-items-center text-break" @route="node" @model={{node.id}}>
-                      ({{to-fixed node.buildState.selfTime 3}}ms) {{node.label}}
-                  </LinkTo>
-                {{/unless}}
-              {{/each}}
-
-              {{#if (and this.isCollapsed (gt @model.nodes.length 10))}}
-                <a class="btn btn-outline-primary text-center m-2" href="#" {{on "click" this.uncollapse}}> Show {{sub @model.nodes.length 10}} More </a>
-              {{/if}}
-            {{else}}
-              <div class="d-flex height-fill">
-                <div class="mx-auto">
-                  <EmptyState
-                    @iconType="times-circle"
-                    @iconSize="4x"
-                    @title="Could not find any nodes for your search"
-                    @subtitle="Please search another term."
-                  />
-                </div>
-              </div>
-            {{/if}}
-          </nav>
-        {{/if}}
-      </div>
-      <div class="col-9">
-        {{outlet}}
-      </div>
+  <PaperSidenav @class="md-whiteframe-z2" @lockedOpen={{true}}>
+    {{#if @model.nodesByType}}
+      <PluginGroupedList
+        @nodesByType={{@model.nodesByType}}
+      />
     {{/if}}
+
+    {{#if @model.nodes}}
+      <PluginList
+        @nodes={{@model.nodes}}
+        @pluginType={{this.pluginType}}
+      />
+    {{/if}}
+
+    {{#if @model.builds}}
+      <BuildsList
+        @builds={{@model.builds}}
+      />
+    {{/if}}
+  </PaperSidenav>
+
+  <div id="main" class="flex layout-column md-padding" tabindex="-1" role="main">
+    {{outlet}}
   </div>
-</div>
+</PaperSidenavContainer>
+
+{{#if this.buildError}}
+  <PaperDialog @class="flex">
+    <PaperDialogContent @class="p-0">
+      <div class="m-0">
+        <PaperCard @class="m-0" as |card|>
+          <card.title as |title|>
+            <title.text as |text|>
+              <text.headline>Error!</text.headline>
+              <text.subhead>{{this.buildError.location}} in <a href={{href-to "node" this.buildError.nodeId}}>{{this.buildError.nodeLabel}}</a></text.subhead>
+            </title.text>
+          </card.title>
+          <pre class="m-0"><code>{{this.buildError.message}}</code></pre>
+          <card.content @class="m-0 p-0">
+            <CodeBlock class="line-numbers mb-0 mt-0" @code={{this.buildError.fileContents}} data-line={{this.buildError.line}}/>
+          </card.content>
+        </PaperCard>
+      </div>
+    </PaperDialogContent>
+  </PaperDialog>
+{{/if}}
+
+<PaperToaster @parent="#main" />

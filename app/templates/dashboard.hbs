@@ -1,43 +1,15 @@
-<br/>
-
-<h1> Dashboard </h1>
-<h5> <i> Last build time {{this.model.selfTime}}ms </i> </h5>
-
-<hr/>
-
-<Table
-  @title="System Info"
-  @data={{this.info}}
-  @empty="No System data available"
+<SystemInfo
+  @systemInfo={{this.model.systemInfo}}
 />
 
-<hr/>
+<PaperDivider />
 
-<h2> Slowest Node </h2>
+<SlowestNodes
+  @slowestNodes={{this.model.slowestNodes}}
+/>
 
-<LinkTo @route="node" @model={{this.model.slowestNode.id}}>
-    ({{to-fixed this.model.slowestNode.buildState.selfTime 3}}ms) {{this.model.slowestNode.label}}
-</LinkTo>
+<PaperDivider />
 
-<hr/>
-
-<h2> FS Information </h2>
-
-<div class="container">
-  <div class="row">
-    <div class="col-6 d-flex align-items-center">
-      <Charts::FsCount
-        @fs={{this.model.totalFs}}
-      />
-    </div>
-    <div class="col-6">
-      <Table
-        @title="FS Timing"
-        @data={{this.fs}}
-        @empty="No FS data available"
-      />
-    </div>
-  </div>
-</div>
-
-<br/>
+<NodeInfoFsCount
+  @fs={{this.model.totalFs}}
+/>

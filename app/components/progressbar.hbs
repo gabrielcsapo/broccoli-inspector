@@ -1,5 +1,7 @@
 {{#if @isBuilding}}
-  <div class="alert alert-secondary">
-    {{@currentBuildTime}}ms {{@currentStep}}
-  </div>
+  <PaperToolbar @accent={{true}}>
+    <PaperToolbarTools>
+      ({{@currentBuildTime}}ms) {{@currentStep}}
+    </PaperToolbarTools>
+  </PaperToolbar>
 {{/if}}

@@ -62,8 +62,8 @@ export default class Table extends Component<Args> {
   }
 
   @action
-  uncollapse() {
-    this.isCollapsed = false;
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
   }
 
   @action

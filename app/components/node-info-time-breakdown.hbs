@@ -1,0 +1,32 @@
+<PaperCard as |card|>
+  <card.title as |title|>
+    <title.text as |text|>
+      <text.headline>Node Time Breakdown</text.headline>
+      <text.subhead>This node's time is compromised of fs and other. Other consists of operations that occur in the plugin itself. Please see the Heimdall Schema section for more context to what that could be.</text.subhead>
+    </title.text>
+  </card.title>
+  <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedTab}} @onChange={{action (mut this.selectedTab)}} as |tabs|>
+    <tabs.tab>
+      Chart
+    </tabs.tab>
+    <tabs.tab>
+      Table
+    </tabs.tab>
+  </PaperTabs>
+  {{#if (eq selectedTab 0)}}
+    <C3Chart
+      @data={{this.data}}
+      @title={{this.title}}
+      @padding={{this.padding}}
+      @c3chart={{this.chart}}
+      @tooltip={{this.tooltip}}
+      @pie={{this.pie}}
+    />
+  {{else}}
+    <Table
+      @title="FS Timing"
+      @data={{this.fs}}
+      @empty="No FS Timing available"
+    />
+  {{/if}}
+</PaperCard>

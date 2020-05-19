@@ -23,6 +23,17 @@ const query = gql`
   }
 `;
 
+const buildsQuery = gql`
+  query query {
+    builds {
+      id
+      filePath
+      time
+      amountOfNodes
+    }
+  }
+`;
+
 const groupPluginsQuery = gql`
   query query {
     nodesByType {
@@ -67,13 +78,10 @@ function sortNodes(nodes, filter) {
 
 export default class ApplicationRoute extends Route {
   queryParams = {
-    searchTerm: {
-      refreshModel: true
-    },
     pluginType: {
       refreshModel: true
     },
-    groupPlugins: {
+    queryContext: {
       refreshModel: true
     }
   };
@@ -91,7 +99,8 @@ export default class ApplicationRoute extends Route {
 
     socket.on('beginNode', this.beginNode, this);
     socket.on('endNode', this.endNode, this);
-    socket.on('buildFinished', this.buildFinished, this);
+    socket.on('buildSuccess', this.buildSuccess, this);
+    socket.on('buildFailure', this.buildFailure, this);
   }
 
   afterModel() {
@@ -101,9 +110,9 @@ export default class ApplicationRoute extends Route {
   model(params) {
     this.controllerFor('application').set('isLoading', true);
 
-    const { searchTerm, pluginType, groupPlugins } = params;
+    const { pluginType, queryContext } = params;
 
-    if(groupPlugins) {
+    if(queryContext === 'group') {
       if(pluginType) {
         return this.apollo.query({ query: groupPluginsSearchQuery, variables: { type: pluginType } }, "nodesByType").then((result) => {
           const nodes = result[0] && result[0].nodes ? sortNodes(result[0].nodes) : [];
@@ -117,12 +126,9 @@ export default class ApplicationRoute extends Route {
       });
     }
 
-    if(searchTerm) {
-      return this.apollo.query({ query }, "nodes").then((result) => {
-        return {
-          nodes: sortNodes(result, searchTerm),
-          searchTerm
-        }
+    if(queryContext === 'builds') {
+      return this.apollo.query({ query: buildsQuery }, "builds").then((result) => {
+        return { builds: result }
       });
     }
 
@@ -131,9 +137,24 @@ export default class ApplicationRoute extends Route {
     });
   }
 
-  buildFinished(currentBuild) {
+  buildSuccess(currentBuild) {
     this.controller.set('isBuilding', false);
     this.controller.set('totalBuildTime', currentBuild.totalTime / 1000000);
+  }
+
+  buildFailure(currentBuild) {
+    if(currentBuild.isBuilderError) {
+      const { broccoliPayload } = currentBuild;
+      const { originalError, nodeLabel, nodeId, error, fileContents } = broccoliPayload;
+      this.controller.set('buildError', {
+        fileContents,
+        line: originalError.location.line,
+        location: error.location.file,
+        message: error.message,
+        nodeId,
+        nodeLabel,
+      })
+    }
   }
 
   endNode(data) {

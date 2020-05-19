@@ -1,0 +1,66 @@
+<PaperContent>
+  <div class="paper-content--block">
+    <div class="layout-row layout-align-start-center h-100">
+      <div>
+        <b>Plugins</b>
+      </div>
+    </div>
+  </div>
+  <PaperDivider />
+  {{#if @pluginType}}
+    <div class="paper-content--block">
+      <div class="layout-row layout-align-center-center h-100">
+        <div>
+          {{@pluginType}}
+          <PaperButton @iconButton={{true}} @href={{href-to "dashboard" (query-params pluginType=null)}}>{{paper-icon "cancel"}}</PaperButton>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+  <PaperDivider />
+  <div class="paper-content--block">
+    <div class="layout-row layout-align-start-center h-100">
+      <div>
+        {{paper-icon "access_time"}}
+        {{this.time}}ms
+      </div>
+    </div>
+  </div>
+  <PaperDivider />
+  <div class="paper-content--block">
+    <PaperInput @placeholder="Filter plugins" @type="text" @value={{this.searchByValue}} @onChange={{action (mut this.searchByValue)}} @icon="search" />
+  </div>
+  <PaperDivider />
+  <PaperList>
+    {{#if this.nodes}}
+      {{#each this.nodes key="@index" as |node idx|}}
+        {{#if (and this.isCollapsed (lt idx 10))}}
+          <PaperItem @class="md-3-line" @href={{href-to "node" node.id}}>
+            <div class="md-list-item-text">
+              <h3>{{node.label}}</h3>
+              <h4>{{to-fixed node.buildState.selfTime 3}}ms</h4>
+            </div>
+          </PaperItem>
+        {{/if}}
+
+        {{#unless this.isCollapsed}}
+          <PaperItem @class="md-3-line" @href={{href-to "node" node.id}}>
+            <div class="md-list-item-text">
+              <h3>{{node.label}}</h3>
+              <h4>{{to-fixed node.buildState.selfTime 3}}ms</h4>
+            </div>
+          </PaperItem>
+        {{/unless}}
+      {{/each}}
+
+      {{#if (and this.isCollapsed (gt this.nodes.length 10))}}
+        <PaperButton @onClick={{this.uncollapse}}>Show {{sub this.nodes.length 10}} more nodes</PaperButton>
+      {{/if}}
+    {{else}}
+      <PaperItem>
+        No nodes found
+      </PaperItem>
+    {{/if}}
+  </PaperList>
+
+</PaperContent>

@@ -1,27 +1,29 @@
 {{#if @model.result}}
-  <div class="mt-3">
-    <h2> {{@model.result.length}} results found </h2>
-    {{#each @model.result key="@index" as |searchResult idx|}}
-      {{#each searchResult.results key="@index" as |result idx|}}
-        <div>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <LinkTo @route="node" @model={{searchResult.node.id}}>
-                  {{searchResult.node.label}}
-                </LinkTo>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">{{result.property}}</li>
-            </ol>
-          </nav>
+  <h2> {{@model.result.length}} results found </h2>
 
-          <pre><code>...<br/>{{highlight-text result.stringValue @model.query}}<br/>...<br/></code></pre>
-        </div>
-        <hr/>
-      {{/each}}
-      <hr/>
+  {{#each @model.result key="@index" as |searchResult idx|}}
+    {{#each searchResult.results key="@index" as |result idx|}}
+      <PaperCard as |card|>
+        <card.title as |title|>
+          <title.text as |text|>
+            <text.headline>
+              <LinkTo @route="node" @model={{searchResult.node.id}}>
+                {{searchResult.node.label}}
+              </LinkTo>
+
+              {{paper-icon "arrow_right"}}
+
+              {{result.property}}
+            </text.headline>
+            <text.subhead>
+              <pre><code>...<br/>{{highlight-text result.stringValue @model.query}}<br/>...<br/></code></pre>
+            </text.subhead>
+          </title.text>
+        </card.title>
+      </PaperCard>
+
     {{/each}}
-  </div>
+  {{/each}}
 {{else}}
   <EmptyState
     class="mt-3"

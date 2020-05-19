@@ -1,38 +1,54 @@
-<div class="card">
-  {{#if this.filePath}}
-    <div class="card-header">
-      {{this.filePath}} {{this.line}}:{{this.column}}
-    </div>
-  {{/if}}
-  <div class="container-fluid overflow-auto m-0 p-0" style="height: 400px;">
-    <div class="row">
-      <div class="col-9 pt-0 pb-0 pr-0 pl-2 m-0">
+<PaperCard as |card|>
+  <card.content @class="p-0">
+    <PaperSidenavContainer>
+      <PaperCardContent @class="flex p-0">
         {{#if loading}}
-          <EmptyState
-            @iconType="spinner"
-            @iconSize="4x"
-            @spin={{true}}
-            @title="Loading file to view"
-          />
+          <PaperCard as |card|>
+            <card.title as |title|>
+              <title.text as |text|>
+                <text.headline>Currently loading file</text.headline>
+                <text.subhead>Please do not refresh, this page will refresh when data is loaded</text.subhead>
+              </title.text>
+              <PaperProgressCircular @accent={{true}} @class="md-hue-1" @diameter={{60}} />
+            </card.title>
+          </PaperCard>
         {{else}}
           {{#if this.file}}
-            <CodeBlock class="line-numbers mt-0" @code={{this.file}} @language="javascript" data-line={{this.line}}/>
+            <div style="height:700px;">
+              <PaperToolbar>
+                <PaperToolbarTools>
+                  {{this.filePath}} {{this.line}}:{{this.column}}
+                </PaperToolbarTools>
+              </PaperToolbar>
+
+              <CodeBlock style="overflow:scroll;height:100%;" class="line-numbers mb-0 mt-0" @code={{this.file}} @language="javascript" data-line={{this.line}}/>
+            </div>
           {{else}}
             <EmptyState
-              @iconType="file-code"
-              @iconSize="4x"
+              @iconType="code"
               @title="Click stack line on the right to see file"
             />
           {{/if}}
         {{/if}}
-      </div>
-      <div class="col-3 p-0 m-0">
-        <ul class="list-group">
-          {{#each this.instantiationStack as |instantiationStackLine index|}}
-            <li data-index={{index}} class="list-group-item list-group-item-action {{if (eq this.selectedIndex index) "list-group-item-action-active"}}" {{on "click" this.onStackClick}}>{{html instantiationStackLine}}</li>
-          {{/each}}
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+      </PaperCardContent>
+
+      <PaperSidenav @class="md-whiteframe-z2" @lockedOpen={{true}}>
+        <PaperContent>
+          <PaperList>
+            {{#each this.instantiationStack as |instantiationStackLine|}}
+              {{#if instantiationStackLine.filePath}}
+                <PaperItem @onClick={{fn (action "onStackClick") instantiationStackLine.filePath instantiationStackLine.line instantiationStackLine.column}} @class={{if (eq this.selectedIndex index) "active"}}>
+                  {{instantiationStackLine.stackLine}}
+                </PaperItem>
+              {{else}}
+                <PaperItem @class={{if (eq this.selectedIndex index) "active"}}>
+                  {{instantiationStackLine.stackLine}}
+                </PaperItem>
+              {{/if}}
+            {{/each}}
+          </PaperList>
+        </PaperContent>
+      </PaperSidenav>
+    </PaperSidenavContainer>
+  </card.content>
+</PaperCard>

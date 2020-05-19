@@ -1,3 +1,9 @@
+# 0.2.0 (05/18/2020)
+
+- major design overhaul
+- adds error modal for when the broccoli funnel fails to build properly (#16)
+- fixes places where ms wasn't sorting correctly
+
 # 0.1.2 (05/11/2020)
 
 - Surfaces monitors in the heimdall custom tab section as well

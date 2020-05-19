@@ -159,6 +159,6 @@ code[class*="language-css"] {
 */
 .line-highlight {
 	background: rgba(193, 222, 241, 0.2);
-	background: -webkit-linear-gradient(left, rgba(193, 222, 241, 0.2) 70%, rgba(221, 222, 241, 0));
-	background: linear-gradient(to right, rgba(193, 222, 241, 0.2) 70%, rgba(221, 222, 241, 0));
+  background: linear-gradient(to right, rgba(0, 154, 255, 0.2) 70%, rgba(221, 222, 241, 0));
+	background: -webkit-linear-gradient(left, rgba(0, 154, 255, 0.2) 70%, rgba(221, 222, 241, 0));
 }
