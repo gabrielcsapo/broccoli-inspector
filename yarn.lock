@@ -1969,15 +1969,6 @@
   dependencies:
     "@types/express" "*"
 
-"@types/ember-data@^3.1.11":
-  version "3.1.11"
-  resolved "https://registry.yarnpkg.com/@types/ember-data/-/ember-data-3.1.11.tgz#2c6111bc48e0e2e86679c21a1077ef952c77e04c"
-  integrity sha512-kmA22JS75ydChEvnmsEFhvNpZftn1ebyU/iBan8FVsSqptM9y2HQrYWosXTcMhiyGIBZaaH2OwtP2AZx3V+IBg==
-  dependencies:
-    "@types/ember" "*"
-    "@types/ember__object" "*"
-    "@types/rsvp" "*"
-
 "@types/ember-qunit@^3.4.8":
   version "3.4.8"
   resolved "https://registry.yarnpkg.com/@types/ember-qunit/-/ember-qunit-3.4.8.tgz#81dbfa76f0729ec5c455039457ba747fb7b44ec1"

@@ -1,6 +1,6 @@
+import Ember from 'ember';
 import ApolloService from 'ember-apollo-client/services/apollo';
 import { getOwner } from '@ember/application';
-import { inject as service } from '@ember/service';
 
 export default class ApolloBroccoliInspector extends ApolloService {
   get options() {

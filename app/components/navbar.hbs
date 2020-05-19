@@ -1,16 +1,16 @@
 <PaperToolbar>
-  {{#if searchFormOpen}}
+  {{#if this.searchFormOpen}}
     <div class="full-length-search">
-      <PaperInput @placeholder="Search all nodes" @type="text" @value={{this.searchTerm}} @onChange={{action (mut this.searchTerm)}} @onKeyDown={{this.search}} />
+      <PaperInput @placeholder="Search all nodes" @type="text" @value={{this.searchTerm}} @onChange={{fn (mut this.searchTerm)}} @onKeyDown={{this.search}} />
 
-      <PaperButton @onClick={{action "toggleSearchForm"}} @iconButton={{true}}>
+      <PaperButton @onClick={{this.toggleSearchForm}} @iconButton={{true}}>
         {{paper-icon "cancel"}}
       </PaperButton>
     </div>
   {{else}}
     <PaperToolbarTools>
       <LinkTo @route="index" class="layout-row layout-align-center-center">
-        <img src="/_broccoli-inspector/assets/images/logo/logo-white-tiny.png">
+        <img src="/_broccoli-inspector/assets/images/logo/logo-white-tiny.png" alt="Broccoli Inspector in white fill background">
         &nbsp;Broccoli Inspector
       </LinkTo>
       <span class="flex"></span>
@@ -22,7 +22,7 @@
         </PaperTooltip>
       </PaperButton>
 
-      <PaperButton @onClick={{action "toggleSearchForm"}} @iconButton={{true}}>
+      <PaperButton @onClick={{this.toggleSearchForm}} @iconButton={{true}}>
         {{paper-icon "search"}}
 
         <PaperTooltip @position="bottom">

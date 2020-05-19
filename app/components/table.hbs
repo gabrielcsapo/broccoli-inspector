@@ -4,7 +4,7 @@
       {{@title}}
     </h2>
     <span class="flex"></span>
-    <PaperButton @onClick={{action "toggleCollapseTable"}} @iconButton={{true}}>
+    <PaperButton @onClick={{this.toggleCollapseTable}} @iconButton={{true}}>
       {{#if this.tableCollapsed}}
         {{paper-icon "expand_more"}}
       {{else}}
@@ -40,38 +40,40 @@
         {{/each}}
       </tr>
     </thead>
-    {{#if this.body}}
-      {{#each this.body as |items idx|}}
-        {{#if (and this.isCollapsed (lt idx 10))}}
-          <TableRow @items={{items}} @onClick={{this.onClick}}/>
+    <tbody>
+      {{#if this.body}}
+        {{#each this.body as |items idx|}}
+          {{#if (and this.isCollapsed (lt idx 10))}}
+            <TableRow @items={{items}} @onClick={{this.onClick}}/>
+          {{/if}}
+
+          {{#unless this.isCollapsed}}
+            <TableRow @items={{items}} @onClick={{this.onClick}}/>
+          {{/unless}}
+        {{/each}}
+
+        {{#if (and this.isCollapsed (gt this.body.length 10))}}
+          <tr>
+            <td colspan={{this.width}} class="text-center">
+              <PaperButton @raised={{true}} @onClick={{this.toggleCollapse}}>Show {{sub this.body.length 10}} more rows</PaperButton>
+            </td>
+          </tr>
         {{/if}}
 
         {{#unless this.isCollapsed}}
-          <TableRow @items={{items}} @onClick={{this.onClick}}/>
+          <tr>
+            <td colspan={{this.width}} class="text-center">
+              <PaperButton @raised={{true}} @onClick={{this.toggleCollapse}}>Show {{sub this.body.length 10}} less rows</PaperButton>
+            </td>
+          </tr>
         {{/unless}}
-      {{/each}}
-
-      {{#if (and this.isCollapsed (gt this.body.length 10))}}
+      {{else}}
         <tr>
-          <td colspan={{this.width}} class="text-center">
-            <PaperButton @raised={{true}} @onClick={{this.toggleCollapse}}>Show {{sub this.body.length 10}} more rows</PaperButton>
+          <td class="text-center" colspan={{this.header.length}}>
+            {{@empty}}
           </td>
         </tr>
       {{/if}}
-
-      {{#unless this.isCollapsed}}
-        <tr>
-          <td colspan={{this.width}} class="text-center">
-            <PaperButton @raised={{true}} @onClick={{this.toggleCollapse}}>Show {{sub this.body.length 10}} less rows</PaperButton>
-          </td>
-        </tr>
-      {{/unless}}
-    {{else}}
-      <tr>
-        <td class="text-center" colspan={{this.header.length}}>
-          {{@empty}}
-        </td>
-      </tr>
-    {{/if}}
+    </tbody>
   </table>
 {{/unless}}

@@ -1,0 +1,21 @@
+name: Ember CI
+
+on: [push]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: rwjblue/setup-volta@v1
+    - uses: mydea/actions-ember-testing@v2
+    - name: Install dependencies
+      run: yarn install
+    - name: Run tests
+      run: yarn test
+    - name: Lint JS
+      run: yarn lint:js
+    - name: Lint HBS
+      run: yarn lint:hbs

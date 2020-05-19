@@ -1,3 +1,7 @@
+# 0.2.1 (05/19/2020)
+
+- updates table styling to have more distinguished borders
+
 # 0.2.0 (05/18/2020)
 
 - major design overhaul

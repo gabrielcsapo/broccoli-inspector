@@ -5,8 +5,8 @@
       <text.subhead>Information on the current system</text.subhead>
     </title.text>
   </card.title>
-  <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedIndex}} @onChange={{action (mut this.selectedIndex)}} as |tabs|>
-    {{#each systemInfoKeys as |key index|}}
+  <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedIndex}} @onChange={{fn (mut this.selectedIndex)}} as |tabs|>
+    {{#each this.systemInfoKeys as |key|}}
       <tabs.tab>
         {{key}}
       </tabs.tab>

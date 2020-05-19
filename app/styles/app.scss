@@ -80,12 +80,13 @@ mark {
 }
 
 table {
-  margin-bottom: 8px;
   max-width: 100%;
   width: 100%;
   border-spacing: 0;
   border-radius: 2px;
   overflow: hidden;
+  box-shadow: 0 2px 2px 0 paper-color('grey', '50'), 0 3px 1px -2px paper-color('grey', '100'), 0 1px 5px 0 paper-color('grey', '200');
+  border: 1px solid paper-color('grey', '200');
 }
 
 th {
@@ -100,6 +101,7 @@ td, th {
 
 td {
   vertical-align: top;
+  border-bottom: 1px solid paper-color('grey', '200');
 }
 
 .overflow-scroll { overflow: scroll; }

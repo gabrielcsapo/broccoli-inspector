@@ -17,7 +17,7 @@
   </div>
   <PaperDivider />
   <div class="paper-content--block">
-    <PaperInput @placeholder="Filter plugins" @type="text" @value={{this.searchByValue}} @onChange={{action (mut this.searchByValue)}} @icon="search" />
+    <PaperInput @placeholder="Filter plugins" @type="text" @value={{this.searchByValue}} @onChange={{fn (mut this.searchByValue)}} @icon="search" />
   </div>
   <PaperDivider />
   <PaperList>

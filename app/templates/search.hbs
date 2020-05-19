@@ -1,8 +1,8 @@
 {{#if @model.result}}
   <h2> {{@model.result.length}} results found </h2>
 
-  {{#each @model.result key="@index" as |searchResult idx|}}
-    {{#each searchResult.results key="@index" as |result idx|}}
+  {{#each @model.result key="@index" as |searchResult|}}
+    {{#each searchResult.results key="@index" as |result|}}
       <PaperCard as |card|>
         <card.title as |title|>
           <title.text as |text|>

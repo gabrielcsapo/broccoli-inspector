@@ -5,7 +5,7 @@
       <text.subhead>This shows plugins that were run for this specific build.</text.subhead>
     </title.text>
   </card.title>
-  <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedTab}} @onChange={{action (mut this.selectedTab)}} as |tabs|>
+  <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedTab}} @onChange={{fn (mut this.selectedTab)}} as |tabs|>
     <tabs.tab>
       Chart
     </tabs.tab>
@@ -13,7 +13,7 @@
       Table
     </tabs.tab>
   </PaperTabs>
-  {{#if (eq selectedTab 0)}}
+  {{#if (eq this.selectedTab 0)}}
     <C3Chart
       @data={{this.data}}
       @axis={{this.axis}}

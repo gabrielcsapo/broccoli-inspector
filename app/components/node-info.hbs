@@ -22,8 +22,8 @@
         <text.subhead>Hiemdall Schemas provide additional instrumentation for a plugin to provide aggregate timing for a plugin</text.subhead>
       </title.text>
     </card.title>
-    <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedHeimdallCustomSchemaIndex}} @onChange={{action (mut this.selectedHeimdallCustomSchemaIndex)}} as |tabs|>
-      {{#each @node.stats.custom as |custom index|}}
+    <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedHeimdallCustomSchemaIndex}} @onChange={{fn (mut this.selectedHeimdallCustomSchemaIndex)}} as |tabs|>
+      {{#each @node.stats.custom as |custom|}}
         <tabs.tab>
           {{custom.name}}
         </tabs.tab>
