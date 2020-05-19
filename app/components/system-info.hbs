@@ -1,0 +1,18 @@
+<PaperCard as |card|>
+  <card.title as |title|>
+    <title.text as |text|>
+      <text.headline>System Info</text.headline>
+      <text.subhead>Information on the current system</text.subhead>
+    </title.text>
+  </card.title>
+  <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedIndex}} @onChange={{action (mut this.selectedIndex)}} as |tabs|>
+    {{#each systemInfoKeys as |key index|}}
+      <tabs.tab>
+        {{key}}
+      </tabs.tab>
+    {{/each}}
+  </PaperTabs>
+  <card.content @class="p-0">
+    <pre class="m-0"><code>{{this.selectedSystemInfoData}}</code></pre>
+  </card.content>
+</PaperCard>

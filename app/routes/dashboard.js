@@ -15,31 +15,12 @@ const query = gql`
         versions
       }
       selfTime
-      slowestNode {
+      slowestNodes {
         id
         label
-        inputFiles
-        outputFiles
-        pluginName
         buildState {
           selfTime
           totalTime
-        }
-        nodeInfo {
-          instantiationStack
-          annotation
-          persistentOutput
-          needsCache
-          volatile
-          trackInputChanges
-        }
-        inputNodeWrappers {
-          id
-          label
-          buildState {
-            selfTime
-            totalTime
-          }
         }
       }
       totalFs {
@@ -135,6 +116,6 @@ export default class DashboardRoute extends Route {
   model(params) {
     const { id } = params;
 
-    return this.apollo.query({ query, variables: { id } }, "dashboard");
+    return this.apollo.query({ query, variables: { id }, fetchPolicy: 'no-cache' }, "dashboard");
   }
 }

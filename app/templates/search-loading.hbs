@@ -1,7 +1,9 @@
-<EmptyState
-  @iconType="spinner"
-  @iconSize="4x"
-  @spin={{true}}
-  @title="Currently loading search query"
-  @subtitle="Please do not refresh, this page will refresh when data is loaded"
-/>
+<PaperCard as |card|>
+  <card.title as |title|>
+    <title.text as |text|>
+      <text.headline>Currently loading search query</text.headline>
+      <text.subhead>Please do not refresh, this page will refresh when data is loaded</text.subhead>
+    </title.text>
+    <PaperProgressCircular @accent={{true}} @class="md-hue-1" @diameter={{60}} />
+  </card.title>
+</PaperCard>

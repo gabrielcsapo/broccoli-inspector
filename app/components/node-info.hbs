@@ -15,64 +15,54 @@
 <br/>
 
 {{#if @node.stats.custom}}
-  <br/>
-  <h2> Heimdall Schemas </h2>
-  <i> Hiemdall Schemas provide additional instrumentation for a plugin to provide aggregate timing for a plugin </i>
-  <BsTab as |tab|>
-    {{#each @node.stats.custom as |custom index|}}
-      <tab.pane @title={{custom.name}}>
-        <div class="card p-3">
-          <pre class="m-0"><code>{{custom.jsonValue}}</code></pre>
-        </div>
-      </tab.pane>
-    {{/each}}
-  </BsTab>
+  <PaperCard as |card|>
+    <card.title as |title|>
+      <title.text as |text|>
+        <text.headline>Heimdall Schemas</text.headline>
+        <text.subhead>Hiemdall Schemas provide additional instrumentation for a plugin to provide aggregate timing for a plugin</text.subhead>
+      </title.text>
+    </card.title>
+    <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedHeimdallCustomSchemaIndex}} @onChange={{action (mut this.selectedHeimdallCustomSchemaIndex)}} as |tabs|>
+      {{#each @node.stats.custom as |custom index|}}
+        <tabs.tab>
+          {{custom.name}}
+        </tabs.tab>
+      {{/each}}
+    </PaperTabs>
+    <pre class="m-0"><code>{{this.selectedHeimdallCustomSchema.jsonValue}}</code></pre>
+  </PaperCard>
 {{else}}
-  <div class="card">
-    <div class="card-body">
-      To get additional data logged here, please follow the guide on adding heimdall logging to your plugin.
-    </div>
-  </div>
+  <EmptyState
+    @iconType="note"
+    @title="Heimdall Schemas"
+    @subtitle={{html "To get additional data logged here, please visit <a href=\"https://github.com/heimdalljs/heimdalljs-lib\" target=\"_blank\">https://github.com/heimdalljs/heimdalljs-lib</a> for more information."}}
+  />
 {{/if}}
 
 <br/>
 
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <Charts::PluginTimeBreakdown
-        @selfTime={{@node.buildState.selfTime}}
-        @fs={{@node.stats.fs}}
-      />
-    </div>
-    <div class="col">
-      <Table
-        @title="FS Timing"
-        @data={{this.fs}}
-        @empty="No FS Timing available"
-      />
-    </div>
-  </div>
-</div>
+<NodeInfoTimeBreakdown
+  @fs={{@node.stats.fs}}
+  @selfTime={{@node.buildState.selfTime}}
+/>
 
 <br/>
 
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <Table
-        @title="Input Nodes"
-        @data={{this.inputNodeWrappers}}
-        @empty="No input node wrappers for this plugin"
-      />
-    </div>
-    <div class="col">
-      <Table
-        @title="Output Nodes"
-        @data={{this.outputNodeWrappers}}
-        @empty="No output node wrappers for this plugin"
-      />
-    </div>
+<div class="layout-row">
+  <div class="flex-45">
+    <Table
+      @title="Input Nodes"
+      @data={{this.inputNodeWrappers}}
+      @empty="No input node wrappers for this plugin"
+    />
+  </div>
+  <div class="flex-10"></div>
+  <div class="flex-45">
+    <Table
+      @title="Output Nodes"
+      @data={{this.outputNodeWrappers}}
+      @empty="No output node wrappers for this plugin"
+    />
   </div>
 </div>
 

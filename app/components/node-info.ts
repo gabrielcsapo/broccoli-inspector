@@ -12,6 +12,13 @@ export default class NodeInfo extends Component<Args> {
   @service
   router;
 
+  @tracked
+  selectedHeimdallCustomSchemaIndex = 0;
+
+  get selectedHeimdallCustomSchema() {
+    return this.args.node.stats.custom[this.selectedHeimdallCustomSchemaIndex];
+  }
+
   get info() {
     const node = this.args.node;
     const nodeInfo = node?.nodeInfo || {};
@@ -87,38 +94,6 @@ export default class NodeInfo extends Component<Args> {
           }
         ]
       })
-    }
-  }
-
-  get fs() {
-    const node = this.args.node;
-    const fs = node?.stats?.fs || {};
-
-    const body = Object.keys(fs)
-      .filter((key) => {
-        const item = fs[key];
-
-        return item && item.time;
-      })
-      .sort((keyA, keyB) => {
-        const rowA = fs[keyA];
-        const rowB = fs[keyB];
-
-        return rowB.time - rowA.time;
-      })
-      .map((key) => {
-        const { time, count } = fs[key];
-        // time is ns and we want to convert to ms
-        return [key, { raw: time, text: `${time / 1000000}ms` }, count];
-      });
-
-    return {
-      header: [
-        `Operation`,
-        `Time`,
-        `Count`
-      ],
-      body
     }
   }
 

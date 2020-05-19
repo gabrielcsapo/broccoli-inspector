@@ -1,0 +1,33 @@
+<PaperCard as |card|>
+  <card.title as |title|>
+    <title.text as |text|>
+      <text.headline>Node FS Count</text.headline>
+      <text.subhead>This shows the FS count</text.subhead>
+    </title.text>
+  </card.title>
+  <PaperTabs @stretch={{true}} @borderBottom={{true}} @selected={{this.selectedTab}} @onChange={{action (mut this.selectedTab)}} as |tabs|>
+    <tabs.tab>
+      Chart
+    </tabs.tab>
+    <tabs.tab>
+      Table
+    </tabs.tab>
+  </PaperTabs>
+  {{#if (eq selectedTab 0)}}
+    <C3Chart
+      @data={{this.data}}
+      @title={{this.title}}
+      @padding={{this.padding}}
+      @legend={{this.legend}}
+      @c3chart={{this.chart}}
+      @tooltip={{this.tooltip}}
+      @pie={{this.pie}}
+    />
+  {{else}}
+    <Table
+      @title="FS Timing"
+      @data={{this.fs}}
+      @empty="No FS data available"
+    />
+  {{/if}}
+</PaperCard>

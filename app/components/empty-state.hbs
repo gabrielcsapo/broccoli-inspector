@@ -1,7 +1,9 @@
-<div class="empty-state text-center">
-  <div class="empty-state--icon">
-    <FaIcon @icon={{@iconType}} @size={{@iconSize}} @spin={{@spin}}/>
-  </div>
-  <h2 class="empty-state--title">{{@title}}</h2>
-  <p class="empty-state--subtitle">{{@subtitle}}</p>
-</div>
+<PaperCard as |card|>
+  <card.title as |title|>
+    <title.text as |text|>
+      <text.headline>{{@title}}</text.headline>
+      <text.subhead>{{@subtitle}}</text.subhead>
+    </title.text>
+    <PaperIcon @icon={{@iconType}} />
+  </card.title>
+</PaperCard>
