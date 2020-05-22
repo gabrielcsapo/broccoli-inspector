@@ -1,3 +1,7 @@
+# 0.2.2 (05/21/2020)
+
+- Updated logo design thanks to Denis Toledo https://www.denistoledo.dev/
+
 # 0.2.1 (05/19/2020)
 
 - updates table styling to have more distinguished borders

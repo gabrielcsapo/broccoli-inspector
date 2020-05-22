@@ -1,3 +1,10 @@
+<p align="center">
+  <img src="./public/assets/images/logo/logo-rounded.png" height="300" />
+  <p align="center">
+    Credits to the awesome <a href="https://www.denistoledo.dev/">Denis Toledo</a>
+  </p>
+</p>
+
 # broccoli-inspector
 
 🔍 inspect what's really happening in your broccoli pipeline
@@ -28,7 +35,7 @@ To get FS timing information ensure that you add `EMBER_CLI_INSTRUMENTATION=1` r
 
 > Currently tracking moving this functionality into broccoli here https://github.com/broccolijs/broccoli/issues/461.
 
-Once you have done the setup done, visit [http://localhost:4200/_broccoli-inspector](http://localhost:4200/_broccoli-inspector) in your browser. 
+Once you have done the setup done, visit [http://localhost:4200/_broccoli-inspector](http://localhost:4200/_broccoli-inspector) in your browser.
 
 ## How does this work?
 

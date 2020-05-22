@@ -1,6 +1,6 @@
 {
   "name": "broccoli-inspector",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "🔍 inspect what's really happening in your broccoli pipeline",
   "repository": "https://github.com/gabrielcsapo/broccoli-inspector.git",
   "license": "MIT",
