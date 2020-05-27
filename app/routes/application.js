@@ -21,6 +21,16 @@ const query = gql`
   }
 `;
 
+const infoQuery = gql`
+  query query {
+    info {
+      notSupported {
+        reason
+      }
+    }
+  }
+`;
+
 const buildsQuery = gql`
   query query {
     builds {
@@ -108,30 +118,38 @@ export default class ApplicationRoute extends Route {
   model(params) {
     this.controllerFor('application').set('isLoading', true);
 
-    const { pluginType, queryContext } = params;
+    return this.apollo.query({ query: infoQuery }, "info").then((infoResult) => {
+      if(infoResult.notSupported) {
+        return {
+          notSupported: infoResult.notSupported
+        }
+      }
 
-    if(queryContext === 'group') {
-      if(pluginType) {
-        return this.apollo.query({ query: groupPluginsSearchQuery, variables: { type: pluginType } }, "nodesByType").then((result) => {
-          const nodes = result[0] && result[0].nodes ? sortNodes(result[0].nodes) : [];
+      const { pluginType, queryContext } = params;
 
-          return { nodes }
+      if(queryContext === 'group') {
+        if(pluginType) {
+          return this.apollo.query({ query: groupPluginsSearchQuery, variables: { type: pluginType } }, "nodesByType").then((result) => {
+            const nodes = result[0] && result[0].nodes ? sortNodes(result[0].nodes) : [];
+
+            return { nodes }
+          });
+        }
+
+        return this.apollo.query({ query: groupPluginsQuery }, "nodesByType").then((result) => {
+          return { nodesByType: result.sort((nodeA, nodeB) => nodeB.time - nodeA.time) }
         });
       }
 
-      return this.apollo.query({ query: groupPluginsQuery }, "nodesByType").then((result) => {
-        return { nodesByType: result.sort((nodeA, nodeB) => nodeB.time - nodeA.time) }
-      });
-    }
+      if(queryContext === 'builds') {
+        return this.apollo.query({ query: buildsQuery }, "builds").then((result) => {
+          return { builds: result }
+        });
+      }
 
-    if(queryContext === 'builds') {
-      return this.apollo.query({ query: buildsQuery }, "builds").then((result) => {
-        return { builds: result }
+      return this.apollo.query({ query }, "nodes").then((result) => {
+        return { nodes: sortNodes(result) }
       });
-    }
-
-    return this.apollo.query({ query }, "nodes").then((result) => {
-      return { nodes: sortNodes(result) }
     });
   }
 
