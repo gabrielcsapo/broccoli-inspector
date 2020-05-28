@@ -1,5 +1,7 @@
-# Unreleased
+# 0.2.3 (05/27/2020)
 
+- Adds the ability to download data from builds
+- Scroll the file to the line number selected from stackTrace
 - Adds modal banner to show when broccoli-inspector does not support the project it is being included in
 
 # 0.2.2 (05/21/2020)

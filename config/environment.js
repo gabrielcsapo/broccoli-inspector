@@ -10,7 +10,7 @@ module.exports = function(environment) {
     },
     modulePrefix: 'broccoli-inspector',
     environment,
-    rootURL: '/_broccoli-inspector',
+    rootURL: '/_broccoli-inspector/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

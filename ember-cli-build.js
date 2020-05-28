@@ -25,7 +25,6 @@ module.exports = function(defaults) {
     },
 
     'ember-prism': {
-      'theme': 'vs',
       'components': ['javascript'],
       'plugins': ['line-highlight', 'line-numbers']
     },

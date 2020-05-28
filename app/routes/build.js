@@ -11,6 +11,7 @@ const query = gql`
       nodes {
         id
         label
+        pluginName
         buildState {
           selfTime
           totalTime

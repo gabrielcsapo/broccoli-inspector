@@ -69,6 +69,10 @@ export default class InstantiationStackExplorer extends Component {
       this.column = column;
       this.filePath = filePath;
       this.loading = false;
+
+      setTimeout(function() {
+        document.querySelector('.code-block').scroll(0, parseInt(document.querySelector('.line-highlight').style.top.replace('px', '')))
+      }, 200)
     });
   }
 }
