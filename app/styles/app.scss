@@ -76,7 +76,8 @@ pre code {
 }
 
 mark {
-  background-color: var(--orange);
+  background-color: paper-color($primary);
+  color: #ffffff;
 }
 
 table {

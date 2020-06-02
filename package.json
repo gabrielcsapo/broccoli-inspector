@@ -1,6 +1,6 @@
 {
   "name": "broccoli-inspector",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "🔍 inspect what's really happening in your broccoli pipeline",
   "repository": "https://github.com/gabrielcsapo/broccoli-inspector.git",
   "license": "MIT",
@@ -10,7 +10,7 @@
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
-    "start": "ember serve",
+    "start": "EMBER_CLI_INSTRUMENTATION=1 ember serve",
     "test": "npm-run-all lint:* test:*",
     "test:ember": "ember test",
     "storybook": "start-storybook -p 6006 -s dist",
@@ -24,13 +24,12 @@
   ],
   "dependencies": {
     "apollo-server-express": "^2.12.0",
+    "ember-cli-version-checker": "^5.1.1",
     "express": "^4.17.1",
     "find-up": "^4.1.0",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.3",
-    "semver": "^7.3.2",
-    "socket.io": "^2.3.0",
-    "walk-sync": "^2.1.0"
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

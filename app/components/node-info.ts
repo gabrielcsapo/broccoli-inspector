@@ -23,13 +23,20 @@ export default class NodeInfo extends Component<Args> {
     const node = this.args.node;
     const nodeInfo = node?.nodeInfo || {};
 
+    const body = Object.keys(nodeInfo)
+      .filter((prop) => prop.indexOf('__') === -1 && prop !== 'instantiationStack')
+      .map((prop) => [prop, nodeInfo[prop]]);
+
+    body.push([
+      'pluginName',
+      node.pluginName
+    ]);
+
     return {
       header: [
         "Property", "Value"
       ],
-      body: Object.keys(nodeInfo)
-        .filter((prop) => prop.indexOf('__') === -1 && prop !== 'instantiationStack')
-        .map((prop) => [prop, nodeInfo[prop]])
+      body
     }
   }
 

@@ -37,9 +37,15 @@ function sortRow(lastSelectedColumn, columnIndex, columnA, columnB) {
   }
 }
 
+function getColumnValue(column) {
+  if(column.raw !== undefined) return column.raw;
+  if(column.text !== undefined) return column.text
+  if(column !== undefined) return column;
+}
+
 function sortColumn(body, columnIndex, lastSelectedColumn) {
   return body.sort((columnA, columnB) => {
-    return sortRow(lastSelectedColumn, columnIndex, columnA[columnIndex].raw || columnA[columnIndex].text || columnA[columnIndex], columnB[columnIndex].raw || columnB[columnIndex].text || columnB[columnIndex]);
+    return sortRow(lastSelectedColumn, columnIndex, getColumnValue(columnA[columnIndex]), getColumnValue(columnB[columnIndex]));
   });
 }
 

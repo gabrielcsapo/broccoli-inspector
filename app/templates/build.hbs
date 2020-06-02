@@ -1,37 +1,57 @@
-<PaperCard as |card|>
-  <card.title as |title|>
-    <title.text as |text|>
-      <text.headline>
-        <div class="layout-row">
-          <div class="flex">
-            Build {{@model.id}}
-          </div>
-          <div class="flex-nogrow">
-            <PaperMenu as |menu|>
-              <menu.trigger>
-                <PaperButton @iconButton={{true}}>
-                  {{paper-icon "more_horiz"}}
-                </PaperButton>
-              </menu.trigger>
+{{#if model.error}}
+  <PaperDialog @class="flex">
+    <PaperDialogContent @class="p-0">
+      <div class="m-0">
+        <PaperCard @class="m-0" as |card|>
+          <card.title as |title|>
+            <title.text as |text|>
+              <text.headline>Error</text.headline>
+              <text.subhead>{{@model.error}}</text.subhead>
+            </title.text>
+          </card.title>
+          <card.content>
+            <PaperButton @href={{href-to "build" 0}}>Navigate back to safety</PaperButton>
+          </card.content>
+        </PaperCard>
+      </div>
+    </PaperDialogContent>
+  </PaperDialog>
+{{else}}
+  <PaperCard as |card|>
+    <card.title as |title|>
+      <title.text as |text|>
+        <text.headline>
+          <div class="layout-row">
+            <div class="flex">
+              Build {{@model.id}} ({{to-fixed @model.time 2}}ms)
+            </div>
+            <div class="flex-nogrow">
+              <PaperMenu as |menu|>
+                <menu.trigger>
+                  <PaperButton @iconButton={{true}}>
+                    {{paper-icon "more_horiz"}}
+                  </PaperButton>
+                </menu.trigger>
 
-              <menu.content @width={{4}} as |content|>
-                <content.menu-item @href={{this.downloadAsJSON}} @target="_blank">
-                  {{paper-icon "link"}}
-                  <span>Download Build Info</span>
-                </content.menu-item>
-              </menu.content>
-            </PaperMenu>
+                <menu.content @width={{4}} as |content|>
+                  <content.menu-item @href={{this.downloadAsJSON}} @target="_blank">
+                    {{paper-icon "link"}}
+                    <span>Download Build Info</span>
+                  </content.menu-item>
+                </menu.content>
+              </PaperMenu>
+            </div>
           </div>
-        </div>
-      </text.headline>
-      <text.subhead>This is the resulting information from build {{@model.id}}</text.subhead>
-    </title.text>
-  </card.title>
-  <card.content>
-    This build was triggered because of changes to {{@model.filePath}}.
-  </card.content>
-</PaperCard>
+        </text.headline>
+        <text.subhead>This is the resulting information from build {{@model.id}}</text.subhead>
+      </title.text>
+    </card.title>
+    <card.content>
+      This build was triggered because of changes to {{@model.filePath}}.
+    </card.content>
+  </PaperCard>
 
-<BuildPlugins
-  @nodes={{@model.nodes}}
-/>
+  <BuildPlugins
+    @nodes={{@model.nodes}}
+  />
+{{/if}}

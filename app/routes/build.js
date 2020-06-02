@@ -8,6 +8,7 @@ const query = gql`
     build(id: $id) {
       id
       filePath
+      time,
       nodes {
         id
         label
@@ -31,6 +32,10 @@ export default class BuildRoute extends Route {
   model(params) {
     const { id } = params;
 
-    return this.apollo.query({ query, variables: { id }, fetchPolicy: 'no-cache' }, "build");
+    return this.apollo.query({ query, variables: { id }, fetchPolicy: 'no-cache' }, "build").catch((ex) => {
+      return {
+        error: ex.message
+      }
+    });
   }
 }

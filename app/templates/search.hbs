@@ -1,12 +1,12 @@
 {{#if @model.result}}
-  <h2> {{@model.result.length}} results found </h2>
+  <h2>{{@model.result.length}} results found for "{{@model.query}}"</h2>
 
   {{#each @model.result key="@index" as |searchResult|}}
     {{#each searchResult.results key="@index" as |result|}}
       <PaperCard as |card|>
         <card.title as |title|>
           <title.text as |text|>
-            <text.headline>
+            <text.subhead>
               <LinkTo @route="node" @model={{searchResult.node.id}}>
                 {{searchResult.node.label}}
               </LinkTo>
@@ -14,12 +14,12 @@
               {{paper-icon "arrow_right"}}
 
               {{result.property}}
-            </text.headline>
-            <text.subhead>
-              <pre><code>...<br/>{{highlight-text result.stringValue @model.query}}<br/>...<br/></code></pre>
             </text.subhead>
           </title.text>
         </card.title>
+        <card.content @class="m-0 p-0">
+          <pre class="mb-0 mt-0"><code><br/>{{highlight-text result.stringValue @model.query}}<br/><br/></code></pre>
+        </card.content>
       </PaperCard>
 
     {{/each}}
@@ -27,9 +27,7 @@
 {{else}}
   <EmptyState
     class="mt-3"
-    @iconType="battery-empty"
-    @iconSize="4x"
-    @title={{concat "No Data found for your search " "\"" @model.query "\""}}
-    @subtitle=""
+    @iconType="hourglass_empty"
+    @title={{concat "No search results found for " "\"" @model.query "\""}}
   />
 {{/if}}

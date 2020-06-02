@@ -1,7 +1,7 @@
 <PaperCard as |card|>
   <card.title as |title|>
     <title.text as |text|>
-      <text.headline>Plugin Information</text.headline>
+      <text.headline>Plugins run</text.headline>
       <text.subhead>This shows plugins that were run for this specific build.</text.subhead>
     </title.text>
   </card.title>
@@ -17,7 +17,6 @@
     <C3Chart
       @data={{this.data}}
       @axis={{this.axis}}
-      @c3chart={{this.chart}}
     />
   {{else}}
     <Table

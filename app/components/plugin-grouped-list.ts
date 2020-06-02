@@ -25,6 +25,6 @@ export default class GroupedPluginList extends Component {
 
   @action
   uncollapse() {
-
+    this.isCollapsed = false;
   }
 }

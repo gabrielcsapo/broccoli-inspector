@@ -2,12 +2,9 @@
   {{#each @items as |item|}}
     {{#if item.linkRoute}}
       <td>
-        <LinkTo
-          @route={{item.linkRoute}}
-          @model={{item.linkModel}}
-        >
+        <a href={{href-to item.linkRoute item.linkModel}}>
           {{item.text}}
-        </LinkTo>
+        </a>
       </td>
     {{else if item.tag}}
       <td>

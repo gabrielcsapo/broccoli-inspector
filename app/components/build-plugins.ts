@@ -7,15 +7,10 @@ export default class BuildPlugins extends Component {
   @tracked
   selectedTab = 0;
 
-  chart = null;
-
   get nodes() {
     const nodes = this.args?.nodes;
 
     const body = nodes
-      .filter((node) => {
-        return node.buildState.selfTime !== 0 && node.buildState.selfTime > 50;
-      })
       .map((node) => {
         return [node.id, {
           text: node.label,

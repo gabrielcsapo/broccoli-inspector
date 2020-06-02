@@ -1,3 +1,13 @@
+# 0.2.4 (06/01/20202)
+
+- Search results are more consolidated
+- Search results empty state looks as expected
+- Fixes issue with table where sorting values are not picked correctly
+- Ensure that plugin types that are formed like (broccoli-persistent-filter:Babel > [Babel: broccoli-inspector]) group by the first string matching (broccoli-persistent-filter:Babel)
+- Fixes bug where plugins that were grouped could not be uncollapsed
+- Catches graphql errors on build page and display modal
+- Adds banner updates that specifies that ember-cli versions < 3.11.0 are not supported.
+
 # 0.2.3 (05/27/2020)
 
 - Adds the ability to download data from builds

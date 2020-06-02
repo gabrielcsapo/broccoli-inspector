@@ -25,6 +25,6 @@ export default class PluginList extends Component {
 
   @action
   uncollapse() {
-
+    this.isCollapsed = false;
   }
 }
