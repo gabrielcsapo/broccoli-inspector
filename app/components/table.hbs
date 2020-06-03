@@ -42,20 +42,14 @@
     </thead>
     <tbody>
       {{#if this.body}}
-        {{#each this.body as |items idx|}}
-          {{#if (and this.isCollapsed (lt idx 10))}}
-            <TableRow @items={{items}} @onClick={{this.onClick}}/>
-          {{/if}}
-
-          {{#unless this.isCollapsed}}
-            <TableRow @items={{items}} @onClick={{this.onClick}}/>
-          {{/unless}}
+        {{#each this.body as |items|}}
+          <TableRow @items={{items}} @onClick={{this.onClick}}/>
         {{/each}}
 
-        {{#if (and this.isCollapsed (gt this.body.length 10))}}
+        {{#if (and this.isCollapsed (gt @data.body.length 10))}}
           <tr>
             <td colspan={{this.width}} class="text-center">
-              <PaperButton @raised={{true}} @onClick={{this.toggleCollapse}}>Show {{sub this.body.length 10}} more rows</PaperButton>
+              <PaperButton @raised={{true}} @onClick={{this.toggleCollapse}}>Show {{sub @data.body.length 10}} more rows</PaperButton>
             </td>
           </tr>
         {{/if}}

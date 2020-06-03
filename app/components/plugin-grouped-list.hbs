@@ -22,34 +22,20 @@
   <PaperDivider />
   <PaperList>
     {{#if this.nodesByType}}
-      {{#each this.nodesByType key="@index" as |node idx|}}
-        {{#if (and this.isCollapsed (lt idx 10))}}
-          <PaperItem @class="md-3-line" @href={{href-to "index" (query-params pluginType=node.label)}}>
-            <div class="md-list-item-text">
-              <h3>{{node.label}}</h3>
-              <h4>{{to-fixed node.time 3}}ms</h4>
-            </div>
-            <div class="md-secondary-container">
-              ({{node.amountOfNodes}})
-            </div>
-          </PaperItem>
-        {{/if}}
-
-        {{#unless this.isCollapsed}}
-          <PaperItem @class="md-3-line" @href={{href-to "index" (query-params pluginType=node.label)}}>
-            <div class="md-list-item-text">
-              <h3>{{node.label}}</h3>
-              <h4>{{to-fixed node.time 3}}ms</h4>
-            </div>
-            <div class="md-secondary-container">
-              ({{node.amountOfNodes}})
-            </div>
-          </PaperItem>
-        {{/unless}}
+      {{#each this.nodesByType key="@index" as |node|}}
+        <PaperItem @class="md-3-line" @href={{href-to "index" (query-params pluginType=node.label)}}>
+          <div class="md-list-item-text">
+            <h3>{{node.label}}</h3>
+            <h4>{{to-fixed node.time 3}}ms</h4>
+          </div>
+          <div class="md-secondary-container">
+            ({{node.amountOfNodes}})
+          </div>
+        </PaperItem>
       {{/each}}
 
-      {{#if (and this.isCollapsed (gt this.nodesByType.length 10))}}
-        <PaperButton @onClick={{this.uncollapse}}>Show {{sub this.nodesByType.length 10}} more grouped plugins</PaperButton>
+      {{#if (and this.isCollapsed (gt @nodesByType.length 10))}}
+        <PaperButton @onClick={{this.uncollapse}}>Show {{sub @nodesByType.length 10}} more grouped plugins</PaperButton>
       {{/if}}
     {{else}}
       <PaperItem>

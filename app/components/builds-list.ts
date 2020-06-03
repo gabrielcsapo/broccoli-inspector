@@ -1,17 +1,13 @@
-import Component from "@glimmer/component";
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
+import CollapsableComponent from './collapsable-component';
 
-export default class BuildsList extends Component {
-  @tracked
-  isCollapsed = true;
+export default class BuildsList extends CollapsableComponent {
+  constructor(...args) {
+    super(...args);
 
-  get builds() {
-    return this.args.builds;
+    this._items = this.args.builds;
   }
 
-  @action
-  uncollapse() {
-    this.isCollapsed = false;
+  get builds() {
+    return this.items;
   }
 }

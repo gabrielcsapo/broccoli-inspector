@@ -14,7 +14,7 @@
           </PaperCard>
         {{else}}
           {{#if this.file}}
-            <div style="height:700px;">
+            <div style="height:400px;">
               <PaperToolbar>
                 <PaperToolbarTools>
                   {{this.filePath}} {{this.line}}:{{this.column}}
@@ -34,7 +34,7 @@
 
       <PaperSidenav @class="md-whiteframe-z2" @lockedOpen={{true}}>
         <PaperContent>
-          <PaperList>
+          <PaperList style="height:400px;">
             {{#each this.instantiationStack as |instantiationStackLine index|}}
               {{#if instantiationStackLine.filePath}}
                 <PaperItem @onClick={{fn this.onStackClick instantiationStackLine.filePath instantiationStackLine.line instantiationStackLine.column}} @class={{if (eq this.selectedIndex index) "active"}}>

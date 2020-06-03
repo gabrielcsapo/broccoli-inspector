@@ -9,13 +9,8 @@ const query = gql`
     nodes {
       id
       label
-      nodeInfo {
-        instantiationStack
-        annotation
-      }
       buildState {
         selfTime
-        totalTime
       }
     }
   }
@@ -60,10 +55,6 @@ const groupPluginsSearchQuery = gql`
       nodes {
         id
         label
-        nodeInfo {
-          instantiationStack
-          annotation
-        }
         buildState {
           selfTime
           totalTime

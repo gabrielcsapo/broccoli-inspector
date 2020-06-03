@@ -1,6 +1,6 @@
-import Component from "@glimmer/component";
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import CollapsableComponent from './collapsable-component';
 
 interface Data {
   header?: string[];
@@ -49,7 +49,7 @@ function sortColumn(body, columnIndex, lastSelectedColumn) {
   });
 }
 
-export default class Table extends Component<Args> {
+export default class Table extends CollapsableComponent<Args> {
   @tracked
   lastSelectedColumn = null;
 
@@ -57,10 +57,13 @@ export default class Table extends Component<Args> {
   currentSelectedColumn = null;
 
   @tracked
-  isCollapsed = true; // will condense the table to only show the first 10 results
-
-  @tracked
   tableCollapsed = false;
+
+  constructor(...args) {
+    super(...args);
+
+    this._items = this.args.data.body;
+  }
 
   @action
   toggleCollapseTable() {
@@ -90,7 +93,7 @@ export default class Table extends Component<Args> {
       return sortColumn(this.args.data.body, this.currentSelectedColumn, this.lastSelectedColumn) || [];
     }
 
-    return this.args.data.body || [];
+    return this.items || [];
   }
 
   get header() {
@@ -99,7 +102,7 @@ export default class Table extends Component<Args> {
 
   // should return the width of the table based on the number of elements in the first result
   get width() {
-    return this.body[0] && this.body[0].length || 0;
+    return this.items[0] && this.items[0].length || 0;
   }
 
   get csv() {
