@@ -33,28 +33,21 @@
   <PaperDivider />
   <PaperList>
     {{#if this.nodes}}
-      {{#each this.nodes key="@index" as |node idx|}}
-        {{#if (and this.isCollapsed (lt idx 10))}}
-          <PaperItem @class="md-3-line" @href={{href-to "node" node.id}}>
-            <div class="md-list-item-text">
-              <h3>{{node.label}}</h3>
-              <h4>{{to-fixed node.buildState.selfTime 3}}ms</h4>
-            </div>
-          </PaperItem>
-        {{/if}}
+      {{#each this.nodes key="@index" as |node|}}
+        <PaperItem data-list-item={{node.id}} @class="md-3-line" @href={{href-to "node" node.id}}>
+          <div class="md-list-item-text">
+            <h3>{{node.label}}</h3>
+            <h4>{{to-fixed node.buildState.selfTime 3}}ms</h4>
+          </div>
 
-        {{#unless this.isCollapsed}}
-          <PaperItem @class="md-3-line" @href={{href-to "node" node.id}}>
-            <div class="md-list-item-text">
-              <h3>{{node.label}}</h3>
-              <h4>{{to-fixed node.buildState.selfTime 3}}ms</h4>
-            </div>
-          </PaperItem>
-        {{/unless}}
+          <PaperTooltip @position="right" @attachTo="[data-list-item='{{node.id}}']">
+            {{node.label}}
+          </PaperTooltip>
+        </PaperItem>
       {{/each}}
 
-      {{#if (and this.isCollapsed (gt this.nodes.length 10))}}
-        <PaperButton @onClick={{this.uncollapse}}>Show {{sub this.nodes.length 10}} more nodes</PaperButton>
+      {{#if (and this.isCollapsed (gt @nodes.length 10))}}
+        <PaperButton @onClick={{this.uncollapse}}>Show {{sub @nodes.length 10}} more nodes</PaperButton>
       {{/if}}
     {{else}}
       <PaperItem>

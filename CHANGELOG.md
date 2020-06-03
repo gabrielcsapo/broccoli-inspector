@@ -1,3 +1,10 @@
+# 0.2.5 (06/03/20202)
+
+- instantiationStack component is now 400px instead of 700px and also the sidebar with the stack itself is scrollable instead of growing to whatever size the list needs.
+- All condensable lists now extend CondensableComponent which will only provide the required amount of items to help with list rendering performance
+- Remove attributes from graphql queries we aren't using
+- add tooltip on plugin list to ensure plugins are readable
+
 # 0.2.4 (06/01/20202)
 
 - Search results are more consolidated

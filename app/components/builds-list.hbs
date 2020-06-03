@@ -9,36 +9,21 @@
   <PaperDivider />
   <PaperList>
     {{#if this.builds}}
-      {{#each this.builds key="@index" as |build idx|}}
-        {{#if (and this.isCollapsed (lt idx 10))}}
-          <PaperItem @class="md-3-line" @href={{href-to "build" build.id}}>
-            <PaperButton @raised={{true}} @mini={{true}} @primary={{true}} @disabled={{true}}>
-              {{build.id}}
-            </PaperButton>
-            <div class="md-list-item-text">
-              <h3>{{to-fixed build.time 2}}ms</h3>
-              <h4>{{build.filePath}}</h4>
-              <h4>{{build.amountOfNodes}} nodes run</h4>
-            </div>
-          </PaperItem>
-        {{/if}}
-
-        {{#unless this.isCollapsed}}
-          <PaperItem @class="md-3-line" @href={{href-to "build" build.id}}>
-            <PaperButton @raised={{true}} @mini={{true}} @primary={{true}} @disabled={{true}}>
-              {{build.id}}
-            </PaperButton>
-            <div class="md-list-item-text">
-              <h3>{{build.time}}ms</h3>
-              <h4>{{build.filePath}}</h4>
-              <h4>{{build.amountOfNodes}} nodes run</h4>
-            </div>
-          </PaperItem>
-        {{/unless}}
+      {{#each this.builds key="@index" as |build|}}
+        <PaperItem @class="md-3-line" @href={{href-to "build" build.id}}>
+          <PaperButton @raised={{true}} @mini={{true}} @primary={{true}} @disabled={{true}}>
+            {{build.id}}
+          </PaperButton>
+          <div class="md-list-item-text">
+            <h3>{{to-fixed build.time 2}}ms</h3>
+            <h4>{{build.filePath}}</h4>
+            <h4>{{build.amountOfNodes}} nodes run</h4>
+          </div>
+        </PaperItem>
       {{/each}}
 
-      {{#if (and this.isCollapsed (gt this.builds.length 10))}}
-        <PaperButton @onClick={{this.uncollapse}}>Show {{sub this.builds.length 10}} more builds</PaperButton>
+      {{#if (and this.isCollapsed (gt @builds.length 10))}}
+        <PaperButton @onClick={{this.uncollapse}}>Show {{sub @builds.length 10}} more builds</PaperButton>
       {{/if}}
     {{else}}
       <PaperItem>

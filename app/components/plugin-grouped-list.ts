@@ -1,30 +1,27 @@
-import Component from "@glimmer/component";
+import CollapsableComponent from './collapsable-component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 
-export default class GroupedPluginList extends Component {
-  @tracked
-  isCollapsed = true;
-
+export default class GroupedPluginList extends CollapsableComponent {
   @tracked
   searchByValue = '';
 
+  constructor(...args) {
+    super(...args);
+
+    this._items = this.args.nodesByType;
+  }
+
   get nodesByType() {
     if(this.searchByValue) {
-      return this.args.nodesByType.filter(({ label }) => {
+      return this.items.filter(({ label }) => {
         return label.indexOf(this.searchByValue) > -1;
       });
     }
 
-    return this.args.nodesByType;
+    return this.items;
   }
 
   get time() {
     return this.args.nodesByType.map((nodeByType) => nodeByType.time).reduce((a, b) => a + b);
-  }
-
-  @action
-  uncollapse() {
-    this.isCollapsed = false;
   }
 }
