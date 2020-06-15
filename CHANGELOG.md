@@ -1,3 +1,7 @@
+# 0.3.0 (06/15/20202)
+
+- ensures that if user serves ember application with `ember serve --path=dist`
+
 # 0.2.5 (06/03/20202)
 
 - instantiationStack component is now 400px instead of 700px and also the sidebar with the stack itself is scrollable instead of growing to whatever size the list needs.
