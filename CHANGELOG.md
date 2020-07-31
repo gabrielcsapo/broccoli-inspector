@@ -1,3 +1,7 @@
+# 0.4.0 (06/15/20202)
+
+- ensures that even when builds fail they are still viewable. This change makes buildState fields nullable.  
+
 # 0.3.0 (06/15/20202)
 
 - ensures that if user serves ember application with `ember serve --path=dist`
