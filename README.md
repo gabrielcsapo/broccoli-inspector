@@ -11,6 +11,8 @@
 
 > there be 🐲 here! The API's and functionality are still be cemented, anything before a 1.0.0 release will be subject to change.
 
+![demo-screencast](./broccoli-inspector.gif)
+
 ## Installation
 
 ```

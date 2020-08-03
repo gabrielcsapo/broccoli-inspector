@@ -1,19 +1,24 @@
-# 0.4.0 (06/15/20202)
+# 0.4.1 (08/03/2020)
+
+- fixes an issue where the progress bar never goes away after successful build
+- fixes bug in table rendering which didn't allow data to update after changed
+
+# 0.4.0 (07/31/2020)
 
 - ensures that even when builds fail they are still viewable. This change makes buildState fields nullable.  
 
-# 0.3.0 (06/15/20202)
+# 0.3.0 (06/15/2020)
 
 - ensures that if user serves ember application with `ember serve --path=dist`
 
-# 0.2.5 (06/03/20202)
+# 0.2.5 (06/03/2020)
 
 - instantiationStack component is now 400px instead of 700px and also the sidebar with the stack itself is scrollable instead of growing to whatever size the list needs.
 - All condensable lists now extend CondensableComponent which will only provide the required amount of items to help with list rendering performance
 - Remove attributes from graphql queries we aren't using
 - add tooltip on plugin list to ensure plugins are readable
 
-# 0.2.4 (06/01/20202)
+# 0.2.4 (06/01/2020)
 
 - Search results are more consolidated
 - Search results empty state looks as expected
