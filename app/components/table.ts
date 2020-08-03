@@ -61,8 +61,6 @@ export default class Table extends CollapsableComponent<Args> {
 
   constructor(...args) {
     super(...args);
-
-    this._items = this.args.data.body;
   }
 
   @action
@@ -93,7 +91,7 @@ export default class Table extends CollapsableComponent<Args> {
       return sortColumn(this.args.data.body, this.currentSelectedColumn, this.lastSelectedColumn) || [];
     }
 
-    return this.items || [];
+    return this.args.data.body || [];
   }
 
   get header() {
@@ -102,7 +100,7 @@ export default class Table extends CollapsableComponent<Args> {
 
   // should return the width of the table based on the number of elements in the first result
   get width() {
-    return this.items[0] && this.items[0].length || 0;
+    return this.args.data.body[0] && this.args.data.body[0].length || 0;
   }
 
   get csv() {

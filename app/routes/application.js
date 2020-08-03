@@ -145,6 +145,7 @@ export default class ApplicationRoute extends Route {
   }
 
   buildSuccess(currentBuild) {
+    console.log('hiiiiii', currentBuild);
     this.controller.set('isBuilding', false);
     this.controller.set('totalBuildTime', currentBuild.totalTime / 1000000);
   }

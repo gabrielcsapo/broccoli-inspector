@@ -9,6 +9,8 @@
 
 🔍 inspect what's really happening in your broccoli pipeline
 
+![demo-screencast](./broccoli-inspector.gif)
+
 > there be 🐲 here! The API's and functionality are still be cemented, anything before a 1.0.0 release will be subject to change.
 
 ## Installation
