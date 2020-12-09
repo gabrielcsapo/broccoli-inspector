@@ -81,24 +81,9 @@
   </PaperSidenavContainer>
 
   {{#if this.buildError}}
-    <PaperDialog @class="flex">
-      <PaperDialogContent @class="p-0">
-        <div class="m-0">
-          <PaperCard @class="m-0" as |card|>
-            <card.title as |title|>
-              <title.text as |text|>
-                <text.headline>Error!</text.headline>
-                <text.subhead>{{this.buildError.location}} in <a href={{href-to "node" this.buildError.nodeId}}>{{this.buildError.nodeLabel}}</a></text.subhead>
-              </title.text>
-            </card.title>
-            <pre class="m-0"><code>{{this.buildError.message}}</code></pre>
-            <card.content @class="m-0 p-0">
-              <CodeBlock class="line-numbers mb-0 mt-0" @code={{this.buildError.fileContents}} data-line={{this.buildError.line}}/>
-            </card.content>
-          </PaperCard>
-        </div>
-      </PaperDialogContent>
-    </PaperDialog>
+    <ErrorModal
+      @error={{this.buildError}}
+    />
   {{/if}}
 
   <PaperToaster @parent="#main" />

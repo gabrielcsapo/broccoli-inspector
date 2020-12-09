@@ -1,3 +1,8 @@
+# 0.5.0 (12/08/2020)
+
+- major bumps for all dependencies
+- ensures that error modal scrolls to the line that currently has the error
+
 # 0.4.1 (08/03/2020)
 
 - fixes an issue where the progress bar never goes away after successful build

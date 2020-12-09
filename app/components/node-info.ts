@@ -60,7 +60,6 @@ export default class NodeInfo extends Component<Args> {
     const node = this.args.node;
     const inputNodeWrappers = node?.inputNodeWrappers || [];
 
-    console.log(inputNodeWrappers)
     return {
       header: [
         'ID',

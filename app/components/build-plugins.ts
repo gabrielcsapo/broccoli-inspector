@@ -1,6 +1,4 @@
 import Component from "@glimmer/component";
-import { bind, later } from "@ember/runloop";
-import { action, computed } from "@ember/object";
 import { tracked } from '@glimmer/tracking';
 
 export default class BuildPlugins extends Component {

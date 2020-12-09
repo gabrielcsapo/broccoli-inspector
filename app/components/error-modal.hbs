@@ -1,0 +1,22 @@
+<div
+ {{did-insert (action this.scrollToError)}}
+>
+  <PaperDialog @class="flex">
+    <PaperDialogContent @class="p-0">
+      <div class="m-0">
+        <PaperCard @class="m-0" as |card|>
+          <card.title as |title|>
+            <title.text as |text|>
+              <text.headline>Error!</text.headline>
+              <text.subhead>{{@error.location}} on line {{@error.line}} in <a href={{href-to "node" @error.nodeId}}>{{@error.nodeLabel}}</a></text.subhead>
+            </title.text>
+          </card.title>
+          <pre class="m-0"><code>{{@error.message}}</code></pre>
+          <card.content @class="m-0 p-0">
+            <CodeBlock class="error-message-block line-numbers mb-0 mt-0" style="height:200px;" @code={{@error.fileContents}} data-line={{@error.line}}/>
+          </card.content>
+        </PaperCard>
+      </div>
+    </PaperDialogContent>
+  </PaperDialog>
+</div>
