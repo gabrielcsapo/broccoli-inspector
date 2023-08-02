@@ -1,5 +1,5 @@
-@import 'ember-paper';
-@import 'prism-vs';
+@import "ember-paper";
+@import "prism-vs";
 
 .md-navigation-rail {
   max-width: 80px;
@@ -64,7 +64,7 @@ pre {
   padding: 20px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 pre {
@@ -86,28 +86,37 @@ table {
   border-spacing: 0;
   border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 2px 2px 0 paper-color('grey', '50'), 0 3px 1px -2px paper-color('grey', '100'), 0 1px 5px 0 paper-color('grey', '200');
-  border: 1px solid paper-color('grey', '200');
+  box-shadow: 0 2px 2px 0 paper-color("grey", "50"),
+    0 3px 1px -2px paper-color("grey", "100"),
+    0 1px 5px 0 paper-color("grey", "200");
+  border: 1px solid paper-color("grey", "200");
 }
 
 th {
-  background-color: paper-color($primary, '400');
+  background-color: paper-color($primary, "400");
   color: white;
 }
 
-td, th {
+td,
+th {
   padding: 12px 16px;
   text-align: left;
 }
 
 td {
   vertical-align: top;
-  border-bottom: 1px solid paper-color('grey', '200');
+  border-bottom: 1px solid paper-color("grey", "200");
 }
 
-.overflow-scroll { overflow: scroll; }
-.text-center { text-align: center; }
-.text-break { word-break: break-word !important; }
+.overflow-scroll {
+  overflow: scroll;
+}
+.text-center {
+  text-align: center;
+}
+.text-break {
+  word-break: break-word !important;
+}
 .h-100 {
   height: 100%;
 }
@@ -122,4 +131,11 @@ td {
 }
 .mt-0 {
   margin-top: 0 !important;
+}
+
+// Overrides
+
+.md-list-item-text h3 {
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
 }
