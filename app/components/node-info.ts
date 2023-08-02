@@ -1,8 +1,9 @@
 import Component from "@glimmer/component";
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { Node } from "types";
+import { inject as service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
+import { Node } from "broccoli-inspector/types";
+import type RouterService from "@ember/routing/router-service";
 
 interface Args {
   node?: Node;
@@ -10,13 +11,15 @@ interface Args {
 
 export default class NodeInfo extends Component<Args> {
   @service
-  router;
+  declare router: RouterService;
 
   @tracked
   selectedHeimdallCustomSchemaIndex = 0;
 
   get selectedHeimdallCustomSchema() {
-    return this.args.node.stats.custom[this.selectedHeimdallCustomSchemaIndex];
+    return (this.args.node as any).stats.custom[
+      this.selectedHeimdallCustomSchemaIndex
+    ];
   }
 
   get info() {
@@ -24,33 +27,36 @@ export default class NodeInfo extends Component<Args> {
     const nodeInfo = node?.nodeInfo || {};
 
     const body = Object.keys(nodeInfo)
-      .filter((prop) => prop.indexOf('__') === -1 && prop !== 'instantiationStack')
-      .map((prop) => [prop, nodeInfo[prop]]);
+      .filter(
+        (prop) => prop.indexOf("__") === -1 && prop !== "instantiationStack"
+      )
+      .map((prop) => [prop, (nodeInfo as any)[prop]]);
 
-    body.push([
-      'pluginName',
-      node.pluginName
-    ]);
+    if (node?.pluginName) {
+      body.push(["pluginName", node.pluginName]);
+    }
 
     return {
-      header: [
-        "Property", "Value"
-      ],
-      body
-    }
+      header: ["Property", "Value"],
+      body,
+    };
   }
 
   @action
-  onInfoTableClick(e) {
+  onInfoTableClick(e: any) {
     e.stopPropagation();
     e.preventDefault();
 
-    if(e.target && e.target.dataset['filePath']) {
+    if (e.target && e.target.dataset["filePath"]) {
       const { filePath, line, column } = e.target.dataset;
 
-      this.router.transitionTo('node.file', this.args.node.id, {
-        queryParams: { filePath: encodeURI(filePath), line, column }
-      });
+      if (this.args?.node?.id) {
+        this.router.transitionTo("node.file", this.args?.node?.id, {
+          queryParams: { filePath: encodeURI(filePath), line, column },
+        });
+      } else {
+        alert("selected node has no id");
+      }
     }
 
     return false;
@@ -61,23 +67,19 @@ export default class NodeInfo extends Component<Args> {
     const inputNodeWrappers = node?.inputNodeWrappers || [];
 
     return {
-      header: [
-        'ID',
-        'Time',
-        'Node Label'
-      ],
+      header: ["ID", "Time", "Node Label"],
       body: inputNodeWrappers.map((inputNodeWrapper) => {
         return [
           inputNodeWrapper.id,
-          Number(inputNodeWrapper.buildState.selfTime).toFixed(3) + 'ms',
+          Number(inputNodeWrapper.buildState.selfTime).toFixed(3) + "ms",
           {
             text: inputNodeWrapper.label,
             linkModel: inputNodeWrapper.id,
-            linkRoute: 'node'
-          }
-        ]
-      })
-    }
+            linkRoute: "node",
+          },
+        ];
+      }),
+    };
   }
 
   get outputNodeWrappers() {
@@ -85,23 +87,19 @@ export default class NodeInfo extends Component<Args> {
     const outputNodeWrappers = node?.outputNodeWrappers || [];
 
     return {
-      header: [
-        'ID',
-        'Time',
-        'Node Label'
-      ],
+      header: ["ID", "Time", "Node Label"],
       body: outputNodeWrappers.map((outputNodeWrapper) => {
         return [
           outputNodeWrapper.id,
-          Number(outputNodeWrapper.buildState.selfTime).toFixed(3) + 'ms',
+          Number(outputNodeWrapper.buildState.selfTime).toFixed(3) + "ms",
           {
             text: outputNodeWrapper.label,
             linkModel: outputNodeWrapper.id,
-            linkRoute: 'node'
-          }
-        ]
-      })
-    }
+            linkRoute: "node",
+          },
+        ];
+      }),
+    };
   }
 
   get files() {
@@ -112,15 +110,15 @@ export default class NodeInfo extends Component<Args> {
     const tableHeight = Math.max(inputFiles.length, outputFiles.length);
 
     for (var i = 0; i < tableHeight; i++) {
-      body.push([inputFiles[i], outputFiles[i]])
+      body.push([inputFiles[i], outputFiles[i]]);
     }
 
     return {
       header: [
         `Input Files (${inputFiles.length})`,
-        `Output Files (${outputFiles.length})`
+        `Output Files (${outputFiles.length})`,
       ],
-      body
+      body,
     };
   }
 }

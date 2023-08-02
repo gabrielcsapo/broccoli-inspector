@@ -1,3 +1,7 @@
+# Unreleased
+
+- bump dependencies, fix typescript errors
+
 # 0.5.0 (12/08/2020)
 
 - major bumps for all dependencies
@@ -10,7 +14,7 @@
 
 # 0.4.0 (07/31/2020)
 
-- ensures that even when builds fail they are still viewable. This change makes buildState fields nullable.  
+- ensures that even when builds fail they are still viewable. This change makes buildState fields nullable.
 
 # 0.3.0 (06/15/2020)
 
@@ -101,7 +105,7 @@
 
 - fix label formatting for total fs timing data to turn us to ms.
 - move group by plugin to sidebar from Navbar
-- consolidates navbar to have `|input|     |links|`
+- consolidates navbar to have `|input| |links|`
 - show node breakdown by fs and other (other being the time spent in the plugin that we don't have instrumentation to pin down where it is being spent.)
 - Move search box for plugins into the right rail, this is specifically for search by plugin name
   - This functionality is done locally

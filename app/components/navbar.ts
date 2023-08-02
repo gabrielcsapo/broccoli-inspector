@@ -1,14 +1,15 @@
 import Component from "@glimmer/component";
-import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import { inject as service } from "@ember/service";
+import { action } from "@ember/object";
+import { tracked } from "@glimmer/tracking";
+import type Router from "@ember/routing/router";
 
 export default class Navbar extends Component {
   @service
-  router;
+  declare router: Router;
 
   @tracked
-  searchTerm = '';
+  searchTerm = "";
 
   @tracked
   searchFormOpen = false;
@@ -18,11 +19,12 @@ export default class Navbar extends Component {
     this.searchFormOpen = !this.searchFormOpen;
   }
 
+  // TOOD: fix this with the right type
   @action
-  search(e) {
-    if(e.keyCode === 13) {
-      this.router.transitionTo('search', {
-        queryParams: { query: encodeURI(this.searchTerm) }
+  search(e: any) {
+    if (e.keyCode === 13) {
+      this.router.transitionTo("search", {
+        queryParams: { query: encodeURI(this.searchTerm) },
       });
     }
   }

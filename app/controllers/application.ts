@@ -1,13 +1,24 @@
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import socketIO from "socket.io-client";
+import { io } from "socket.io-client";
+import type RouterService from '@ember/routing/router-service';
+import { type Node } from 'broccoli-inspector/types';
+
+type BuildError = {
+    fileContents: string;
+    line: number;
+    location: string;
+    message: string;
+    nodeId: number;
+    nodeLabel:string;
+  } | null;
 
 export default class ApplicationController extends Controller {
   queryParams = ['queryContext', 'pluginType'];
 
   @service('router')
-  router;
+  declare router: RouterService;
 
   @tracked
   queryContext = null;
@@ -25,20 +36,20 @@ export default class ApplicationController extends Controller {
   currentBuildTime = 0;
 
   @tracked
-  currentNode = null;
+  currentNode = ''; // label of the current node (TODO: we should change this name)
 
   @tracked
   totalBuildTime = 0;
 
   @tracked
-  buildError = null;
+  buildError: BuildError = null;
 
   constructor() {
     super(...arguments);
 
     // In order for broccoli-inspector the middleware needs to be set and serving this asset
     // We can depend on socket.io being setup if that is the case
-    const socket = socketIO(window.location.origin);
+    const socket = io(window.location.origin);
 
     socket.on("beginNode", this.beginNode.bind(this));
     socket.on("endNode", this.endNode.bind(this));
@@ -50,12 +61,16 @@ export default class ApplicationController extends Controller {
     return this.router.currentRouteName;
   }
 
-  buildSuccess(currentBuild) {
+  // TODO: figure out what the type is
+  buildSuccess(currentBuild: any) {
     this.isBuilding = false;
-    this.totalBuildTime = currentBuild.totalTime / 1000000;
+    console.log(currentBuild);
+    // TODO: this might be the wrong type
+    this.totalBuildTime = (currentBuild as any).totalTime / 1000000;
   }
 
-  buildFailure(currentBuild) {
+  // TODO: figure out what the type is
+  buildFailure(currentBuild: any) {
     if (currentBuild.isBuilderError) {
       const { broccoliPayload } = currentBuild;
       const {
@@ -68,7 +83,7 @@ export default class ApplicationController extends Controller {
 
       this.buildError = {
         fileContents,
-        line: currentBuild?.broccoliPayload?.originalError?.hash.loc?.first_line || currentBuild?.broccoliPayload?.error?.location?.line,
+        line: originalError?.hash.loc?.first_line || broccoliPayload?.error?.location?.line,
         location: error.location.file,
         message: error.message,
         nodeId,
@@ -78,11 +93,11 @@ export default class ApplicationController extends Controller {
     }
   }
 
-  endNode(data) {
+  endNode(data: Node) {
     this.currentBuildTime = this.currentBuildTime + data.buildState.selfTime
   }
 
-  beginNode(data) {
+  beginNode(data: Node) {
     // if we were previously not building we should reset the stats
     if (!this.isBuilding) {
       this.currentBuildTime = 0;

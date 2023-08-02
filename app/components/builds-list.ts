@@ -1,7 +1,13 @@
-import CollapsableComponent from './collapsable-component';
+import { NodesByType } from "broccoli-inspector/types";
+import CollapsableComponent from "./collapsable-component";
 
-export default class BuildsList extends CollapsableComponent {
-  constructor(...args) {
+type Args = {
+  builds: NodesByType;
+};
+
+export default class BuildsList extends CollapsableComponent<Args> {
+  constructor(...args: any) {
+    // @ts-ignore
     super(...args);
 
     this._items = this.args.builds;

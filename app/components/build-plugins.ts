@@ -1,12 +1,17 @@
 import Component from "@glimmer/component";
 import { tracked } from '@glimmer/tracking';
+import { type Node } from "broccoli-inspector/types";
 
-export default class BuildPlugins extends Component {
+interface Args {
+  nodes?: Node[];
+}
+
+export default class BuildPlugins extends Component<Args> {
   @tracked
   selectedTab = 0;
 
   get nodes() {
-    const nodes = this.args?.nodes;
+    const nodes = this.args?.nodes || [];
 
     const body = nodes
       .map((node) => {
