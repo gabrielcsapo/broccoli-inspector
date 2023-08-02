@@ -1,0 +1,11 @@
+{{! template-lint-disable no-curly-component-invocation no-implicit-this }}
+{{#if (has-block)}}
+  {{yield}}
+{{else}}
+  {{label}}
+{{/if}}
+
+<PaperRipple
+  @fitRipple={{@iconButton}}
+  @center={{@iconButton}}
+  @dimBackground={{not @iconButton}}/>

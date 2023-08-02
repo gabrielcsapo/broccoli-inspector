@@ -1,0 +1,16 @@
+{{! template-lint-disable no-action no-curly-component-invocation no-implicit-this }}
+{{yield}}
+{{#if activeToast.show}}
+  <PaperToast @onClose={{action onClose activeToast}} @position={{activeToast.position}} @duration={{activeToast.duration}} @class={{activeToast.toastClass}} @parent={{parent}} as |toast|>
+    {{#if activeToast.componentName}}
+      {{component activeToast.componentName}}
+    {{else}}
+      <toast.text>{{activeToast.text}}</toast.text>
+      {{#if activeToast.action}}
+        <PaperButton @primary={{activeToast.action.primary}} @accent={{activeToast.action.accent}} @warn={{activeToast.action.warn}} @onClick={{activeToast.action.onClick}}>
+          {{activeToast.action.label}}
+        </PaperButton>
+      {{/if}}
+    {{/if}}
+  </PaperToast>
+{{/if}}

@@ -1,0 +1,110 @@
+{{! template-lint-disable no-action no-curly-component-invocation no-implicit-this }}
+<PageToolbar @pageTitle="Child Alignment" @isLayout={{true}} />
+
+<DocContent @class="layout-docs alignment">
+
+  <p>
+    The <code>layout-align</code> class takes two words. The first word says how the children
+    will be aligned in the layout's direction, and the second word says how the
+    children will be aligned perpendicular to the layout's direction.
+  </p>
+  <p>
+    Only one parameter value is required for this class. For example,
+    <code>layout-row layout-align-center</code> would make the elements center horizontally and use
+    the default behavior vertically.
+  </p>
+
+  <p>
+    <code>layout-column layout-align-center-end</code> would make children align along
+    the center vertically and along the end (right) horizontally.
+  </p>
+
+  <p>
+    Below is an interactive demo that lets you explore the visual results of the different
+    settings:
+  </p>
+
+  <PaperCard as |card|>
+    <PaperToolbar as |toolbar|>
+      <toolbar.tools>
+        <h2>
+          <span class="layout-class">{{layoutClass}}</span>
+          <span class="layout-align-class">{{layoutAlignClass}}</span>
+        </h2>
+      </toolbar.tools>
+    </PaperToolbar>
+    <div class="example interactive-demo">
+      {{! BEGIN-SNIPPET child-alignment }}
+      <div class="{{layoutClass}} {{layoutAlignClass}}">
+        <div class="one">one</div>
+        <div class="two">two</div>
+        <div class="three">three</div>
+      </div>
+      {{! END-SNIPPET }}
+    </div>
+    <card.content>
+      <div class="layout-row layout-align-space-between-start">
+        <div class="demo-group">
+          <h4>Layout Direction</h4>
+          <PaperRadioGroup @groupValue={{layoutDirection}} @onChange={{action (mut layoutDirection)}} as |group|>
+            <group.radio @value="row">
+              row
+            </group.radio>
+            <group.radio @value="column">
+              column
+            </group.radio>
+          </PaperRadioGroup>
+        </div>
+
+        <div class="demo-group">
+          <h4>Alignment in Layout Direction</h4>
+          <PaperRadioGroup @groupValue={{mainDirection}} @onChange={{action (mut mainDirection)}} as |group|>
+            <group.radio @value="">
+              none
+            </group.radio>
+            <group.radio @value="start">
+              start (default)
+            </group.radio>
+            <group.radio @value="center">
+              center
+            </group.radio>
+            <group.radio @value="end">
+              end
+            </group.radio>
+            <group.radio @value="space-around">
+              space-around
+            </group.radio>
+            <group.radio @value="space-between">
+              space-between
+            </group.radio>
+          </PaperRadioGroup>
+        </div>
+
+        <div class="demo-group">
+          <h4>Alignment in Perpendicular Direction</h4>
+          <PaperRadioGroup @groupValue={{perpDirection}} @onChange={{action (mut perpDirection)}} as |group|>
+            <group.radio @value="">
+              <em>none</em>
+            </group.radio>
+            <group.radio @value="start">
+              start
+            </group.radio>
+            <group.radio @value="center">
+              center
+            </group.radio>
+            <group.radio @value="end">
+              end
+            </group.radio>
+            <group.radio @value="stretch">
+              stretch (default)
+            </group.radio>
+          </PaperRadioGroup>
+        </div>
+      </div>
+
+      <CodeSnippet @name="child-alignment.hbs" />
+    </card.content>
+  </PaperCard>
+
+
+</DocContent>

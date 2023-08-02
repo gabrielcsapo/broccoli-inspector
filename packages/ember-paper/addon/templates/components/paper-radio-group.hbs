@@ -1,0 +1,13 @@
+{{! template-lint-disable no-action no-implicit-this }}
+{{yield (hash
+  label=(component labelComponent
+    setAriaLabelledby=(action (mut ariaLabelledby))
+  )
+  radio=(component radioComponent
+    toggle=toggle
+    disabled=disabled
+    groupValue=groupValue
+    onChange=(action "onChange")
+    parentComponent=this
+    shouldRegister=true)
+)}}

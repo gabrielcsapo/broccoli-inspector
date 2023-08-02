@@ -1,18 +1,21 @@
+import '@glint/environment-ember-loose';
+import '@glint/environment-ember-template-imports';
+
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 import type RouterService from '@ember/routing/router-service';
 import { type Node } from 'broccoli-inspector/types';
 
 type BuildError = {
-    fileContents: string;
-    line: number;
-    location: string;
-    message: string;
-    nodeId: number;
-    nodeLabel:string;
-  } | null;
+  fileContents: string;
+  line: number;
+  location: string;
+  message: string;
+  nodeId: number;
+  nodeLabel: string;
+} | null;
 
 export default class ApplicationController extends Controller {
   queryParams = ['queryContext', 'pluginType'];
@@ -51,10 +54,10 @@ export default class ApplicationController extends Controller {
     // We can depend on socket.io being setup if that is the case
     const socket = io(window.location.origin);
 
-    socket.on("beginNode", this.beginNode.bind(this));
-    socket.on("endNode", this.endNode.bind(this));
-    socket.on("buildSuccess", this.buildSuccess.bind(this));
-    socket.on("buildFailure", this.buildFailure.bind(this));
+    socket.on('beginNode', this.beginNode.bind(this));
+    socket.on('endNode', this.endNode.bind(this));
+    socket.on('buildSuccess', this.buildSuccess.bind(this));
+    socket.on('buildFailure', this.buildFailure.bind(this));
   }
 
   get currentRouteName() {
@@ -73,28 +76,25 @@ export default class ApplicationController extends Controller {
   buildFailure(currentBuild: any) {
     if (currentBuild.isBuilderError) {
       const { broccoliPayload } = currentBuild;
-      const {
-        originalError,
-        nodeLabel,
-        nodeId,
-        error,
-        fileContents,
-      } = broccoliPayload;
+      const { originalError, nodeLabel, nodeId, error, fileContents } =
+        broccoliPayload;
 
       this.buildError = {
         fileContents,
-        line: originalError?.hash.loc?.first_line || broccoliPayload?.error?.location?.line,
+        line:
+          originalError?.hash.loc?.first_line ||
+          broccoliPayload?.error?.location?.line,
         location: error.location.file,
         message: error.message,
         nodeId,
         nodeLabel,
       };
-      console.log(this.buildError)
+      console.log(this.buildError);
     }
   }
 
   endNode(data: Node) {
-    this.currentBuildTime = this.currentBuildTime + data.buildState.selfTime
+    this.currentBuildTime = this.currentBuildTime + data.buildState.selfTime;
   }
 
   beginNode(data: Node) {

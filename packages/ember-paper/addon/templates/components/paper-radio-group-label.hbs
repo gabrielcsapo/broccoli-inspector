@@ -1,0 +1,7 @@
+{{! template-lint-disable no-curly-component-invocation no-implicit-this }}
+{{#if (has-block)}}
+  {{yield}}
+{{else}}
+  {{text}}
+{{/if}}
+

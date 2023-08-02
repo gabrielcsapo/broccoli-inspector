@@ -1,0 +1,47 @@
+$primary: 'deep-orange';
+$warn: 'amber';
+$accent: 'pink';
+
+@import 'ember-paper';
+@import 'demo';
+
+/**
+ * Needed styles to set correct widths.
+ */
+
+body {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+body.ember-application {
+  flex-direction: row;
+  flex: 1;
+  display: flex;
+}
+
+body > div.ember-view {
+  flex-direction: row;
+  flex: 1;
+  display: flex;
+}
+
+.site-nav-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+md-toolbar.md-warn {
+  a, button {
+    &.md-button.md-default-theme:not(.md-primary):not(.md-accent) {
+      color: $dark-contrast-color;
+    }
+  }
+}
+
+.inner-sidenav {
+  position: relative;
+}

@@ -1,6 +1,8 @@
 # Unreleased
 
 - bump dependencies, fix typescript errors
+- feat: show sidebar contents with overflow so that you can see if things are run multiple times with the same name
+- feat: migrates to ember-template-imports for easier feature additions and changes
 
 # 0.5.0 (12/08/2020)
 

@@ -1,0 +1,11 @@
+// app.scss
+
+// Define desired color palettes for each intention.
+$primary: "teal";
+$accent: "light-green";
+$warn: "pink";
+
+// Import ember-paper.
+@import "ember-paper";
+
+// Import or define the rest of your application's styles.

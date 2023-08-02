@@ -1,0 +1,19 @@
+{{! template-lint-disable no-curly-component-invocation no-implicit-this }}
+<div class="md-switch-bar"></div>
+<div class="md-container">
+  <div class="md-bar"></div>
+  <div class="md-thumb-container" style={{thumbContainerStyle}}>
+    <div class="md-thumb">
+      <PaperRipple @center={{true}} @fitRipple={{true}}/>
+    </div>
+  </div>
+</div>
+{{#if (has-block)}}
+  <div class="md-label">
+    {{yield}}
+  </div>
+{{else}}
+  <div class="md-label">
+    {{label}}
+  </div>
+{{/if}}

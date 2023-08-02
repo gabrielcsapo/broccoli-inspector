@@ -23,7 +23,9 @@
         <text.headline>
           <div class="layout-row">
             <div class="flex">
-              Build {{@model.id}} ({{to-fixed @model.time 2}}ms)
+              Build
+              {{@model.id}}
+              ({{to-fixed @model.time 2}}ms)
             </div>
             <div class="flex-nogrow">
               <PaperMenu as |menu|>
@@ -34,7 +36,10 @@
                 </menu.trigger>
 
                 <menu.content @width={{4}} as |content|>
-                  <content.menu-item @href={{this.downloadAsJSON}} @target="_blank">
+                  <content.menu-item
+                    @href={{this.downloadAsJSON}}
+                    @target="_blank"
+                  >
                     {{paper-icon "link"}}
                     <span>Download Build Info</span>
                   </content.menu-item>
@@ -43,15 +48,15 @@
             </div>
           </div>
         </text.headline>
-        <text.subhead>This is the resulting information from build {{@model.id}}</text.subhead>
+        <text.subhead>This is the resulting information from build
+          {{@model.id}}</text.subhead>
       </title.text>
     </card.title>
     <card.content>
-      This build was triggered because of changes to {{@model.filePath}}.
+      This build was triggered because of changes to
+      {{@model.filePath}}.
     </card.content>
   </PaperCard>
 
-  <BuildPlugins
-    @nodes={{@model.nodes}}
-  />
+  <BuildPlugins @nodes={{@model.nodes}} />
 {{/if}}

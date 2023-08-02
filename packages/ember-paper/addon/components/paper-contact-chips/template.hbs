@@ -1,0 +1,34 @@
+{{! template-lint-disable no-implicit-this }}
+<md-contact-chips class="md-default-theme {{@class}}" ...attributes>
+  <PaperChips
+    class="md-contact-chips"
+    @readOnly={{@readOnly}}
+    @addItem={{@addItem}}
+    @removeItem={{@removeItem}}
+    @requireMatch={{true}}
+    @searchField={{this.searchField}}
+    @content={{@content}}
+    @options={{@options}}
+    @defaultHighlighted={{@defaultHighlighted}}
+    @placeholder={{@placeholder}}
+    @search={{@search}}
+    @matcher={{@matcher}}
+    @noMatchesMessage={{@noMatchesMessage}} as |item type|>
+
+    {{#if (eq type "suggestion")}}
+      <div class="md-contact-suggestion">
+        <img src={{get item this.imageField}} alt={{get item this.nameField}} class="md-contact-avatar">
+        <span class="md-contact-name">{{get item this.nameField}}</span>
+        <span class="md-contact-email">{{get item this.emailField}}</span>
+      </div>
+    {{/if}}
+
+    {{#if (eq type "chip")}}
+      <div class="md-contact-avatar">
+        <img src={{get item imageField}} alt={{get item nameField}}>
+      </div>
+      <span class="md-contact-name">{{get item nameField}}</span>
+    {{/if}}
+
+  </PaperChips>
+</md-contact-chips>

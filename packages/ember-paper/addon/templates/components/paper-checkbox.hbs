@@ -1,0 +1,20 @@
+{{! template-lint-disable no-curly-component-invocation no-implicit-this }}
+<div class="md-container">
+  <div class="md-icon"></div>
+  <PaperRipple
+    @center={{true}}
+    @fitRipple={{true}}/>
+</div>
+{{#if (has-block)}}
+  <div class="md-label">
+    <span id={{labelId}}>
+      {{yield}}
+    </span>
+  </div>
+{{else}}
+  <div class="md-label">
+    <span id={{labelId}}>
+      {{label}}
+    </span>
+  </div>
+{{/if}}

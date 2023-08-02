@@ -1,0 +1,29 @@
+{
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "plugins": ["prettier-plugin-ember-template-tag"],
+  "overrides": [
+    {
+      "files": "*.scss",
+      "options": {
+        "parser": "scss",
+        "trailingComma": "none",
+        "singleQuote": false
+      }
+    },
+    {
+      "files": ["*.gjs", "*.gts"],
+      "options": {
+        "parser": "ember-template-tag",
+        "templateSingleQuote": false
+      }
+    },
+    {
+      "files": "*.hbs",
+      "options": {
+        "parser": "glimmer",
+        "singleQuote": false
+      }
+    }
+  ]
+}
